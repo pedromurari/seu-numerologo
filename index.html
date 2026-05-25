@@ -126,7 +126,7 @@
     }
     .formTitle em{
       font-family:'Cormorant Garamond',serif;
-      font-style:italic;color:var(--gold2);font-weight:300;
+      font-style:italic;color:var(--gold2);font-weight:400;
       font-size:1.1em;
     }
     .formSub{
@@ -2543,33 +2543,39 @@
     50%{box-shadow:0 0 10px var(--gold),0 0 24px rgba(208,94,42,.4)}
   }
 
-  /* ── Hero headline — editorial dramático ── */
+  /* ── Hero headline — Cinzel bold, legível ── */
   .v2-hero-h1{
-    font-family:'Cormorant Garamond',serif !important;
-    font-size:clamp(3rem,8vw,6.4rem) !important;
-    font-weight:300 !important;
-    line-height:1.02 !important;
-    letter-spacing:-.03em !important;
+    font-family:'Cinzel',serif !important;
+    font-size:clamp(2rem,5.5vw,4rem) !important;
+    font-weight:600 !important;
+    line-height:1.15 !important;
+    letter-spacing:.04em !important;
     color:#f8f0e4 !important;
     margin-bottom:28px !important;
     position:relative;z-index:2;
+    text-transform:uppercase;
   }
   .v2-hero-accent{
+    font-family:'DM Serif Display',serif !important;
     font-style:italic;
+    font-weight:400;
+    text-transform:none;
     color:var(--gold2);
-    font-weight:300;
     display:block;
-    margin-top:4px;
+    margin-top:8px;
+    font-size:1.15em;
+    letter-spacing:-.01em;
   }
   .v2-hero-sub{
-    font-size:clamp(.92rem,2vw,1.1rem) !important;
+    font-size:clamp(.95rem,2vw,1.1rem) !important;
     color:var(--text2);
-    line-height:1.8;
-    max-width:480px;
+    line-height:1.75;
+    max-width:500px;
     margin-left:auto;margin-right:auto;
     margin-bottom:44px;
     position:relative;z-index:2;
-    font-weight:300;
+    font-weight:400;
+    font-family:'DM Sans',sans-serif !important;
   }
   .v2-hero-cta-wrap{position:relative;z-index:2}
 
@@ -2649,17 +2655,17 @@
     flex-shrink:0;
   }
 
-  /* ── Section H2 — Cormorant dramático ── */
+  /* ── Section H2 — DM Serif bold, legível ── */
   .lp-h2{
-    font-family:'Cormorant Garamond',serif !important;
-    font-size:clamp(2.4rem,5vw,4rem) !important;
-    font-weight:300 !important;
-    letter-spacing:-.02em !important;
-    line-height:1.05 !important;
+    font-family:'DM Serif Display',serif !important;
+    font-size:clamp(2rem,4vw,3rem) !important;
+    font-weight:400 !important;
+    letter-spacing:-.01em !important;
+    line-height:1.15 !important;
     color:#f4ede4 !important;
     margin-bottom:24px !important;
   }
-  .lp-lead{font-family:'DM Sans',sans-serif;font-weight:300 !important;line-height:1.85 !important}
+  .lp-lead{font-family:'DM Sans',sans-serif;font-weight:400 !important;line-height:1.8 !important;font-size:1rem !important}
 
   /* ── Feature cards — numerais sagrados ── */
   .lp-what-card{
@@ -2782,9 +2788,9 @@
     gap:0 !important;
   }
   .lp-founder-name{
-    font-family:'Cormorant Garamond',serif !important;
-    font-size:clamp(2rem,5vw,3.2rem) !important;
-    font-weight:300 !important;
+    font-family:'DM Serif Display',serif !important;
+    font-size:clamp(2rem,4vw,2.8rem) !important;
+    font-weight:400 !important;
     color:#f4ede4 !important;
     margin-bottom:4px !important;
     letter-spacing:-.01em;
@@ -2800,7 +2806,7 @@
     font-size:1rem !important;
     line-height:1.85 !important;
     color:var(--text2) !important;
-    font-weight:300 !important;
+    font-weight:400 !important;
   }
 
   /* ── Footer — mais premium ── */
@@ -2823,7 +2829,7 @@
     font-size:.78rem;letter-spacing:.25em;text-transform:uppercase;
     color:var(--text3);margin-top:10px;margin-bottom:4px;
   }
-  .lp-footer-brand-sub{font-size:.75rem;color:var(--muted);line-height:1.6;font-weight:300}
+  .lp-footer-brand-sub{font-size:.75rem;color:var(--muted);line-height:1.6;font-weight:400}
   .lp-social-row{display:flex;gap:10px;margin-top:20px}
   .lp-social-btn{
     width:34px;height:34px;border-radius:50%;
@@ -2841,14 +2847,14 @@
     display:block;font-size:.84rem;color:var(--text3);
     text-decoration:none;margin-bottom:10px;
     transition:color .2s;cursor:pointer;
-    font-weight:300;
+    font-weight:400;
   }
   .lp-footer-link:hover{color:var(--text2)}
   .lp-footer-bottom{
     border-top:1px solid rgba(255,255,255,.05);
     padding:20px 24px;
     display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;
-    font-size:.72rem;color:var(--muted);font-weight:300;
+    font-size:.72rem;color:var(--muted);font-weight:400;
     max-width:860px;margin:0 auto;
   }
 
