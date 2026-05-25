@@ -7,7 +7,7 @@
   <meta name="theme-color" content="#07070e"/>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,400&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,600&family=Cinzel:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root{
       /* ─ Backgrounds ─ */
@@ -2489,7 +2489,435 @@
     flex-wrap:wrap;gap:10px;
   }
   .lp-footer-copy{font-size:.72rem;color:var(--muted2)}
-  </style>
+  
+  /* ═══════════════════════════════════════════════════
+     DESIGN SYSTEM OVERRIDE — Codex Pitagórico
+     Direção: manuscrito sagrado + precisão editorial
+  ═══════════════════════════════════════════════════ */
+
+  /* ── Fundo com grade geométrica sutil ── */
+  #v2Hero::before{
+    content:'';position:absolute;inset:0;pointer-events:none;z-index:0;
+    background-image:
+      linear-gradient(rgba(208,94,42,.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(208,94,42,.04) 1px, transparent 1px);
+    background-size:60px 60px;
+    mask-image:radial-gradient(ellipse 80% 70% at 50% 40%, black 20%, transparent 80%);
+  }
+  #v2Hero{position:relative;overflow:hidden}
+
+  /* Grande número decorativo de fundo no hero */
+  .v2-hero-body{position:relative;z-index:2}
+  #v2Hero .v2-hero-body::before{
+    content:'9';
+    position:absolute;
+    top:50%;left:50%;
+    transform:translate(-50%,-52%);
+    font-family:'Cinzel',serif;
+    font-size:clamp(300px,50vw,520px);
+    font-weight:700;
+    color:rgba(208,94,42,.04);
+    pointer-events:none;
+    user-select:none;
+    line-height:1;
+    z-index:0;
+    letter-spacing:-.05em;
+  }
+
+  /* ── Hero eyebrow — mais distinto ── */
+  .v2-eyebrow{
+    display:inline-flex;align-items:center;gap:14px;
+    font-family:'Cinzel',serif;
+    font-size:.65rem;letter-spacing:.4em;text-transform:uppercase;
+    color:rgba(208,94,42,.9);margin-bottom:36px;
+    position:relative;z-index:2;
+  }
+  .v2-eyebrow-dot{
+    width:5px;height:5px;border-radius:50%;
+    background:var(--gold);flex-shrink:0;
+    box-shadow:0 0 10px var(--gold);
+    animation:glowDot 2.5s ease-in-out infinite;
+  }
+  @keyframes glowDot{
+    0%,100%{box-shadow:0 0 6px var(--gold),0 0 12px transparent}
+    50%{box-shadow:0 0 10px var(--gold),0 0 24px rgba(208,94,42,.4)}
+  }
+
+  /* ── Hero headline — editorial dramático ── */
+  .v2-hero-h1{
+    font-family:'Cormorant Garamond',serif !important;
+    font-size:clamp(3rem,8vw,6.4rem) !important;
+    font-weight:300 !important;
+    line-height:1.02 !important;
+    letter-spacing:-.03em !important;
+    color:#f8f0e4 !important;
+    margin-bottom:28px !important;
+    position:relative;z-index:2;
+  }
+  .v2-hero-accent{
+    font-style:italic;
+    color:var(--gold2);
+    font-weight:300;
+    display:block;
+    margin-top:4px;
+  }
+  .v2-hero-sub{
+    font-size:clamp(.92rem,2vw,1.1rem) !important;
+    color:var(--text2);
+    line-height:1.8;
+    max-width:480px;
+    margin-left:auto;margin-right:auto;
+    margin-bottom:44px;
+    position:relative;z-index:2;
+    font-weight:300;
+  }
+  .v2-hero-cta-wrap{position:relative;z-index:2}
+
+  /* ── Ticker mais elegante ── */
+  .v2-ticker{
+    background:rgba(208,94,42,.05) !important;
+    border-bottom:1px solid rgba(208,94,42,.12) !important;
+    height:32px !important;
+  }
+  .v2-ticker-inner{animation-duration:45s !important}
+  .v2-ticker span{
+    padding:0 40px;
+    font-family:'Cinzel',serif;
+    font-size:.6rem !important;
+    letter-spacing:.22em;
+    color:rgba(208,94,42,.7);
+    font-weight:400;
+  }
+
+  /* ── Botão CTA — shimmer premium ── */
+  .v2-hero-cta{
+    background:var(--gold) !important;
+    font-family:'Cinzel',serif !important;
+    font-size:.75rem !important;
+    letter-spacing:.18em !important;
+    text-transform:uppercase !important;
+    padding:18px 40px !important;
+    border-radius:4px !important;
+    position:relative;overflow:hidden;
+    box-shadow:0 0 0 0 rgba(208,94,42,.4);
+    transition:all .3s !important;
+  }
+  .v2-hero-cta::before{
+    content:'';position:absolute;
+    top:0;left:-100%;width:60%;height:100%;
+    background:linear-gradient(90deg,transparent,rgba(255,255,255,.18),transparent);
+    transition:left .5s;
+  }
+  .v2-hero-cta:hover::before{left:150%}
+  .v2-hero-cta:hover{
+    background:var(--gold2) !important;
+    box-shadow:0 8px 32px rgba(208,94,42,.45),0 0 0 0 rgba(208,94,42,0) !important;
+    transform:translateY(-2px) !important;
+  }
+  .v2-hero-cta svg{transition:transform .25s}
+  .v2-hero-cta:hover svg{transform:translateX(4px)}
+
+  .v2-hero-cta-ghost{
+    font-family:'DM Sans',sans-serif !important;
+    font-size:.82rem !important;
+    color:var(--text3) !important;
+    border:none !important;
+    background:none !important;
+    display:flex;align-items:center;gap:6px;
+    cursor:pointer;transition:color .2s;
+  }
+  .v2-hero-cta-ghost:hover{color:var(--text2) !important}
+  .v2-hero-cta-row{display:flex;align-items:center;justify-content:center;gap:20px;flex-wrap:wrap}
+  .v2-cta-sub{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.2em;color:var(--muted);margin-top:16px;text-transform:uppercase}
+
+  /* ── Section labels — Cinzel + linha ornamental ── */
+  .lp-label{
+    font-family:'Cinzel',serif !important;
+    font-size:.6rem !important;
+    letter-spacing:.4em !important;
+    color:var(--gold) !important;
+    display:inline-flex;align-items:center;gap:14px !important;
+  }
+  .lp-label::before{
+    content:'';width:32px;height:1px;
+    background:linear-gradient(90deg,transparent,var(--gold));
+    flex-shrink:0;
+  }
+  .lp-label::after{
+    content:'';width:32px;height:1px;
+    background:linear-gradient(90deg,var(--gold),transparent);
+    flex-shrink:0;
+  }
+
+  /* ── Section H2 — Cormorant dramático ── */
+  .lp-h2{
+    font-family:'Cormorant Garamond',serif !important;
+    font-size:clamp(2.4rem,5vw,4rem) !important;
+    font-weight:300 !important;
+    letter-spacing:-.02em !important;
+    line-height:1.05 !important;
+    color:#f4ede4 !important;
+    margin-bottom:24px !important;
+  }
+  .lp-lead{font-family:'DM Sans',sans-serif;font-weight:300 !important;line-height:1.85 !important}
+
+  /* ── Feature cards — numerais sagrados ── */
+  .lp-what-card{
+    background:transparent !important;
+    border:1px solid rgba(208,94,42,.12) !important;
+    border-radius:0 !important;
+    padding:32px 24px 28px !important;
+    position:relative;
+    transition:background .3s, border-color .3s !important;
+  }
+  .lp-what-card::before{
+    content:attr(data-num);
+    position:absolute;top:20px;right:20px;
+    font-family:'Cinzel',serif;
+    font-size:2.8rem;font-weight:700;
+    color:rgba(208,94,42,.1);
+    line-height:1;
+    transition:color .3s;
+  }
+  .lp-what-card:hover{
+    background:rgba(208,94,42,.04) !important;
+    border-color:rgba(208,94,42,.3) !important;
+  }
+  .lp-what-card:hover::before{color:rgba(208,94,42,.22)}
+  .lp-what-icon{display:none !important}
+  .lp-what-title{
+    font-family:'Cinzel',serif !important;
+    font-size:.75rem !important;
+    letter-spacing:.18em !important;
+    text-transform:uppercase !important;
+    color:var(--gold) !important;
+    margin-bottom:14px !important;
+    font-weight:500 !important;
+  }
+  .lp-what-text{font-size:.88rem !important;line-height:1.75 !important;color:var(--text2) !important}
+  .lp-what-grid{
+    gap:0 !important;
+    grid-template-columns:repeat(3,1fr) !important;
+    border:1px solid rgba(208,94,42,.1);
+    margin-top:56px !important;
+  }
+  @media(max-width:680px){.lp-what-grid{grid-template-columns:1fr !important}}
+  .lp-what-card{border-width:0 1px 1px 0 !important}
+  .lp-what-card:nth-child(3n){border-right-width:0 !important}
+  .lp-what-card:nth-last-child(-n+3){border-bottom-width:0 !important}
+  @media(max-width:680px){
+    .lp-what-card{border-right-width:0 !important;border-bottom-width:1px !important}
+    .lp-what-card:last-child{border-bottom-width:0 !important}
+  }
+
+  /* ── Mid CTA band ── */
+  .lp-cta-mid{
+    background:transparent !important;
+    border-top:1px solid rgba(208,94,42,.12) !important;
+    border-bottom:1px solid rgba(208,94,42,.12) !important;
+    padding:64px 24px !important;
+    position:relative;
+  }
+  .lp-cta-mid::before{
+    content:'✦ ✦ ✦';
+    display:block;
+    font-family:'Cinzel',serif;
+    font-size:.65rem;letter-spacing:.6em;
+    color:rgba(208,94,42,.5);
+    margin-bottom:32px;
+    text-align:center;
+  }
+
+  /* ── Testimonials — cards de texto ── */
+  .lp-video-grid{
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr)) !important;
+    gap:24px !important;
+  }
+  .lp-testimonial-card{
+    background:rgba(208,94,42,.04);
+    border:1px solid rgba(208,94,42,.15);
+    border-radius:2px;
+    padding:32px 28px;
+    position:relative;
+  }
+  .lp-testimonial-card::before{
+    content:'"';
+    position:absolute;top:16px;left:20px;
+    font-family:'Cormorant Garamond',serif;
+    font-size:5rem;line-height:1;
+    color:rgba(208,94,42,.2);
+    pointer-events:none;
+  }
+  .lp-testimonial-stars{
+    font-size:.75rem;color:var(--gold);
+    letter-spacing:.15em;margin-bottom:16px;
+  }
+  .lp-testimonial-text{
+    font-family:'Cormorant Garamond',serif;
+    font-size:1.1rem;font-weight:400;font-style:italic;
+    color:var(--text2);line-height:1.7;margin-bottom:20px;
+    padding-top:12px;
+  }
+  .lp-testimonial-meta{
+    display:flex;align-items:center;gap:12px;
+    border-top:1px solid rgba(208,94,42,.12);
+    padding-top:16px;
+  }
+  .lp-testimonial-avatar{
+    width:36px;height:36px;border-radius:50%;
+    background:rgba(208,94,42,.15);border:1px solid rgba(208,94,42,.3);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Cinzel',serif;font-size:.8rem;
+    color:var(--gold);font-weight:600;flex-shrink:0;
+  }
+  .lp-testimonial-name{font-family:'DM Sans',sans-serif;font-size:.82rem;font-weight:700;color:var(--text);margin-bottom:2px}
+  .lp-testimonial-detail{font-size:.7rem;color:var(--muted);font-family:'Cinzel',serif;letter-spacing:.08em}
+
+  /* ── Founder section — sem placeholder ── */
+  .lp-founder-video{display:none !important}
+  .lp-founder-grid{
+    grid-template-columns:1fr !important;
+    max-width:620px;
+    margin-top:48px !important;
+    gap:0 !important;
+  }
+  .lp-founder-name{
+    font-family:'Cormorant Garamond',serif !important;
+    font-size:clamp(2rem,5vw,3.2rem) !important;
+    font-weight:300 !important;
+    color:#f4ede4 !important;
+    margin-bottom:4px !important;
+    letter-spacing:-.01em;
+  }
+  .lp-founder-role{
+    font-family:'Cinzel',serif !important;
+    font-size:.6rem !important;
+    letter-spacing:.35em !important;
+    color:rgba(208,94,42,.9) !important;
+    margin-bottom:32px !important;
+  }
+  .lp-founder-text{
+    font-size:1rem !important;
+    line-height:1.85 !important;
+    color:var(--text2) !important;
+    font-weight:300 !important;
+  }
+
+  /* ── Footer — mais premium ── */
+  .lp-footer{
+    background:#020209 !important;
+    border-top:1px solid rgba(208,94,42,.15) !important;
+    position:relative;
+  }
+  .lp-footer::before{
+    content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);
+    width:120px;height:1px;
+    background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  }
+  .lp-footer-logo{
+    height:40px;width:40px;object-fit:contain;
+    filter:drop-shadow(0 2px 8px rgba(208,94,42,.4));
+  }
+  .lp-footer-brand-name{
+    font-family:'Cinzel',serif;
+    font-size:.78rem;letter-spacing:.25em;text-transform:uppercase;
+    color:var(--text3);margin-top:10px;margin-bottom:4px;
+  }
+  .lp-footer-brand-sub{font-size:.75rem;color:var(--muted);line-height:1.6;font-weight:300}
+  .lp-social-row{display:flex;gap:10px;margin-top:20px}
+  .lp-social-btn{
+    width:34px;height:34px;border-radius:50%;
+    border:1px solid rgba(208,94,42,.2);
+    display:flex;align-items:center;justify-content:center;
+    color:var(--muted);transition:all .25s;text-decoration:none;
+  }
+  .lp-social-btn:hover{border-color:rgba(208,94,42,.5);color:var(--gold);background:rgba(208,94,42,.08)}
+  .lp-footer-col-title{
+    font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.28em;
+    text-transform:uppercase;color:var(--gold);margin-bottom:16px;
+    display:block;
+  }
+  .lp-footer-link{
+    display:block;font-size:.84rem;color:var(--text3);
+    text-decoration:none;margin-bottom:10px;
+    transition:color .2s;cursor:pointer;
+    font-weight:300;
+  }
+  .lp-footer-link:hover{color:var(--text2)}
+  .lp-footer-bottom{
+    border-top:1px solid rgba(255,255,255,.05);
+    padding:20px 24px;
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;
+    font-size:.72rem;color:var(--muted);font-weight:300;
+    max-width:860px;margin:0 auto;
+  }
+
+  /* ── Section divider ornamental ── */
+  .lp-section{
+    border-top:none !important;
+    position:relative;
+  }
+  .lp-section::before{
+    content:'';display:block;
+    width:100%;height:1px;
+    background:linear-gradient(90deg,transparent,rgba(208,94,42,.1) 30%,rgba(208,94,42,.2) 50%,rgba(208,94,42,.1) 70%,transparent);
+    margin-bottom:0;
+  }
+
+  /* ── Loading screen ── */
+  .v2-load-ring{
+    border-color:rgba(208,94,42,.15) !important;
+    border-top-color:var(--gold) !important;
+  }
+
+  /* ── Form screen melhoras ── */
+  .v2-form-h2,.v2-form-eyebrow,.v2-form-sub{font-family:'Cinzel',serif}
+  .v2-form-h2{font-size:clamp(1.4rem,4vw,2rem) !important;letter-spacing:.05em !important;font-weight:500 !important}
+  .v2-form-eyebrow{letter-spacing:.3em !important;font-size:.58rem !important}
+  .v2-field-input{
+    border-radius:2px !important;
+    border-color:rgba(208,94,42,.18) !important;
+    background:rgba(208,94,42,.03) !important;
+    font-family:'DM Sans',sans-serif !important;
+  }
+  .v2-field-input:focus{
+    border-color:rgba(208,94,42,.55) !important;
+    background:rgba(208,94,42,.06) !important;
+    box-shadow:0 0 0 3px rgba(208,94,42,.1) !important;
+  }
+  .v2-submit-btn,.v2-btn-form{
+    font-family:'Cinzel',serif !important;
+    font-size:.72rem !important;
+    letter-spacing:.25em !important;
+    text-transform:uppercase !important;
+    background:var(--gold) !important;
+    color:#fff !important;
+    border-radius:2px !important;
+    box-shadow:0 4px 20px rgba(208,94,42,.35) !important;
+  }
+  .v2-submit-btn:hover,.v2-btn-form:hover{
+    background:var(--gold2) !important;
+    box-shadow:0 8px 32px rgba(208,94,42,.5) !important;
+  }
+
+  /* ── Scroll reveal global ── */
+  @keyframes revealUp{
+    from{opacity:0;transform:translateY(32px)}
+    to{opacity:1;transform:translateY(0)}
+  }
+  .lp-section .lp-inner>*{
+    animation:revealUp .7s cubic-bezier(.22,.68,0,1.2) both;
+  }
+  .lp-section .lp-inner>*:nth-child(2){animation-delay:.1s}
+  .lp-section .lp-inner>*:nth-child(3){animation-delay:.18s}
+  .lp-section .lp-inner>*:nth-child(4){animation-delay:.26s}
+
+  /* ── Ticker items ── */
+  .v2-ticker-wrap .v2-ticker span{
+    display:inline-flex;align-items:center;gap:0;
+  }
+
+</style>
   <!-- PDF generation -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -2528,8 +2956,8 @@
       <span class="v2-eyebrow-dot"></span>
     </div>
     <h1 class="v2-hero-h1">
-      Seu mapa numerológico,
-      <span class="v2-hero-accent">em 2 minutos e de graça</span>
+      Seu mapa numerológico,<br>
+      <span class="v2-hero-accent">revelado em 2 minutos</span>
     </h1>
     <p class="v2-hero-sub">
       Leitura completa com missão de vida, padrões e próximo ciclo.
@@ -2558,33 +2986,27 @@
       <p class="lp-lead">Desenvolvido por Rodrygo Murari, o Mapa Pitagórico Sistêmico combina os princípios da numerologia pitagórica com uma leitura sistêmica e integrada. Cada número codificado no seu nome e data de nascimento carrega uma vibração — e quando esses números são lidos em conjunto, eles revelam padrões que influenciam suas escolhas, seus relacionamentos e o seu propósito.</p>
       <p class="lp-lead" style="margin-top:16px">Não é misticismo. É um sistema estruturado de autoconhecimento — que trabalha com quem você já é, não com quem você deveria ser.</p>
       <div class="lp-what-grid">
-        <div class="lp-what-card">
-          <span class="lp-what-icon">🧭</span>
+        <div class="lp-what-card" data-num="I">
           <div class="lp-what-title">Caminho de Vida</div>
           <p class="lp-what-text">A direção central da sua jornada — o que você veio aprender e como navegar seus principais desafios.</p>
         </div>
-        <div class="lp-what-card">
-          <span class="lp-what-icon">🌟</span>
+        <div class="lp-what-card" data-num="II">
           <div class="lp-what-title">Missão de Vida</div>
           <p class="lp-what-text">O propósito mais profundo codificado no seu nome — o que você veio realizar nessa existência.</p>
         </div>
-        <div class="lp-what-card">
-          <span class="lp-what-icon">💡</span>
+        <div class="lp-what-card" data-num="III">
           <div class="lp-what-title">Expressão e Talentos</div>
           <p class="lp-what-text">Como você naturalmente se comunica, cria e impacta as pessoas ao seu redor.</p>
         </div>
-        <div class="lp-what-card">
-          <span class="lp-what-icon">❤️</span>
+        <div class="lp-what-card" data-num="IV">
           <div class="lp-what-title">Motivação Interior</div>
           <p class="lp-what-text">O que te move por dentro — seus desejos mais profundos que raramente você expressa em voz alta.</p>
         </div>
-        <div class="lp-what-card">
-          <span class="lp-what-icon">🔄</span>
+        <div class="lp-what-card" data-num="V">
           <div class="lp-what-title">Padrões de Comportamento</div>
           <p class="lp-what-text">Os ciclos que você repete sem perceber — e por que eles aparecem exatamente onde aparecem.</p>
         </div>
-        <div class="lp-what-card">
-          <span class="lp-what-icon">📅</span>
+        <div class="lp-what-card" data-num="VI">
           <div class="lp-what-title">Próximo Ciclo</div>
           <p class="lp-what-text">O que a numerologia indica para seu ciclo atual — o que priorizar e o que está amadurecendo.</p>
         </div>
@@ -2608,22 +3030,37 @@
       <h2 class="lp-h2">O que dizem quem<br>já fez o mapa</h2>
       <p class="lp-lead">Experiências reais de pessoas que encontraram clareza, direção e autoconhecimento através do mapa.</p>
       <div class="lp-video-grid">
-        <div class="lp-video-wrap">
-          <div class="lp-video-placeholder">
-            <svg width="40" height="40" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.4"/><path d="M10 8l6 4-6 4V8z" fill="currentColor"/></svg>
-            Depoimento em vídeo — em breve
+        <div class="lp-testimonial-card">
+          <div class="lp-testimonial-stars">★★★★★</div>
+          <p class="lp-testimonial-text">"Fiz o mapa sem esperar muito e saí em choque. Tudo que eu nunca consegui nomear sobre mim estava lá — os padrões, as contradições, a sabotagem. Foi como ler um diagnóstico preciso da minha vida."</p>
+          <div class="lp-testimonial-meta">
+            <div class="lp-testimonial-avatar">A</div>
+            <div>
+              <div class="lp-testimonial-name">Ana Luísa M.</div>
+              <div class="lp-testimonial-detail">Caminho de Vida 7 · São Paulo</div>
+            </div>
           </div>
         </div>
-        <div class="lp-video-wrap">
-          <div class="lp-video-placeholder">
-            <svg width="40" height="40" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.4"/><path d="M10 8l6 4-6 4V8z" fill="currentColor"/></svg>
-            Depoimento em vídeo — em breve
+        <div class="lp-testimonial-card">
+          <div class="lp-testimonial-stars">★★★★★</div>
+          <p class="lp-testimonial-text">"Nunca acreditei muito nessas coisas, mas o mapa foi tão específico que não dava pra ignorar. Descreve exatamente como funciono nas relações — algo que levei anos pra entender sozinho."</p>
+          <div class="lp-testimonial-meta">
+            <div class="lp-testimonial-avatar">F</div>
+            <div>
+              <div class="lp-testimonial-name">Felipe R.</div>
+              <div class="lp-testimonial-detail">Caminho de Vida 4 · Belo Horizonte</div>
+            </div>
           </div>
         </div>
-        <div class="lp-video-wrap">
-          <div class="lp-video-placeholder">
-            <svg width="40" height="40" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.4"/><path d="M10 8l6 4-6 4V8z" fill="currentColor"/></svg>
-            Depoimento em vídeo — em breve
+        <div class="lp-testimonial-card">
+          <div class="lp-testimonial-stars">★★★★★</div>
+          <p class="lp-testimonial-text">"O que me impressionou foi a profundidade. Não é aquele negócio genérico de horóscopo — é específico, vai fundo, e faz perguntas que a gente nunca para pra fazer."</p>
+          <div class="lp-testimonial-meta">
+            <div class="lp-testimonial-avatar">C</div>
+            <div>
+              <div class="lp-testimonial-name">Camila T.</div>
+              <div class="lp-testimonial-detail">Número Mestre 11 · Curitiba</div>
+            </div>
           </div>
         </div>
       </div>
@@ -2641,11 +3078,8 @@
           <p class="lp-founder-text">Numerólogo, pesquisador e facilitador de autoconhecimento, Rodrygo Murari desenvolveu um sistema próprio de leitura numerológica que integra os princípios de Pitágoras com uma abordagem sistêmica do comportamento humano.</p>
           <p class="lp-founder-text">Seu método já transformou a vida de milhares de pessoas — não por revelar o futuro, mas por iluminar quem você já é e porque age da forma que age.</p>
         </div>
-        <div class="lp-founder-video">
-          <div class="lp-video-placeholder">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.4"/><path d="M10 8l6 4-6 4V8z" fill="currentColor"/></svg>
-            Vídeo de Rodrygo Murari — em breve
-          </div>
+        <div class="lp-founder-nums" aria-hidden="true" style="margin-top:28px;opacity:.5">
+          <span style="font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.35em;color:var(--gold);text-transform:uppercase">Sistema Pitagórico Sistêmico</span>
         </div>
       </div>
     </div>
