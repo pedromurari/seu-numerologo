@@ -3129,6 +3129,26 @@
   document.getElementById('v2Name').addEventListener('keydown',function(e){if(e.key==='Enter')document.getElementById('v2Date').focus();});
 
   /* Submit */
+  /* ── Supabase lead capture ── */
+  (function(){
+    var SB_URL='https://dpmmstmzqixrzjcewubn.supabase.co';
+    var SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRwbW1zdG16cWl4cnpqY2V3dWJuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkzMDU5NzMsImV4cCI6MjA5NDg4MTk3M30.DYMZrva-08HvaNtru0ioBu6VZ0a-FVtjWIzmTL7oxbw';
+    window._saveLead=function(nome,email,dataNasc,caminhoVida){
+      try{
+        fetch(SB_URL+'/rest/v1/leads',{
+          method:'POST',
+          headers:{
+            'Content-Type':'application/json',
+            'apikey':SB_KEY,
+            'Authorization':'Bearer '+SB_KEY,
+            'Prefer':'return=minimal'
+          },
+          body:JSON.stringify({nome:nome,email:email,data_nascimento:dataNasc,caminho_vida:caminhoVida||null})
+        }).catch(function(){});
+      }catch(e){}
+    };
+  })();
+
   document.getElementById('v2Submit').addEventListener('click',function(){
     var nome=document.getElementById('v2Name').value.trim();
     var dataRaw=document.getElementById('v2Date').value.trim();
@@ -3140,6 +3160,10 @@
     if(!email||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){err.textContent='Por favor, informe um e-mail válido.';return;}
     err.textContent='';
     _nome=nome;_date=clean;_email=email;
+    /* Salva lead no Supabase (fire-and-forget) */
+    var dateObj=parseDateBR(clean);
+    var cv=dateObj?calcCaminhoVida(dateObj):null;
+    if(window._saveLead)window._saveLead(nome,email,clean,cv);
     runLoading();
   });
 
