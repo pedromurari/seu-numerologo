@@ -2923,6 +2923,256 @@
     display:inline-flex;align-items:center;gap:0;
   }
 
+  /* ══════════════════════════════════════════
+     SLIDE 5 — SALES PAGE 2026
+  ══════════════════════════════════════════ */
+
+  /* Scroll no slide 5 */
+  .v2-slide[data-slide="5"] .v2-slide-inner{
+    overflow-y:auto;
+    padding-bottom:100px;
+    scrollbar-width:none;
+    -webkit-overflow-scrolling:touch;
+  }
+  .v2-slide[data-slide="5"] .v2-slide-inner::-webkit-scrollbar{display:none}
+
+  /* Transition hook — ponte emocional */
+  .sp-bridge{
+    text-align:center;
+    padding:20px 0 28px;
+    border-bottom:1px solid rgba(208,94,42,.12);
+    margin-bottom:24px;
+  }
+  .sp-bridge-text{
+    font-family:'DM Serif Display',serif;
+    font-size:clamp(1.1rem,3vw,1.4rem);
+    color:#f4ede4;
+    line-height:1.5;
+    max-width:480px;
+    margin:0 auto;
+  }
+  .sp-bridge-text em{color:var(--gold);font-style:italic}
+
+  /* Prova social — específica com resultado */
+  .sp-proof{
+    display:flex;align-items:center;gap:14px;
+    background:rgba(112,208,160,.05);
+    border:1px solid rgba(112,208,160,.18);
+    border-radius:8px;
+    padding:14px 18px;
+    margin-bottom:22px;
+  }
+  .sp-proof-avatar{
+    width:40px;height:40px;border-radius:50%;
+    background:linear-gradient(135deg,rgba(208,94,42,.3),rgba(208,94,42,.1));
+    border:1.5px solid rgba(208,94,42,.35);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Cinzel',serif;font-size:.8rem;font-weight:600;
+    color:var(--gold);flex-shrink:0;
+  }
+  .sp-proof-body{display:block}
+  .sp-proof-quote{
+    font-size:.85rem;font-style:italic;color:var(--text2);
+    line-height:1.5;margin-bottom:5px;
+  }
+  .sp-proof-meta{
+    font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--muted);
+  }
+  .sp-proof-stars{color:var(--gold);font-size:.7rem;margin-bottom:3px;letter-spacing:2px}
+
+  /* Âncora de preço — tabela comparativa */
+  .sp-price-anchor{
+    background:rgba(208,94,42,.04);
+    border:1px solid rgba(208,94,42,.15);
+    border-radius:8px;
+    padding:20px 20px 16px;
+    margin-bottom:20px;
+  }
+  .sp-pa-label{
+    font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.22em;
+    text-transform:uppercase;color:var(--muted);margin-bottom:12px;display:block;
+  }
+  .sp-pa-row{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:8px 0;border-bottom:1px solid rgba(255,255,255,.05);
+    font-size:.83rem;
+  }
+  .sp-pa-row:last-child{border-bottom:none;padding-top:12px}
+  .sp-pa-item{color:var(--text3);font-weight:400}
+  .sp-pa-val{font-weight:600;color:var(--text3)}
+  .sp-pa-val.crossed{text-decoration:line-through;color:var(--muted);font-weight:400}
+  .sp-pa-row.highlight .sp-pa-item{color:#fff;font-weight:700}
+  .sp-pa-row.highlight .sp-pa-val{
+    color:var(--gold);font-size:1.1rem;font-weight:700;
+    text-shadow:0 0 20px rgba(208,94,42,.4);
+  }
+
+  /* Benefícios como transformação */
+  .sp-transforms{
+    display:flex;flex-direction:column;gap:10px;
+    margin-bottom:20px;
+  }
+  .sp-transform-item{
+    display:flex;align-items:flex-start;gap:12px;
+    padding:12px 14px;
+    background:rgba(255,255,255,.02);
+    border-left:2px solid rgba(208,94,42,.35);
+    border-radius:0 6px 6px 0;
+  }
+  .sp-transform-icon{
+    font-size:.75rem;color:var(--gold);flex-shrink:0;
+    margin-top:2px;font-family:'Cinzel',serif;font-weight:700;
+    min-width:16px;
+  }
+  .sp-transform-text{font-size:.86rem;color:var(--text2);line-height:1.55}
+  .sp-transform-text strong{color:#fff;font-weight:600}
+
+  /* Urgência */
+  .sp-urgency{
+    display:flex;align-items:center;gap:10px;
+    background:rgba(208,94,42,.06);
+    border:1px solid rgba(208,94,42,.2);
+    border-radius:6px;
+    padding:10px 14px;
+    margin-bottom:18px;
+    font-size:.8rem;
+    color:var(--text2);
+    line-height:1.4;
+  }
+  .sp-urgency-dot{
+    width:7px;height:7px;border-radius:50%;
+    background:var(--gold);flex-shrink:0;
+    animation:glowDot 1.5s ease-in-out infinite;
+  }
+  .sp-urgency strong{color:var(--gold);font-weight:700}
+
+  /* Bloco de preço + CTA */
+  .sp-offer-block{
+    background:linear-gradient(160deg,rgba(208,94,42,.08),rgba(208,94,42,.03));
+    border:1px solid rgba(208,94,42,.22);
+    border-radius:10px;
+    padding:24px 22px;
+    text-align:center;
+    margin-bottom:16px;
+    position:relative;overflow:hidden;
+  }
+  .sp-offer-block::before{
+    content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);
+    width:60%;height:1px;
+    background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  }
+  .sp-offer-badge{
+    display:inline-flex;align-items:center;gap:7px;
+    background:rgba(208,94,42,.12);border:1px solid rgba(208,94,42,.3);
+    border-radius:20px;padding:4px 14px;
+    font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--gold);
+    margin-bottom:16px;
+  }
+  .sp-offer-h{
+    font-family:'DM Serif Display',serif;
+    font-size:clamp(1.2rem,3.5vw,1.6rem);
+    color:#f4ede4;line-height:1.2;margin-bottom:6px;
+  }
+  .sp-offer-sub{font-size:.82rem;color:var(--text3);margin-bottom:18px;line-height:1.5}
+  .sp-price-block{margin-bottom:18px}
+  .sp-price-from{font-size:.78rem;color:var(--muted);text-decoration:line-through;margin-bottom:2px}
+  .sp-price-main{
+    font-family:'Cinzel',serif;font-size:clamp(2.2rem,6vw,3rem);
+    font-weight:700;color:var(--gold);line-height:1;
+    text-shadow:0 0 30px rgba(208,94,42,.3);
+  }
+  .sp-price-note{font-size:.7rem;color:var(--muted);margin-top:5px;letter-spacing:.04em}
+
+  /* CTA button — principal */
+  .sp-btn-buy{
+    width:100%;padding:18px 24px;
+    background:linear-gradient(135deg,var(--gold),var(--gold2));
+    border:none;border-radius:6px;
+    font-family:'Cinzel',serif;font-size:.78rem;font-weight:600;
+    letter-spacing:.18em;text-transform:uppercase;
+    color:#fff;cursor:pointer;
+    position:relative;overflow:hidden;
+    box-shadow:0 6px 28px rgba(208,94,42,.45);
+    transition:all .3s;margin-bottom:12px;
+  }
+  .sp-btn-buy::before{
+    content:'';position:absolute;
+    top:0;left:-100%;width:60%;height:100%;
+    background:linear-gradient(90deg,transparent,rgba(255,255,255,.2),transparent);
+    transition:left .5s;
+  }
+  .sp-btn-buy:hover::before{left:150%}
+  .sp-btn-buy:hover{
+    box-shadow:0 10px 40px rgba(208,94,42,.6);
+    transform:translateY(-2px);
+  }
+  .sp-btn-buy:active{transform:translateY(0)}
+
+  /* Garantia */
+  .sp-guarantee{
+    display:flex;align-items:flex-start;gap:14px;
+    background:rgba(112,208,160,.04);
+    border:1px solid rgba(112,208,160,.15);
+    border-radius:8px;padding:14px 16px;
+    margin-bottom:18px;
+  }
+  .sp-guarantee-icon{
+    width:36px;height:36px;border-radius:50%;
+    background:rgba(112,208,160,.1);border:1px solid rgba(112,208,160,.25);
+    display:flex;align-items:center;justify-content:center;
+    font-size:1rem;flex-shrink:0;
+  }
+  .sp-guarantee-h{
+    font-size:.82rem;font-weight:700;color:#f4ede4;margin-bottom:4px;
+  }
+  .sp-guarantee-text{font-size:.78rem;color:var(--text3);line-height:1.55}
+
+  /* Trust strip */
+  .sp-trust{
+    display:flex;justify-content:center;gap:18px;flex-wrap:wrap;
+    font-size:.7rem;color:var(--muted);margin-bottom:18px;
+  }
+  .sp-trust-item{display:flex;align-items:center;gap:5px}
+
+  /* FAQ — objeções */
+  .sp-faq{border-top:1px solid rgba(255,255,255,.06);padding-top:18px;margin-bottom:4px}
+  .sp-faq-title{
+    font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.25em;
+    text-transform:uppercase;color:var(--muted);margin-bottom:14px;text-align:center;
+  }
+  .sp-faq-item{margin-bottom:12px}
+  .sp-faq-q{
+    font-size:.82rem;font-weight:700;color:var(--text2);margin-bottom:4px;
+    display:flex;align-items:flex-start;gap:8px;
+  }
+  .sp-faq-q::before{content:'→';color:var(--gold);flex-shrink:0}
+  .sp-faq-a{font-size:.8rem;color:var(--text3);line-height:1.6;padding-left:18px}
+
+  /* Teaser slide 4 melhorias */
+  .v2-adv-item{
+    display:flex;align-items:center;gap:7px;
+    font-size:.76rem;color:var(--text3);padding:5px 0;
+  }
+  .v2-adv-item-lock{font-size:.7rem;opacity:.6}
+  .v2-taste-kicker{
+    font-family:'Cinzel',serif;
+    font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;
+    color:rgba(208,94,42,.7);margin-bottom:10px;
+  }
+  .v2-taste-quote{
+    font-family:'DM Serif Display',serif;
+    font-size:1rem;font-style:italic;
+    color:var(--text2);line-height:1.6;
+    position:relative;z-index:2;
+  }
+  .v2-taste-blur{
+    position:absolute;bottom:0;left:0;right:0;height:50%;
+    background:linear-gradient(to bottom,transparent,#000);
+    pointer-events:none;
+  }
+
 </style>
   <!-- PDF generation -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -3285,47 +3535,121 @@
       </div>
     </div>
 
-    <!-- Slide 5: CTA -->
+    <!-- Slide 5: Sales Page 2026 -->
     <div class="v2-slide" data-slide="5">
       <div class="v2-slide-inner">
-        <div class="v2-social-strip">
-          <div class="v2-unlock-avatars">
-            <div class="v2-avatar">M</div><div class="v2-avatar">R</div>
-            <div class="v2-avatar">C</div><div class="v2-avatar">A</div>
-            <div class="v2-avatar">+</div>
-          </div>
-          <span>1.247 pessoas desbloquearam esta semana</span>
+
+        <!-- Ponte emocional -->
+        <div class="sp-bridge">
+          <p class="sp-bridge-text">
+            Você acabou de ver três padrões reais sobre você.<br>
+            <em>O mapa completo mostra por que eles persistem — e como interrompê-los.</em>
+          </p>
         </div>
-        <div class="v2-cta-card">
-          <div class="v2-cta-offer-badge">🔓 Acesso Completo</div>
-          <h2 class="v2-cta-h">Desbloqueie tudo que já calculamos para você</h2>
-          <p class="v2-cta-sub">Seu mapa completo está pronto. Com um clique você acessa todas as <strong>12 análises personalizadas</strong>, seus padrões de sabotagem nomeados, seus 4 Pináculos com os períodos exatos e o Plano de Ação real do seu número.</p>
-          <div class="v2-cta-features">
-            <div class="v2-ctaf">❆ Expressão, Alma e Personalidade com leitura completa</div>
-            <div class="v2-ctaf">❆ Padrões de autossabotagem do seu número</div>
-            <div class="v2-ctaf">❆ 4 Pináculos · 4 Desafios · Ciclos de vida</div>
-            <div class="v2-ctaf">❆ Direcionamento de carreira + onde você perde</div>
-            <div class="v2-ctaf">❆ Plano de ação: o que parar, começar e manter</div>
-            <div class="v2-ctaf">❆ PDF completo para baixar e guardar</div>
+
+        <!-- Prova social específica -->
+        <div class="sp-proof">
+          <div class="sp-proof-avatar">M</div>
+          <div class="sp-proof-body">
+            <div class="sp-proof-stars">★★★★★</div>
+            <div class="sp-proof-quote">"Vi o padrão de sabotagem no slide 3 e fiquei em choque. Comprei o mapa completo e a leitura do Número de Alma explicou tudo que eu nunca tinha conseguido nomear."</div>
+            <div class="sp-proof-meta">Mariana S. · Caminho de Vida 3 · São Paulo</div>
           </div>
-          <div class="v2-cta-price">
-            <div class="v2-price-strike">De R$ 97</div>
-            <div class="v2-price-value">R$ <span class="v2-price-big">47</span></div>
-            <div class="v2-price-note">pagamento único · acesso imediato</div>
+        </div>
+
+        <!-- Âncora de preço -->
+        <div class="sp-price-anchor">
+          <span class="sp-pa-label">Compare — o que custaria cada leitura separada</span>
+          <div class="sp-pa-row">
+            <span class="sp-pa-item">Consulta com numerólogo (1h)</span>
+            <span class="sp-pa-val crossed">R$ 250–500</span>
           </div>
-          <button class="v2-btn-buy" id="v2BuyBtn" type="button">
+          <div class="sp-pa-row">
+            <span class="sp-pa-item">12 análises completas + PDF premium</span>
+            <span class="sp-pa-val crossed">R$ 97</span>
+          </div>
+          <div class="sp-pa-row highlight">
+            <span class="sp-pa-item">Seu Mapa · Oferta de lançamento</span>
+            <span class="sp-pa-val">R$ 47</span>
+          </div>
+        </div>
+
+        <!-- Benefícios como transformação -->
+        <div class="sp-transforms">
+          <div class="sp-transform-item">
+            <span class="sp-transform-icon">→</span>
+            <span class="sp-transform-text"><strong>Você vai entender por que repete o mesmo padrão</strong> — e o nome exato do mecanismo que o sustenta no seu número.</span>
+          </div>
+          <div class="sp-transform-item">
+            <span class="sp-transform-icon">→</span>
+            <span class="sp-transform-text"><strong>Você vai saber o que o período atual está pedindo de você</strong> — os 4 Pináculos com datas exatas e o que cada fase significa.</span>
+          </div>
+          <div class="sp-transform-item">
+            <span class="sp-transform-icon">→</span>
+            <span class="sp-transform-text"><strong>Você vai ter um Plano de Ação real</strong> — o que parar, o que começar e o que manter, específico para o seu Caminho de Vida.</span>
+          </div>
+          <div class="sp-transform-item">
+            <span class="sp-transform-icon">→</span>
+            <span class="sp-transform-text"><strong>Você vai entender sua Expressão, Alma e Personalidade</strong> — por que você age de uma forma mas sente outra coisa por dentro.</span>
+          </div>
+        </div>
+
+        <!-- Urgência -->
+        <div class="sp-urgency">
+          <div class="sp-urgency-dot"></div>
+          <span><strong>Oferta de lançamento:</strong> preço de R$47 válido durante o período de lançamento. O valor sobe para R$97 em breve.</span>
+        </div>
+
+        <!-- Garantia -->
+        <div class="sp-guarantee">
+          <div class="sp-guarantee-icon">🛡️</div>
+          <div>
+            <div class="sp-guarantee-h">Garantia de 7 dias — sem perguntas</div>
+            <div class="sp-guarantee-text">Se em 7 dias você não sentir que o mapa trouxe clareza real sobre quem você é e como você funciona, devolvemos 100% do seu investimento. Sem burocracia, sem formulário.</div>
+          </div>
+        </div>
+
+        <!-- Oferta + CTA -->
+        <div class="sp-offer-block">
+          <div class="sp-offer-badge">✦ Acesso Completo · Instantâneo</div>
+          <h2 class="sp-offer-h">Seu Mapa Numerológico<br>Pitagórico Completo</h2>
+          <p class="sp-offer-sub">12 análises personalizadas · PDF premium · Plano de Ação</p>
+          <div class="sp-price-block">
+            <div class="sp-price-from">De R$ 97</div>
+            <div class="sp-price-main">R$ 47</div>
+            <div class="sp-price-note">pagamento único · acesso imediato</div>
+          </div>
+          <button class="sp-btn-buy" id="v2BuyBtn" type="button">
             Quero Meu Mapa Completo Agora
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3.75 9h10.5M9 4.5L13.5 9 9 13.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </button>
-          <div class="v2-cta-trust">
-            <span>🔒 Seguro</span><span>·</span>
-            <span>⚡ Imediato</span><span>·</span>
-            <span>✓ Garantido</span>
+          <div class="sp-trust">
+            <span class="sp-trust-item">🔒 Pagamento seguro</span>
+            <span class="sp-trust-item">⚡ Acesso imediato</span>
+            <span class="sp-trust-item">🛡️ 7 dias de garantia</span>
           </div>
         </div>
-        <div class="v2-nova-consulta-link">
+
+        <!-- FAQ — objeções -->
+        <div class="sp-faq">
+          <div class="sp-faq-title">Perguntas frequentes</div>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q">Isso é para mim?</div>
+            <div class="sp-faq-a">Se você se reconheceu em alguma das análises gratuitas — o padrão, a sabotagem ou a frequência — então sim. O mapa completo vai muito além do que você viu aqui.</div>
+          </div>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q">É diferente de horóscopo?</div>
+            <div class="sp-faq-a">Completamente. Numerologia pitagórica usa matemática — seu nome e data de nascimento geram números únicos para você. Não há generalização por signo. Cada mapa é individual.</div>
+          </div>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q">Como recebo o mapa?</div>
+            <div class="sp-faq-a">Acesso imediato após o pagamento. O mapa abre direto no navegador e você pode baixar o PDF premium para guardar para sempre.</div>
+          </div>
+        </div>
+
+        <div class="v2-nova-consulta-link" style="margin-top:16px">
           <button class="v2-link-btn" id="v2FreeBtn" type="button">← Nova consulta</button>
         </div>
+
       </div>
     </div>
 
@@ -3702,9 +4026,9 @@
 
     /* Locked cards */
     var PREVIEW={
-      expressao:'A leitura do número de Expressão revela como sua missão se manifesta — seu talento natural, sua autoridade e onde você tende a trair sua própria capacidade.',
-      alma:'O número de Alma revela o que você mais precisa sentir para se mover de verdade — não o que você mostra, mas o que te move internamente.',
-      personalidade:'O número de Personalidade revela como o mundo te lê antes de te conhecer — a impressão que você gera e o que ela abre ou fecha para você.'
+      expressao:'Seu número de Expressão revela o talento que você tem mas subestima — e o ponto exato onde você sabota sua própria autoridade justo quando ela começa a aparecer. É a análise que mais surpreende.',
+      alma:'Seu número de Alma revela o que você mais precisa receber para se mover de verdade. Não o que você mostra — o que te move por dentro e que você raramente pede diretamente. Essa leitura muda como você entende suas relações.',
+      personalidade:'Seu número de Personalidade revela por que algumas pessoas te leem como líder enquanto outras te leem diferente — e o que essa lacuna está custando para você em relacionamentos e oportunidades.'
     };
     var lockedCards=[
       {label:'Expressão',num:expressao,title:TEASER_TITULO[expressao]||'',preview:PREVIEW.expressao},
@@ -3732,10 +4056,14 @@
     }).join('');
 
     var advNums=[
-      {name:'1º Pináculo'},{name:'Desafio Principal'},
-      {name:'Lições Kármicas'},{name:'Nº de Maturidade'},
-      {name:'Ciclo Formativo'},{name:'Nº de Equilíbrio'},
-      {name:'Plano de Ação'},{name:'Direcionamento'}
+      {name:'1º Pináculo — o ciclo de poder que você está vivendo agora'},
+      {name:'Desafio Principal — o padrão que mais cobra preço da sua vida'},
+      {name:'Lições Kármicas — o que falta no seu campo vibracional'},
+      {name:'Número de Maturidade — quando o 2º ciclo começa'},
+      {name:'Ciclo Formativo — como os primeiros anos moldaram você'},
+      {name:'Número de Equilíbrio — sua âncora nos momentos de crise'},
+      {name:'Plano de Ação específico para seu Caminho de Vida'},
+      {name:'Direcionamento de carreira + onde você perde energia'}
     ];
     document.getElementById('v2AdvGrid').innerHTML=advNums.map(function(it){
       return '<div class="v2-adv-item">'+
@@ -3746,18 +4074,18 @@
 
     /* Taste box */
     var tasteLines={
-      1:'Parar de pedir permissão para ser quem você é. Começar a inaugurar sem esperar o cenário perfeito. Manter...',
-      2:'Parar de dizer "tudo bem" quando não está. Começar a verbalizar o que precisa antes de acumular. Manter...',
-      3:'Parar de abandonar antes da colheita. Começar a tolerar a fase de execução sem fugir. Manter...',
-      4:'Parar de perfeccionar antes de lançar. Começar a aceitar o "bom o suficiente" como porta de entrada. Manter...',
-      5:'Parar de criar saídas antes de explorar a profundidade. Começar comprometimentos com prazo definido. Manter...',
-      6:'Parar de assumir o sofrimento alheio como seu. Começar a pedir o que precisa antes de esgotar. Manter...',
-      7:'Parar de usar a análise como substituto da ação. Começar a agir com 70% de certeza. Manter...',
-      8:'Parar de confundir o que você vale com o que você tem. Começar a medir resultado por impacto real. Manter...',
-      9:'Parar de manter vivos ciclos que já se encerraram. Começar a honrar os encerramentos. Manter...',
-      11:'Parar de desconfiar sistematicamente da sua intuição. Começar a agir no que percebe antes de analisar. Manter...',
-      22:'Parar de postergar o começo esperando a visão completa. Começar o imperfeito que evolui. Manter...',
-      33:'Parar de dar até o esgotamento sem pedir reposição. Começar com você antes de servir. Manter...'
+      1:'Parar de pedir permissão para ser quem você é. Começar a inaugurar sem esperar o cenário perfeito. Manter a liderança mesmo quando ninguém está validando — especialmente quando ninguém está validando.',
+      2:'Parar de dizer "tudo bem" quando não está. Começar a verbalizar o que precisa antes de acumular ressentimento. Manter a sensibilidade sem deixar que ela se torne um ponto de colapso.',
+      3:'Parar de abandonar antes da colheita. Começar a tolerar a fase de execução sem inventar uma razão criativa para sair. Manter o brilho mesmo quando o projeto exige o que parece repetição.',
+      4:'Parar de perfeccionar indefinidamente antes de lançar. Começar a aceitar que o imperfeito que existe vale mais que o perfeito que não sai. Manter a estrutura sem transformá-la em prisão.',
+      5:'Parar de criar saídas inconscientemente antes de explorar a profundidade. Começar comprometimentos com prazo definido e critério real de encerramento. Manter a liberdade como princípio, não como fuga.',
+      6:'Parar de assumir o sofrimento alheio como responsabilidade sua. Começar a pedir o que precisa antes de esgotar. Manter o cuidado genuíno sem deixar que ele devore sua própria estrutura.',
+      7:'Parar de usar a análise como substituto da ação. Começar a agir com 70% de certeza e deixar a ação revelar o restante. Manter a profundidade sem transformá-la em isolamento.',
+      8:'Parar de confundir o que você vale com o que você tem, controla ou conquistou. Começar a medir resultado por impacto real — não por volume. Manter a força sem deixar que ela se torne rigidez.',
+      9:'Parar de manter vivos ciclos, relações e versões de si mesmo que já cumpriram o papel. Começar a honrar os encerramentos como parte do método — não como fracasso. Manter a compaixão começando por você.',
+      11:'Parar de desconfiar sistematicamente da sua própria percepção. Começar a agir no que você sente antes de esperar que a lógica valide. Manter a sensibilidade aguçada sem deixar que a dúvida a apague.',
+      22:'Parar de postergar o começo esperando que a visão esteja completa na cabeça. Começar o passo um, mesmo que ele pareça insuficiente para a obra que você imagina. Manter a grandiosidade da visão sem deixar que ela paralise o movimento.',
+      33:'Parar de dar até o esgotamento total e depois se culpar por estar vazio. Começar por você — o cuidado que você oferece ao mundo começa no cuidado que você oferece a si mesmo. Manter o amor como princípio ativo, não como martírio.'
     };
     var tasteLine=tasteLines[caminho]||'Parar de... Começar... Manter...';
     document.getElementById('v2TasteBox').innerHTML=
