@@ -4003,6 +4003,8 @@
 
   /* ── TÍTULOS & ESSÊNCIAS ── */
   const TITULOS={1:'O Pioneiro',2:'A Ponte do Vínculo',3:'A Voz que Ilumina',4:'O Arquiteto do Real',5:'O Mensageiro Livre',6:'O Guardião do Amor',7:'O Eremita Sagrado',8:'A Autoridade da Matéria',9:'O Mestre da Entrega',11:'O Canal da Luz',22:'O Arquiteto da Grande Obra',33:'A Compaixão Mestra'};
+  /* Cores vibracionais NPS — uma cor por número */
+  const CORES={1:'#FF3B30',2:'#FF9500',3:'#FFD60A',4:'#34C759',5:'#32ADE6',6:'#BF5AF2',7:'#5E5CE6',8:'#FF69B4',9:'#FFD426',11:'#E0E0E0',22:'#FFD700',33:'#0A84FF'};
   const ESSENCIAS={1:'Iniciação, autonomia, coragem criadora e o fogo do começo.',2:'Cooperação, sensibilidade, diplomacia e a arte de unir sem se dissolver.',3:'Expressão, criatividade, comunicação e a alegria como caminho espiritual.',4:'Construção, disciplina, ordem e a sabedoria das fundações sólidas.',5:'Liberdade, transformação, adaptação e a coragem de experienciar o novo.',6:'Amor, responsabilidade, harmonia e o cuidado como vocação.',7:'Introspecção, conhecimento, espiritualidade e a busca pelo que está além.',8:'Poder, abundância, autoridade e o desafio de exercer força com integridade.',9:'Completude, compaixão, serviço e a sabedoria de encerrar ciclos.',11:'Iluminação, intuição elevada, inspiração e a missão de ser canal de luz.',22:'Materialização em grande escala, visão e construção de legado coletivo.',33:'Amor incondicional, cura, ensino e a compaixão como força transformadora.'};
 
   /* ── LEITURAS COMPLETAS ── */
@@ -4760,6 +4762,12 @@
 
     var SVG_ICON='<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 12.5h10M8 2v8M5 7l3 3 3-3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 
+    function hexToRgb(hex){
+      hex=(hex||'#D05E2A').replace('#','');
+      if(hex.length===3)hex=hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
+      return[parseInt(hex.slice(0,2),16),parseInt(hex.slice(2,4),16),parseInt(hex.slice(4,6),16)];
+    }
+
     function cleanup(){
       var s=document.getElementById('_pdfTmp');if(s)s.remove();
       var b=document.getElementById('v2PdfBtn');
@@ -4841,44 +4849,65 @@
         pdf.setLineWidth(0.4);
         pdf.line(margin+20,84,pageW-margin-20,84);
 
-        // Number grid on cover
+        // Number grid on cover — 7 esferas com cores vibracionais
         if(_nums){
-          var nums=[
-            {l:'Caminho de Vida',v:_nums.caminho},
-            {l:'Expressão',v:_nums.expressao},
-            {l:'Alma',v:_nums.alma},
-            {l:'Personalidade',v:_nums.personalidade}
+          var talentoCover=reduzir(_nums.alma+_nums.expressao);
+          var coverNums=[
+            {l:'Alma',v:_nums.alma},{l:'Imagem',v:_nums.personalidade},
+            {l:'Expressão',v:_nums.expressao},{l:'Talento',v:talentoCover},
+            {l:'Psíquico',v:_nums.dia},{l:'Destino',v:_nums.caminho},
+            {l:'Ano Pessoal',v:_nums.anoPessoal}
           ];
-          var colW=usableW/4;
+          var cols=coverNums.length;
+          var colW=usableW/cols;
           var gx=margin;
-          nums.forEach(function(n){
+          coverNums.forEach(function(n){
             var cx=gx+colW/2;
-            // Card bg
-            pdf.setFillColor(20,20,30);
-            pdf.roundedRect(gx+2,92,colW-4,28,3,3,'F');
-            pdf.setFontSize(22);
-            pdf.setTextColor(245,166,35);
-            pdf.text(String(n.v),cx,107,{align:'center'});
-            pdf.setFontSize(6.5);
-            pdf.setTextColor(161,161,166);
-            pdf.text(n.l,cx,115,{align:'center'});
+            var rgb=hexToRgb(CORES[n.v]||'#F5A623');
+            pdf.setFillColor(Math.floor(rgb[0]*.1),Math.floor(rgb[1]*.1),Math.floor(rgb[2]*.1));
+            pdf.roundedRect(gx+1,90,colW-2,26,2,2,'F');
+            // Colored top border on card
+            pdf.setFillColor(rgb[0],rgb[1],rgb[2]);
+            pdf.rect(gx+1,90,colW-2,1.5,'F');
+            pdf.setFontSize(18);
+            pdf.setTextColor(rgb[0],rgb[1],rgb[2]);
+            pdf.text(String(n.v),cx,103,{align:'center'});
+            pdf.setFontSize(5.5);
+            pdf.setTextColor(180,180,180);
+            pdf.text(n.l,cx,111,{align:'center'});
             gx+=colW;
           });
         }
 
-        // Phase labels on cover
-        var phases=['1ª Esfera: Alma','2ª Esfera: Imagem','3ª Esfera: Expressão','4ª Talento Oculto','5ª Esfera: Psíquico','6ª Esfera: Destino','7ª Esfera: Ano Pessoal'];
-        var py=135;
-        pdf.setFontSize(9);
-        pdf.setTextColor(161,161,166);
-        pdf.text('CONTEÚDO DO MAPA',margin,py);
-        py+=8;
-        phases.forEach(function(ph,i){
-          pdf.setFillColor(20,20,30);
-          pdf.roundedRect(margin,py,usableW,8,2,2,'F');
-          pdf.setFontSize(8);
-          pdf.setTextColor(240,232,214);
-          pdf.text(ph,margin+4,py+5.5);
+        // 7 Esferas list on cover
+        var esfCover=[
+          {n:'1ª',label:'Alma',v:(_nums&&_nums.alma)||''},
+          {n:'2ª',label:'Imagem',v:(_nums&&_nums.personalidade)||''},
+          {n:'3ª',label:'Expressão',v:(_nums&&_nums.expressao)||''},
+          {n:'4ª',label:'Talento Oculto',v:(_nums?reduzir(_nums.alma+_nums.expressao):'')||''},
+          {n:'5ª',label:'Psíquico',v:(_nums&&_nums.dia)||''},
+          {n:'6ª',label:'Destino',v:(_nums&&_nums.caminho)||''},
+          {n:'7ª',label:'Ano Pessoal',v:(_nums&&_nums.anoPessoal)||''}
+        ];
+        var py=126;
+        pdf.setFontSize(7.5);
+        pdf.setTextColor(130,100,70);
+        pdf.text('7 ESFERAS DO MAPA',margin,py);
+        py+=7;
+        esfCover.forEach(function(e){
+          var rgb=hexToRgb(CORES[e.v]||'#888888');
+          pdf.setFillColor(12,12,20);
+          pdf.roundedRect(margin,py,usableW,9,2,2,'F');
+          // Left color strip
+          pdf.setFillColor(rgb[0],rgb[1],rgb[2]);
+          pdf.rect(margin,py,2,9,'F');
+          pdf.setFontSize(7);
+          pdf.setTextColor(rgb[0],rgb[1],rgb[2]);
+          pdf.text(e.n,margin+5,py+6);
+          pdf.setTextColor(220,220,220);
+          pdf.text(e.label,margin+14,py+6);
+          pdf.setTextColor(rgb[0],rgb[1],rgb[2]);
+          pdf.text(String(e.v),pageW-margin-3,py+6,{align:'right'});
           py+=11;
         });
 
@@ -4891,11 +4920,7 @@
         var phaseEls=Array.from(document.querySelectorAll('#v2Phases .v2-phase'));
         var pageCount=1;
 
-        function hexToRgb(hex){
-          hex=(hex||'#D05E2A').replace('#','');
-          if(hex.length===3)hex=hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
-          return[parseInt(hex.slice(0,2),16),parseInt(hex.slice(2,4),16),parseInt(hex.slice(4,6),16)];
-        }
+
 
         function addDecoratedPage(pdf,pageW,pageH,margin,title,pageNum,accentHex){
           var rgb=hexToRgb(accentHex||'#D05E2A');
@@ -5031,25 +5056,25 @@
     document.getElementById('v2MapMeta').textContent=dateRaw+' · Mapa Essencial · 7 Esferas NPS';
 
     var esferas=[
-      {n:'1ª',esfera:'ESFERA DA ALMA',icon:'◐',color:'#F5A623',num:alma,ctx:'alma',
+      {n:'1ª',esfera:'ESFERA DA ALMA',icon:'◐',num:alma,ctx:'alma',
        intro:'<p>Eu Interior, Motivação Secreta, Número da Alma. Essa vibração mostra a sua essência — o que há de mais íntimo e verdadeiro em você. Uma energia que indica suas metas e desejos a média e longo prazo.</p><p>A alma também fala sobre uma ligação fortíssima com a primeira infância, das limitações, dos anseios e aprendizados que determinaram sua formação de personalidade.</p>',
        mantra:null},
-      {n:'2ª',esfera:'ESFERA DA IMAGEM',icon:'◑',color:'#5AC8F5',num:personalidade,ctx:'personalidade',
+      {n:'2ª',esfera:'ESFERA DA IMAGEM',icon:'◑',num:personalidade,ctx:'personalidade',
        intro:'<p>Tudo lá fora é reflexo do mundo interior. O número de Imagem é a projeção do EU — indica a impressão que você passa ao mundo e como os outros te veem.</p><p>Quando aprendemos a projetar nosso número de imagem, tudo lá fora flui melhor pela atração dessa energia que carregamos nas nossas consoantes. É o seu cartão de visita vibracional.</p>',
        mantra:null},
-      {n:'3ª',esfera:'ESFERA DA EXPRESSÃO',icon:'◈',color:'#A78BFA',num:expressao,ctx:'expressao',
+      {n:'3ª',esfera:'ESFERA DA EXPRESSÃO',icon:'◈',num:expressao,ctx:'expressao',
        intro:'<p>O número da Expressão é a vibração máxima da sua identidade — a herança dos antepassados carregada no seu nome. DNA Espiritual. Cada letra é um fio construtivo da sua essência.</p><p>A partir dessa assinatura original, estamos predestinados a cumprir uma tarefa única nessa vida — como um manual da nossa intimidade, que quando equilibrado nos faz assumir o propósito de vida.</p>',
        mantra:null},
-      {n:'4ª',esfera:'TALENTO OCULTO',icon:'✦',color:'#30D158',num:talento,ctx:'alma',
+      {n:'4ª',esfera:'TALENTO OCULTO',icon:'✦',num:talento,ctx:'alma',
        intro:'<p>O Talento Oculto é a síntese vibracional da sua Alma com a sua Expressão. Um poder que já existe dentro de você — que quando ativado, transforma o que era difícil em algo natural e fluido.</p><p><strong>Permissão:</strong> sem obediência e determinação, o talento se esconde e bloqueia as melhores oportunidades. <strong>Treinamento:</strong> a repetição é a mãe da excelência. A vida premia quem se empenha na direção proposital.</p>',
        mantra:'PERMISSÃO + TREINAMENTO = EXCELÊNCIA'},
-      {n:'5ª',esfera:'ESFERA PSÍQUICA',icon:'◎',color:'#FB923C',num:dia,ctx:'dia',
+      {n:'5ª',esfera:'ESFERA PSÍQUICA',icon:'◎',num:dia,ctx:'dia',
        intro:'<p>O Número Psíquico é revelado pelo seu dia de nascimento. Ele fala dos impulsos naturais da personalidade — os dons e aptidões que expressamos instintivamente na direção de um resultado.</p><p>Esta é a primeira persona em ação: a vibração que dá movimento a tudo que expressamos ao interagir com o mundo.</p>',
        mantra:null},
-      {n:'6ª',esfera:'ESFERA DO DESTINO',icon:'◉',color:'#F43F5E',num:caminho,ctx:'caminho',
+      {n:'6ª',esfera:'ESFERA DO DESTINO',icon:'◉',num:caminho,ctx:'caminho',
        intro:'<p>A vibração do Destino é considerada a mais importante — o caminho, a jornada, a travessia existencial desta vida. O código por trás da sua data de nascimento é extremamente essencial.</p><p>Trata-se do caminho de lição — questões que precisam ser desenvolvidas para que efetivamente sua missão de vida seja cumprida. Esse número não pode ser mudado, e depois que é aceito e compreendido, se torna sua maior força.</p>',
        mantra:null},
-      {n:'7ª',esfera:'ANO PESSOAL',icon:'◷',color:'#818CF8',num:anoPessoal,ctx:'ano',
+      {n:'7ª',esfera:'ANO PESSOAL',icon:'◷',num:anoPessoal,ctx:'ano',
        intro:'<p>A jornada secreta do Ano Pessoal é revelada pelos ciclos da vida — que começam no dia em que você nasceu. Essa energia te acompanha durante um ano completo.</p><p>Compreender o ciclo atual é como ter um mapa do território: você não escolhe o terreno, mas escolhe como caminhar nele. Cada ano pessoal convida para uma lição e uma expansão específica.</p>',
        mantra:null}
     ];
@@ -5059,14 +5084,14 @@
       '<div class="v2-ov-title">Visão Geral · 7 Esferas do Mapa</div>'+
       '<div class="v2-ov-grid">'+
       esferas.map(function(e,i){
-        var isMaster=MESTRES.has(e.num);
+        var cor=CORES[e.num]||'#F5A623';
         return'<div class="v2-ov-item" onclick="(function(){'+
           'var ph=document.getElementById(\'phase'+(i+1)+'\');'+
           'if(ph){ph.classList.add(\'open\');'+
           'ph.scrollIntoView({behavior:\'smooth\',block:\'start\'});'+
           'updateProgress();}})()">'+
-          '<div class="v2-ov-n" style="color:'+e.color+'">'+e.n+'</div>'+
-          '<div class="v2-ov-num" style="color:'+e.color+'">'+e.num+'</div>'+
+          '<div class="v2-ov-n" style="color:'+cor+'">'+e.n+'</div>'+
+          '<div class="v2-ov-num" style="color:'+cor+'">'+e.num+'</div>'+
           '<div class="v2-ov-name">'+e.esfera+'</div>'+
           '</div>';
       }).join('')+
@@ -5078,16 +5103,17 @@
 
     document.getElementById('v2Phases').innerHTML=overviewHTML+
       esferas.map(function(e,i){
+        var cor=CORES[e.num]||'#F5A623';
         var isMaster=MESTRES.has(e.num);
         var titulo=TITULOS[e.num]||'';
         var leitura=getLeitura(e.num,e.ctx);
-        return'<div class="v2-phase v2-esfera-card unlocked" id="phase'+(i+1)+'" data-idx="'+i+'" style="--ec:'+e.color+'">'+
+        return'<div class="v2-phase v2-esfera-card unlocked" id="phase'+(i+1)+'" data-idx="'+i+'" style="--ec:'+cor+'">'+
           '<div class="v2-phase-header" onclick="window.togglePhase(this.parentElement)">'+
-          '<div class="v2-esfera-icon" style="color:'+e.color+'">'+e.icon+'</div>'+
+          '<div class="v2-esfera-icon" style="color:'+cor+'">'+e.icon+'</div>'+
           '<div class="v2-phase-info">'+
-          '<div class="v2-phase-tag" style="color:'+e.color+'">'+e.n+' '+e.esfera+'</div>'+
+          '<div class="v2-phase-tag" style="color:'+cor+'">'+e.n+' '+e.esfera+'</div>'+
           '<div class="v2-esfera-num-row">'+
-            '<span class="v2-esfera-big-num'+(isMaster?' is-master':'')+'" style="color:'+e.color+'">'+e.num+'</span>'+
+            '<span class="v2-esfera-big-num'+(isMaster?' is-master':'')+'" style="color:'+cor+'">'+e.num+'</span>'+
             '<span class="v2-esfera-titulo">'+titulo+'</span>'+
           '</div>'+
           '</div>'+
@@ -5097,7 +5123,7 @@
             '<div class="v2-phase-content">'+
               '<div class="v2-esfera-intro">'+e.intro+'</div>'+
               '<div class="v2-reading">'+leitura+'</div>'+
-              (e.mantra?'<div class="v2-esfera-mantra">'+e.mantra+'</div>':'')+
+              (e.mantra?'<div class="v2-esfera-mantra" style="color:'+cor+';border-color:'+cor+'40;background:'+cor+'0d">'+e.mantra+'</div>':'')+
             '</div>'+
           '</div>'+
           '</div>';
