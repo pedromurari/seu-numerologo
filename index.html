@@ -4931,58 +4931,84 @@
           pdf.text('Pág. '+pageNum,pageW-margin,pageH-5,{align:'right'});
         }
 
-        function captureNextPhase(idx){
-          if(idx>=phaseEls.length){
-            var filename=(nome||'Mapa').replace(/[^a-zA-ZÀ-ɏ0-9]/g,'_').replace(/_+/g,'_')+'_Mapa_Numerologico.pdf';
-            pdf.save(filename);
-            cleanup();
-            return;
-          }
-          var el=phaseEls[idx];
-          var phLabel=el.querySelector('.v2-phase-tag')?el.querySelector('.v2-phase-tag').textContent:'';
-          var sectionLabel=phLabel.trim();
-          // Read esfera accent color from CSS variable
-          var accentHex=el.style.getPropertyValue('--ec')||'#D05E2A';
+        // Block-by-block capture: never slices mid-text
+        var TOP_M=17,BOT_M=14,GAP=3;
+        var usableContent=pageH-TOP_M-BOT_M;
+        var curY=TOP_M;
+        var curAccent='#D05E2A';
+        var curLabel='';
 
+        function newPdfPage(){
+          pdf.addPage();pageCount++;
+          addDecoratedPage(pdf,pageW,pageH,margin,curLabel,pageCount,curAccent);
+          curY=TOP_M;
+        }
+
+        function captureBlock(el,cb){
           html2canvas(el,{
             backgroundColor:'#00000c',
-            scale:1.6,
-            useCORS:true,
-            allowTaint:true,
-            logging:false,
+            scale:1.5,
+            useCORS:true,allowTaint:true,logging:false,
             width:el.offsetWidth,
             height:el.scrollHeight,
             windowWidth:document.documentElement.offsetWidth
           }).then(function(c){
-            var topMargin=17;
-            var botMargin=14;
-            var usableHph=pageH-margin-topMargin-botMargin;
-            var pxPerMm=c.width/usableW;
-            // Add 5% overlap to avoid hard cuts mid-glyph
-            var pageHeightPx=Math.floor(usableHph*pxPerMm*0.97);
-            var totalSlices=Math.ceil(c.height/pageHeightPx);
-
-            for(var p=0;p<totalSlices;p++){
-              pdf.addPage();
-              pageCount++;
-              addDecoratedPage(pdf,pageW,pageH,margin,sectionLabel,pageCount,accentHex);
-
-              var srcY=p*pageHeightPx;
-              var srcH=Math.min(pageHeightPx,c.height-srcY);
-              if(srcH<=0)break;
-
-              var tmp=document.createElement('canvas');
-              tmp.width=c.width;
-              tmp.height=srcH;
-              tmp.getContext('2d').drawImage(c,0,srcY,c.width,srcH,0,0,c.width,srcH);
-              var sliceH=srcH/pxPerMm;
-              pdf.addImage(tmp.toDataURL('image/jpeg',0.92),'JPEG',margin+1.5,topMargin,usableW-1.5,sliceH);
+            var ratio=usableW/c.width;
+            var blockH=c.height*ratio;
+            // If block alone is taller than a page, scale it to fit
+            if(blockH>usableContent){
+              var fitRatio=usableContent/blockH;
+              var w2=usableW*fitRatio;
+              var h2=usableContent;
+              if(curY+h2>pageH-BOT_M)newPdfPage();
+              pdf.addImage(c.toDataURL('image/jpeg',0.92),'JPEG',margin+1.5+(usableW-w2)/2,curY,w2,h2);
+              curY+=h2+GAP;
+            } else {
+              if(curY+blockH>pageH-BOT_M)newPdfPage();
+              pdf.addImage(c.toDataURL('image/jpeg',0.92),'JPEG',margin+1.5,curY,usableW-1.5,blockH);
+              curY+=blockH+GAP;
             }
-            captureNextPhase(idx+1);
-          }).catch(function(err){
-            console.warn('Phase capture error:',err);
-            captureNextPhase(idx+1);
-          });
+            cb();
+          }).catch(function(){cb();});
+        }
+
+        function captureNextPhase(idx){
+          if(idx>=phaseEls.length){
+            var filename=(nome||'Mapa').replace(/[^a-zA-ZÀ-ɏ0-9]/g,'_').replace(/_+/g,'_')+'_Mapa_Numerologico.pdf';
+            pdf.save(filename);cleanup();return;
+          }
+          var el=phaseEls[idx];
+          curAccent=el.style.getPropertyValue('--ec')||'#D05E2A';
+          curLabel=(el.querySelector('.v2-phase-tag')||{textContent:''}).textContent.trim();
+
+          // Collect atomic blocks: header, intro, each reading section, mantra
+          var blocks=[];
+          var header=el.querySelector('.v2-phase-header');
+          if(header)blocks.push(header);
+          var content=el.querySelector('.v2-phase-content');
+          if(content){
+            var intro=content.querySelector('.v2-esfera-intro');
+            if(intro)blocks.push(intro);
+            var reading=content.querySelector('.v2-reading');
+            if(reading){
+              var stmt=reading.querySelector('.reading-statement');
+              if(stmt)blocks.push(stmt);
+              reading.querySelectorAll('.reading-section').forEach(function(s){blocks.push(s);});
+              var affirm=reading.querySelector('.reading-affirm');
+              if(affirm)blocks.push(affirm);
+            }
+            var mantra=content.querySelector('.v2-esfera-mantra');
+            if(mantra)blocks.push(mantra);
+          }
+
+          // Start on a fresh page for each esfera
+          newPdfPage();
+
+          function nextBlock(bi){
+            if(bi>=blocks.length){captureNextPhase(idx+1);return;}
+            captureBlock(blocks[bi],function(){nextBlock(bi+1);});
+          }
+          nextBlock(0);
         }
 
         captureNextPhase(0);
