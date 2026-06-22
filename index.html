@@ -1676,6 +1676,52 @@
     .v2-divider::before,.v2-divider::after{content:'';flex:1;height:1px;background:var(--border)}
     .v2-divider-inner{font-size:.55rem;letter-spacing:.3em;color:var(--text3)}
 
+    /* ── 7 ESFERAS ── */
+    .v2-esfera-card{border-left:3px solid transparent!important;transition:border-color .4s}
+    .v2-esfera-card.open{border-left-color:var(--ec,var(--amber))!important}
+    .v2-esfera-icon{width:40px;height:40px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;opacity:.85}
+    .v2-esfera-num-row{display:flex;align-items:baseline;gap:12px;margin-top:4px}
+    .v2-esfera-big-num{font-family:'Poppins',sans-serif;font-size:2.6rem;font-weight:800;line-height:1}
+    .v2-esfera-big-num.is-master{animation:glow 3s ease-in-out infinite}
+    .v2-esfera-titulo{font-size:.95rem;color:var(--text2);font-weight:500}
+    .v2-esfera-intro{
+      font-size:.93rem;color:var(--text2);line-height:1.82;
+      margin-bottom:24px;padding:18px 22px;
+      background:rgba(255,255,255,.025);border-radius:14px;
+      border:1px solid var(--border);
+    }
+    .v2-esfera-intro p{margin-bottom:10px}
+    .v2-esfera-intro p:last-child{margin-bottom:0}
+    .v2-esfera-intro strong{color:var(--text);font-weight:700}
+    .v2-esfera-mantra{
+      margin-top:24px;text-align:center;
+      font-size:.72rem;font-weight:800;letter-spacing:.2em;text-transform:uppercase;
+      color:var(--amber);padding:14px 20px;
+      background:rgba(245,166,35,.06);
+      border:1px solid rgba(245,166,35,.18);border-radius:10px;
+    }
+    /* Overview 7 esferas */
+    .v2-esferas-overview{
+      background:var(--s1);border:1px solid var(--border);border-radius:20px;
+      padding:24px 20px;margin-bottom:20px;
+    }
+    .v2-ov-title{
+      font-size:.62rem;font-weight:700;letter-spacing:.18em;
+      text-transform:uppercase;color:var(--text3);margin-bottom:16px;
+    }
+    .v2-ov-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}
+    .v2-ov-item{
+      text-align:center;padding:12px 4px;
+      background:var(--s2);border:1px solid var(--border);
+      border-radius:12px;cursor:pointer;transition:all .2s;
+    }
+    .v2-ov-item:hover{border-color:var(--border2);transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,.3)}
+    .v2-ov-n{font-size:.58rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
+    .v2-ov-num{font-family:'Poppins',sans-serif;font-size:1.9rem;font-weight:800;line-height:1;margin-bottom:6px}
+    .v2-ov-name{font-size:.48rem;color:var(--text3);font-weight:700;letter-spacing:.06em;text-transform:uppercase;line-height:1.4}
+    @media(max-width:620px){.v2-ov-grid{grid-template-columns:repeat(4,1fr)}}
+    @media(max-width:380px){.v2-ov-grid{grid-template-columns:repeat(2,1fr)}}
+
     /* ── RESPONSIVO ── */
     @media(max-width:768px){
       .v2-hero-pain{grid-template-columns:1fr;max-width:400px}
@@ -4821,7 +4867,7 @@
         }
 
         // Phase labels on cover
-        var phases=['Fase 1: Identidade Central','Fase 2: Padrões Internos','Fase 3: Ciclos no Tempo','Fase 4: Desafios e Lições','Fase 5: Missão e Plano de Ação'];
+        var phases=['1ª Esfera: Alma','2ª Esfera: Imagem','3ª Esfera: Expressão','4ª Talento Oculto','5ª Esfera: Psíquico','6ª Esfera: Destino','7ª Esfera: Ano Pessoal'];
         var py=135;
         pdf.setFontSize(9);
         pdf.setTextColor(161,161,166);
@@ -4939,48 +4985,96 @@
   }
 
   function buildMap(){
-    var d=_nums,date=d.date,nome=d.nome,nomeRaw=d.nomeRaw,dateRaw=d.dateRaw,caminho=d.caminho,expressao=d.expressao,alma=d.alma,personalidade=d.personalidade,dia=d.dia,anoPessoal=d.anoPessoal,idadeAprox=d.idadeAprox;
-    var numsObj={};
-    numsObj['Caminho de Vida']={val:caminho,ctx:'caminho',sub:'sua missão de vida'};
-    numsObj['Expressão']={val:expressao,ctx:'expressao',sub:'sua identidade e propósito'};
-    numsObj['Alma']={val:alma,ctx:'alma',sub:'seu desejo mais íntimo'};
-    numsObj['Personalidade']={val:personalidade,ctx:'personalidade',sub:'como o mundo te percebe'};
-    numsObj['Dia de Nascimento']={val:dia,ctx:'dia',sub:'seus dons naturais'};
-    numsObj['Ano Pessoal '+ANO_ATUAL]={val:anoPessoal,ctx:'ano',sub:'ciclo atual de vida'};
+    var d=_nums,date=d.date,nome=d.nome,nomeRaw=d.nomeRaw,dateRaw=d.dateRaw,
+        caminho=d.caminho,expressao=d.expressao,alma=d.alma,personalidade=d.personalidade,
+        dia=d.dia,anoPessoal=d.anoPessoal,idadeAprox=d.idadeAprox;
 
-    var pinaculos=calcPinaculos(date),periodos=calcPeriodosPinaculos(caminho,date.ano);
-    var desafios=calcDesafios(date),licoes=calcLicoesKarmicas(nomeRaw);
-    var maturidade=calcMaturidade(caminho,expressao),equilibrio=calcEquilibrio(nomeRaw);
-    var ciclos=calcCiclos(date);
+    var talento=reduzir(alma+expressao);
 
     document.getElementById('v2MapName').textContent=nomeRaw.trim();
-    document.getElementById('v2MapMeta').textContent=dateRaw+' · Sistema Pitagórico';
+    document.getElementById('v2MapMeta').textContent=dateRaw+' · Mapa Essencial · 7 Esferas NPS';
 
-    var phases=[
-      {id:'phase1',tag:'Fase 1',title:'Sua Identidade Central',content:buildPhase1(numsObj,nome,caminho,expressao,alma,personalidade,idadeAprox)},
-      {id:'phase2',tag:'Fase 2',title:'Seus Padrões Internos',content:buildPhase2(numsObj,desafios)},
-      {id:'phase3',tag:'Fase 3',title:'Seus Ciclos no Tempo',content:buildPhase3(date,caminho,pinaculos,periodos,ciclos,idadeAprox)},
-      {id:'phase4',tag:'Fase 4',title:'Desafios e Lições',content:buildPhase4(desafios,licoes,maturidade,equilibrio)},
-      {id:'phase5',tag:'Fase 5',title:'Missão e Plano de Ação',content:buildPhase5(caminho)}
+    var esferas=[
+      {n:'1ª',esfera:'ESFERA DA ALMA',icon:'◐',color:'#F5A623',num:alma,ctx:'alma',
+       intro:'<p>Eu Interior, Motivação Secreta, Número da Alma. Essa vibração mostra a sua essência — o que há de mais íntimo e verdadeiro em você. Uma energia que indica suas metas e desejos a média e longo prazo.</p><p>A alma também fala sobre uma ligação fortíssima com a primeira infância, das limitações, dos anseios e aprendizados que determinaram sua formação de personalidade.</p>',
+       mantra:null},
+      {n:'2ª',esfera:'ESFERA DA IMAGEM',icon:'◑',color:'#5AC8F5',num:personalidade,ctx:'personalidade',
+       intro:'<p>Tudo lá fora é reflexo do mundo interior. O número de Imagem é a projeção do EU — indica a impressão que você passa ao mundo e como os outros te veem.</p><p>Quando aprendemos a projetar nosso número de imagem, tudo lá fora flui melhor pela atração dessa energia que carregamos nas nossas consoantes. É o seu cartão de visita vibracional.</p>',
+       mantra:null},
+      {n:'3ª',esfera:'ESFERA DA EXPRESSÃO',icon:'◈',color:'#A78BFA',num:expressao,ctx:'expressao',
+       intro:'<p>O número da Expressão é a vibração máxima da sua identidade — a herança dos antepassados carregada no seu nome. DNA Espiritual. Cada letra é um fio construtivo da sua essência.</p><p>A partir dessa assinatura original, estamos predestinados a cumprir uma tarefa única nessa vida — como um manual da nossa intimidade, que quando equilibrado nos faz assumir o propósito de vida.</p>',
+       mantra:null},
+      {n:'4ª',esfera:'TALENTO OCULTO',icon:'✦',color:'#30D158',num:talento,ctx:'alma',
+       intro:'<p>O Talento Oculto é a síntese vibracional da sua Alma com a sua Expressão. Um poder que já existe dentro de você — que quando ativado, transforma o que era difícil em algo natural e fluido.</p><p><strong>Permissão:</strong> sem obediência e determinação, o talento se esconde e bloqueia as melhores oportunidades. <strong>Treinamento:</strong> a repetição é a mãe da excelência. A vida premia quem se empenha na direção proposital.</p>',
+       mantra:'PERMISSÃO + TREINAMENTO = EXCELÊNCIA'},
+      {n:'5ª',esfera:'ESFERA PSÍQUICA',icon:'◎',color:'#FB923C',num:dia,ctx:'dia',
+       intro:'<p>O Número Psíquico é revelado pelo seu dia de nascimento. Ele fala dos impulsos naturais da personalidade — os dons e aptidões que expressamos instintivamente na direção de um resultado.</p><p>Esta é a primeira persona em ação: a vibração que dá movimento a tudo que expressamos ao interagir com o mundo.</p>',
+       mantra:null},
+      {n:'6ª',esfera:'ESFERA DO DESTINO',icon:'◉',color:'#F43F5E',num:caminho,ctx:'caminho',
+       intro:'<p>A vibração do Destino é considerada a mais importante — o caminho, a jornada, a travessia existencial desta vida. O código por trás da sua data de nascimento é extremamente essencial.</p><p>Trata-se do caminho de lição — questões que precisam ser desenvolvidas para que efetivamente sua missão de vida seja cumprida. Esse número não pode ser mudado, e depois que é aceito e compreendido, se torna sua maior força.</p>',
+       mantra:null},
+      {n:'7ª',esfera:'ANO PESSOAL',icon:'◷',color:'#818CF8',num:anoPessoal,ctx:'ano',
+       intro:'<p>A jornada secreta do Ano Pessoal é revelada pelos ciclos da vida — que começam no dia em que você nasceu. Essa energia te acompanha durante um ano completo.</p><p>Compreender o ciclo atual é como ter um mapa do território: você não escolhe o terreno, mas escolhe como caminhar nele. Cada ano pessoal convida para uma lição e uma expansão específica.</p>',
+       mantra:null}
     ];
 
-    document.getElementById('v2MapNav').innerHTML=phases.map(function(_,i){return'<div class="v2-phase-dot" id="dot'+i+'"></div>';}).join('');
-    document.getElementById('v2Phases').innerHTML=phases.map(function(ph,i){
-      return'<div class="v2-phase unlocked" id="'+ph.id+'" data-idx="'+i+'">'+
-        '<div class="v2-phase-header" onclick="window.togglePhase(this.parentElement)">'+
-        '<div class="v2-phase-num">'+(i+1)+'</div>'+
-        '<div class="v2-phase-info">'+
-        '<div class="v2-phase-tag">'+ph.tag+'</div>'+
-        '<div class="v2-phase-title">'+ph.title+'</div>'+
-        '</div>'+
-        '<span class="v2-phase-chev">▾</span>'+
-        '</div>'+
-        '<div class="v2-phase-body"><div class="v2-phase-content">'+ph.content+'</div></div>'+
-        '</div>';
+    // Overview rápido
+    var overviewHTML='<div class="v2-esferas-overview">'+
+      '<div class="v2-ov-title">Visão Geral · 7 Esferas do Mapa</div>'+
+      '<div class="v2-ov-grid">'+
+      esferas.map(function(e,i){
+        var isMaster=MESTRES.has(e.num);
+        return'<div class="v2-ov-item" onclick="(function(){'+
+          'var ph=document.getElementById(\'phase'+(i+1)+'\');'+
+          'if(ph){ph.classList.add(\'open\');'+
+          'ph.scrollIntoView({behavior:\'smooth\',block:\'start\'});'+
+          'updateProgress();}})()">'+
+          '<div class="v2-ov-n" style="color:'+e.color+'">'+e.n+'</div>'+
+          '<div class="v2-ov-num" style="color:'+e.color+'">'+e.num+'</div>'+
+          '<div class="v2-ov-name">'+e.esfera+'</div>'+
+          '</div>';
+      }).join('')+
+      '</div></div>';
+
+    document.getElementById('v2MapNav').innerHTML=esferas.map(function(_,i){
+      return'<div class="v2-phase-dot" id="dot'+i+'"></div>';
     }).join('');
 
+    document.getElementById('v2Phases').innerHTML=overviewHTML+
+      esferas.map(function(e,i){
+        var isMaster=MESTRES.has(e.num);
+        var titulo=TITULOS[e.num]||'';
+        var leitura=getLeitura(e.num,e.ctx);
+        return'<div class="v2-phase v2-esfera-card unlocked" id="phase'+(i+1)+'" data-idx="'+i+'" style="--ec:'+e.color+'">'+
+          '<div class="v2-phase-header" onclick="window.togglePhase(this.parentElement)">'+
+          '<div class="v2-esfera-icon" style="color:'+e.color+'">'+e.icon+'</div>'+
+          '<div class="v2-phase-info">'+
+          '<div class="v2-phase-tag" style="color:'+e.color+'">'+e.n+' '+e.esfera+'</div>'+
+          '<div class="v2-esfera-num-row">'+
+            '<span class="v2-esfera-big-num'+(isMaster?' is-master':'')+'" style="color:'+e.color+'">'+e.num+'</span>'+
+            '<span class="v2-esfera-titulo">'+titulo+'</span>'+
+          '</div>'+
+          '</div>'+
+          '<span class="v2-phase-chev">▾</span>'+
+          '</div>'+
+          '<div class="v2-phase-body">'+
+            '<div class="v2-phase-content">'+
+              '<div class="v2-esfera-intro">'+e.intro+'</div>'+
+              '<div class="v2-reading">'+leitura+'</div>'+
+              (e.mantra?'<div class="v2-esfera-mantra">'+e.mantra+'</div>':'')+
+            '</div>'+
+          '</div>'+
+          '</div>';
+      }).join('')+
+      '<div style="text-align:center;margin-top:40px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap">'+
+      '<button class="v2-btn-new" id="v2BtnNew">✦ Nova Consulta</button>'+
+      '<button class="v2-pdf-btn" id="v2PdfBtn">'+
+      '<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 12.5h10M8 2v8M5 7l3 3 3-3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>'+
+      'Baixar PDF</button>'+
+      '</div>';
+
     setTimeout(function(){var f=document.querySelector('.v2-phase');if(f){f.classList.add('open');updateProgress();}},400);
-    setupMapObserver(phases.length);
+    setupMapObserver(esferas.length);
   }
 
   window.togglePhase=function(el){el.classList.toggle('open');updateProgress();};
