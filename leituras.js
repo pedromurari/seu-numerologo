@@ -462,10 +462,10 @@
     const dia = reduzir(somarDigitos(String(date.dia)));
     const mes = reduzir(somarDigitos(String(date.mes)));
     const ano = reduzir(somarDigitos(String(date.ano)));
-    const p1 = reduzir(dia + mes);
-    const p2 = reduzir(dia + ano);
-    const p3 = reduzir(p1 + p2);
-    const p4 = reduzir(mes + ano);
+    const p1 = reduzir(dia + mes);   // 1º pináculo: dia + mês
+    const p2 = reduzir(mes + ano);   // 2º pináculo: mês + ano
+    const p3 = reduzir(p1 + p2);     // 3º pináculo: P1 + P2
+    const p4 = reduzir(dia + ano);   // 4º pináculo: dia + ano
     return [p1, p2, p3, p4];
   }
 
