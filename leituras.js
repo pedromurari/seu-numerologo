@@ -7,7 +7,7 @@
   <meta name="theme-color" content="#0a0a0f"/>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Cinzel:wght@400;500&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Cinzel:wght@400;500&display=swap" rel="stylesheet">
   <style>
     :root{
       --bg:#06060c;
@@ -39,7 +39,7 @@
     body{
       background:var(--bg);
       color:var(--text);
-      font-family:'EB Garamond','Cormorant Garamond',Georgia,serif;
+      font-family:'Poppins',system-ui,sans-serif;
       font-size:18px;
       line-height:1.8;
       min-height:100vh;
@@ -72,9 +72,9 @@
       box-shadow:0 0 40px rgba(201,168,76,.1);
     }
     .formTitle{
-      font-family:'Cinzel',serif;
+      font-family:'Poppins',sans-serif;
       font-size:clamp(1.8rem,4.5vw,3rem);
-      font-weight:400;color:#f0e8d5;
+      font-weight:800;color:#f0e8d5;
       line-height:1.2;letter-spacing:.04em;
       margin-bottom:12px;
     }
@@ -102,7 +102,7 @@
       border:1px solid var(--line2);
       border-radius:2px;
       color:var(--text);
-      font-family:'Cormorant Garamond',serif;font-size:1.15rem;
+      font-family:'Poppins',sans-serif;font-size:1.15rem;
       outline:none;
       transition:border-color .3s,box-shadow .3s;
       margin-bottom:22px;
@@ -115,8 +115,8 @@
       border:1px solid var(--gold);
       border-radius:2px;
       color:var(--gold2);
-      font-family:'Cormorant Garamond',serif;font-size:1.1rem;
-      letter-spacing:.12em;cursor:pointer;
+      font-family:'Poppins',sans-serif;font-size:1rem;font-weight:600;
+      letter-spacing:.06em;cursor:pointer;
       transition:background .3s,color .3s;
       margin-top:4px;
     }
@@ -127,13 +127,13 @@
     #resultScreen{max-width:900px;margin:0 auto}
     .resHeader{text-align:center;padding:60px 0 40px;border-bottom:1px solid var(--line2)}
     .resKicker{font-size:.65rem;letter-spacing:.35em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
-    .resName{font-family:'Cinzel',serif;font-size:clamp(1.8rem,4.5vw,3.2rem);font-weight:400;color:#f5eedd;letter-spacing:.06em;}
+    .resName{font-family:'Poppins',sans-serif;font-size:clamp(1.8rem,4.5vw,3.2rem);font-weight:800;color:#f5eedd;letter-spacing:.06em;}
     .resMeta{color:var(--muted);font-size:.88rem;letter-spacing:.18em;margin-top:10px;text-transform:uppercase}
 
     /* ── SEÇÕES ── */
     .section{padding:48px 0}
     .sectionHead{
-      font-family:'Cinzel',serif;font-size:.85rem;font-weight:400;
+      font-family:'Poppins',sans-serif;font-size:.85rem;font-weight:700;
       color:var(--gold2);letter-spacing:.3em;text-transform:uppercase;
       margin-bottom:32px;display:flex;align-items:center;gap:16px;
     }
@@ -143,7 +143,7 @@
     .pyramidWrap{overflow-x:auto;padding-bottom:8px}
     .pyramidFlex{
       display:flex;flex-direction:column;align-items:center;
-      gap:5px;font-family:'Cormorant Garamond',serif;
+      gap:5px;font-family:'Poppins',sans-serif;
       font-size:1rem;font-weight:500;
     }
     .pyrRow{display:flex;gap:5px;justify-content:center;align-items:center}
@@ -198,12 +198,12 @@
     .numCard:hover{border-color:rgba(201,168,76,.35);background:rgba(201,168,76,.03)}
     .numCard.dominant{border-color:rgba(201,168,76,.4)}
     .numCard .cLabel{font-size:.65rem;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
-    .numCard .cVal{font-family:'Cormorant Garamond',serif;font-size:2.8rem;color:#f0e8d5;line-height:1;margin-bottom:8px;}
+    .numCard .cVal{font-family:'Poppins',sans-serif;font-size:2.8rem;color:#f0e8d5;line-height:1;margin-bottom:8px;}
     .numCard .cTit{color:var(--muted);font-size:.95rem;font-style:italic}
     .numCard .cSub{color:rgba(138,128,112,.5);font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;margin-top:6px}
 
     .domSection{margin-top:28px;padding:24px;border:1px solid var(--line2);border-radius:2px;background:rgba(201,168,76,.03);}
-    .domTitle{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--gold2);margin-bottom:16px;font-weight:400;}
+    .domTitle{font-family:'Poppins',sans-serif;font-size:1.1rem;color:var(--gold2);margin-bottom:16px;font-weight:400;}
     .domItem{margin-bottom:12px;color:var(--text);font-size:1rem;line-height:1.7}
     .domItem strong{color:var(--gold2)}
 
@@ -219,7 +219,7 @@
     .accLeft{display:flex;flex-direction:column;gap:4px}
     .accLeft .aLabel{font-size:.65rem;letter-spacing:.25em;text-transform:uppercase;color:var(--gold)}
     .aLabelSub{color:var(--muted);letter-spacing:.1em;text-transform:none;font-size:.85em}
-    .accLeft .aNum{font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:#f0e8d5;}
+    .accLeft .aNum{font-family:'Poppins',sans-serif;font-size:1.5rem;color:#f0e8d5;}
     .accLeft .aTit{font-size:.9rem;color:var(--muted);font-style:italic}
     .accChev{color:var(--gold);font-size:1.1rem;transition:transform .3s}
     .accItem.open .accChev{transform:rotate(180deg)}
@@ -249,10 +249,10 @@
     .pinRow.active{border-color:rgba(201,168,76,.4);background:rgba(201,168,76,.03)}
     .pinLeft{display:flex;flex-direction:column;gap:4px}
     .pinLabel{font-size:.65rem;letter-spacing:.25em;text-transform:uppercase;color:var(--gold)}
-    .pinTit{font-family:'Cormorant Garamond',serif;font-size:.95rem;color:var(--muted);font-style:italic}
+    .pinTit{font-family:'Poppins',sans-serif;font-size:.95rem;color:var(--muted);font-style:italic}
     .pinPeriod{font-size:.8rem;color:var(--muted);letter-spacing:.05em}
     .pinNum{
-      font-family:'Cormorant Garamond',serif;font-size:3rem;
+      font-family:'Poppins',sans-serif;font-size:3rem;
       color:#f0e8d5;line-height:1;text-align:center;min-width:60px;
     }
     .pinRow.active .pinNum{color:var(--gold2)}
@@ -271,7 +271,7 @@
       border-radius:2px;padding:22px 20px;
     }
     .desafioCard .dLabel{font-size:.65rem;letter-spacing:.25em;text-transform:uppercase;color:var(--red);margin-bottom:12px}
-    .desafioCard .dVal{font-family:'Cormorant Garamond',serif;font-size:2.8rem;color:#f0e8d5;line-height:1;margin-bottom:8px;}
+    .desafioCard .dVal{font-family:'Poppins',sans-serif;font-size:2.8rem;color:#f0e8d5;line-height:1;margin-bottom:8px;}
     .desafioCard .dTit{color:var(--redMuted);font-size:.95rem;font-style:italic}
     .desafioCard .dSub{color:rgba(138,128,112,.5);font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;margin-top:6px}
     .desafioCard.principal{border-color:rgba(232,128,128,.5);background:rgba(232,128,128,.025)}
@@ -284,7 +284,7 @@
       background:var(--blueBg);
     }
     .licaoNum{
-      font-family:'Cormorant Garamond',serif;font-size:2.2rem;
+      font-family:'Poppins',sans-serif;font-size:2.2rem;
       color:var(--blue);line-height:1;min-width:44px;text-align:center;
     }
     .licaoRight .lTit{font-family:'Cinzel',serif;font-size:.8rem;letter-spacing:.15em;text-transform:uppercase;color:var(--blueMuted);margin-bottom:8px}
@@ -301,7 +301,7 @@
       border-radius:2px;padding:24px 22px;
     }
     .specialCard .sLabel{font-size:.65rem;letter-spacing:.25em;text-transform:uppercase;color:var(--green);margin-bottom:12px}
-    .specialCard .sVal{font-family:'Cormorant Garamond',serif;font-size:2.8rem;color:#f0e8d5;line-height:1;margin-bottom:8px;}
+    .specialCard .sVal{font-family:'Poppins',sans-serif;font-size:2.8rem;color:#f0e8d5;line-height:1;margin-bottom:8px;}
     .specialCard .sTit{color:var(--greenMuted);font-size:.95rem;font-style:italic}
     .specialCard .sSub{color:rgba(138,128,112,.5);font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;margin-top:6px}
     .specialCard .sDesc{color:#c8c0b0;font-size:.95rem;line-height:1.75;margin-top:14px;border-top:1px solid var(--greenLine);padding-top:14px}
@@ -319,7 +319,7 @@
     }
     .cicloCard.active::before{background:linear-gradient(90deg,transparent,var(--gold),transparent)}
     .cicloCard .ccPhase{font-size:.65rem;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
-    .cicloCard .ccNum{font-family:'Cormorant Garamond',serif;font-size:2.8rem;color:#f0e8d5;line-height:1;margin-bottom:6px}
+    .cicloCard .ccNum{font-family:'Poppins',sans-serif;font-size:2.8rem;color:#f0e8d5;line-height:1;margin-bottom:6px}
     .cicloCard.active .ccNum{color:var(--gold2)}
     .cicloCard .ccName{color:var(--muted);font-size:.95rem;font-style:italic;margin-bottom:6px}
     .cicloCard .ccPeriod{font-size:.75rem;color:rgba(138,128,112,.6);letter-spacing:.08em}
@@ -328,7 +328,7 @@
     .btnNew{
       display:block;margin:40px auto 0;padding:14px 36px;
       background:transparent;border:1px solid var(--line);border-radius:2px;color:var(--muted);
-      font-family:'Cormorant Garamond',serif;font-size:1rem;letter-spacing:.15em;cursor:pointer;
+      font-family:'Poppins',sans-serif;font-size:1rem;letter-spacing:.15em;cursor:pointer;
       transition:border-color .3s,color .3s;
     }
     .btnNew:hover{border-color:var(--gold);color:var(--gold2)}
