@@ -4459,7 +4459,7 @@
     if(elYN&&yrIsMaster)elYN.classList.add('master');
     if(elYNm)elYNm.textContent=anoData.nome;
     if(elYB)elYB.innerHTML=
-      '<p>O Ano Pessoal é calculado a partir do seu dia e mês de nascimento somados com o ano atual. Ele cria um campo de influência único que dura 12 meses — começando no seu aniversário.</p>'+
+      '<p>Seu Ano Pessoal revela o campo de influência que molda os próximos 12 meses da sua jornada.</p>'+
       '<p><strong>Luz desse ano:</strong> '+anoData.luz+'</p>'+
       '<p><strong>Sombra desse ano:</strong> '+anoData.sombra+'</p>'+
       '<p style="color:var(--amber);font-style:italic;font-size:.87rem">↳ No Mapa Completo você aprende exatamente como navegar esse Ano '+anoPessoal+' — o que aproveitar, o que evitar e quando agir.</p>';
@@ -4468,7 +4468,7 @@
 
     /* ── Slide 4: Cards desbloqueados com texto expandível ── */
     var FULL_TEXT={
-      expressao:'<p>Seu número de Expressão revela o talento que você tem mas subestima — e o ponto exato onde você sabota sua própria autoridade justo quando ela começa a aparecer.</p><p>A Expressão é o número calculado pela soma vibracional de todas as letras do seu nome. Ele mostra o que você veio fazer — sua forma natural de se mover no mundo, o canal pelo qual seu potencial se manifesta.</p><p><strong>O que mais surpreende na Expressão:</strong> a distância entre o que você consegue ser quando está em fluxo e o que você apresenta quando sente que está sendo avaliado. Essa lacuna tem uma causa específica no seu número — e ela é mapeável.</p>',
+      expressao:'<p>Seu número de Expressão revela o talento que você tem mas subestima — e o ponto exato onde você sabota sua própria autoridade justo quando ela começa a aparecer.</p><p><strong>O que mais surpreende na Expressão:</strong> a distância entre o que você consegue ser quando está em fluxo e o que você apresenta quando sente que está sendo avaliado. Essa lacuna tem uma causa específica no seu número — e ela é mapeável.</p>',
       alma:ALMA_TEXT[alma]||'',
       personalidade:PERSONA_TEXT[personalidade]||''
     };
@@ -4941,12 +4941,12 @@
   function buildMap(){
     var d=_nums,date=d.date,nome=d.nome,nomeRaw=d.nomeRaw,dateRaw=d.dateRaw,caminho=d.caminho,expressao=d.expressao,alma=d.alma,personalidade=d.personalidade,dia=d.dia,anoPessoal=d.anoPessoal,idadeAprox=d.idadeAprox;
     var numsObj={};
-    numsObj['Caminho de Vida']={val:caminho,ctx:'caminho',sub:'data de nascimento'};
-    numsObj['Expressão']={val:expressao,ctx:'expressao',sub:'todas as letras do nome'};
-    numsObj['Alma']={val:alma,ctx:'alma',sub:'vogais · motivação interior'};
-    numsObj['Personalidade']={val:personalidade,ctx:'personalidade',sub:'consoantes · impressão externa'};
-    numsObj['Dia de Nascimento']={val:dia,ctx:'dia',sub:'dom do dia'};
-    numsObj['Ano Pessoal '+ANO_ATUAL]={val:anoPessoal,ctx:'ano',sub:'ciclo vigente'};
+    numsObj['Caminho de Vida']={val:caminho,ctx:'caminho',sub:'sua missão de vida'};
+    numsObj['Expressão']={val:expressao,ctx:'expressao',sub:'sua identidade e propósito'};
+    numsObj['Alma']={val:alma,ctx:'alma',sub:'seu desejo mais íntimo'};
+    numsObj['Personalidade']={val:personalidade,ctx:'personalidade',sub:'como o mundo te percebe'};
+    numsObj['Dia de Nascimento']={val:dia,ctx:'dia',sub:'seus dons naturais'};
+    numsObj['Ano Pessoal '+ANO_ATUAL]={val:anoPessoal,ctx:'ano',sub:'ciclo atual de vida'};
 
     var pinaculos=calcPinaculos(date),periodos=calcPeriodosPinaculos(caminho,date.ano);
     var desafios=calcDesafios(date),licoes=calcLicoesKarmicas(nomeRaw);
