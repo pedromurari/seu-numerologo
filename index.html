@@ -4891,26 +4891,35 @@
         var phaseEls=Array.from(document.querySelectorAll('#v2Phases .v2-phase'));
         var pageCount=1;
 
-        function addDecoratedPage(pdf,pageW,pageH,margin,title,pageNum){
+        function hexToRgb(hex){
+          hex=(hex||'#D05E2A').replace('#','');
+          if(hex.length===3)hex=hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
+          return[parseInt(hex.slice(0,2),16),parseInt(hex.slice(2,4),16),parseInt(hex.slice(4,6),16)];
+        }
+
+        function addDecoratedPage(pdf,pageW,pageH,margin,title,pageNum,accentHex){
+          var rgb=hexToRgb(accentHex||'#D05E2A');
           pdf.setFillColor(4,4,12);
           pdf.rect(0,0,pageW,pageH,'F');
-          // Top gold bar
-          pdf.setFillColor(208,94,42);
-          pdf.rect(0,0,pageW,2,'F');
+          // Top accent bar (esfera color)
+          pdf.setFillColor(rgb[0],rgb[1],rgb[2]);
+          pdf.rect(0,0,pageW,2.5,'F');
           // Bottom thin bar
-          pdf.setFillColor(208,94,42,0.4);
+          pdf.setFillColor(rgb[0],rgb[1],rgb[2]);
           pdf.rect(0,pageH-1.5,pageW,1.5,'F');
+          // Left accent strip
+          pdf.rect(0,0,1.5,pageH,'F');
           // Page header
           pdf.setFontSize(7);
           pdf.setTextColor(150,120,80);
-          pdf.text('SEU NUMERÓLOGO · SISTEMA PITAGÓRICO SISTÊMICO',margin,10,{});
+          pdf.text('SEU NUMERÓLOGO · SISTEMA PITAGÓRICO SISTÊMICO',margin+2,10,{});
           if(title){
             pdf.setFontSize(8);
-            pdf.setTextColor(208,94,42);
+            pdf.setTextColor(rgb[0],rgb[1],rgb[2]);
             pdf.text(title,pageW-margin,10,{align:'right'});
           }
-          // Thin separator line
-          pdf.setDrawColor(208,94,42);
+          // Thin separator line (esfera color)
+          pdf.setDrawColor(rgb[0],rgb[1],rgb[2]);
           pdf.setLineWidth(0.3);
           pdf.setLineDashPattern([1,2],0);
           pdf.line(margin,13,pageW-margin,13);
@@ -4918,13 +4927,12 @@
           // Footer
           pdf.setFontSize(6.5);
           pdf.setTextColor(100,80,60);
-          pdf.text('Mapa personalizado para '+nome,margin,pageH-5,{});
+          pdf.text('Mapa personalizado para '+nome,margin+2,pageH-5,{});
           pdf.text('Pág. '+pageNum,pageW-margin,pageH-5,{align:'right'});
         }
 
         function captureNextPhase(idx){
           if(idx>=phaseEls.length){
-            // All phases done — save
             var filename=(nome||'Mapa').replace(/[^a-zA-ZÀ-ɏ0-9]/g,'_').replace(/_+/g,'_')+'_Mapa_Numerologico.pdf';
             pdf.save(filename);
             cleanup();
@@ -4932,12 +4940,13 @@
           }
           var el=phaseEls[idx];
           var phLabel=el.querySelector('.v2-phase-tag')?el.querySelector('.v2-phase-tag').textContent:'';
-          var phTitle=el.querySelector('.v2-phase-title')?el.querySelector('.v2-phase-title').textContent:'';
-          var sectionLabel=(phLabel+' — '+phTitle).trim().replace(/^—/,'').trim();
+          var sectionLabel=phLabel.trim();
+          // Read esfera accent color from CSS variable
+          var accentHex=el.style.getPropertyValue('--ec')||'#D05E2A';
 
           html2canvas(el,{
             backgroundColor:'#00000c',
-            scale:1.8,
+            scale:1.6,
             useCORS:true,
             allowTaint:true,
             logging:false,
@@ -4945,17 +4954,18 @@
             height:el.scrollHeight,
             windowWidth:document.documentElement.offsetWidth
           }).then(function(c){
-            var topMargin=16;
-            var botMargin=12;
+            var topMargin=17;
+            var botMargin=14;
             var usableHph=pageH-margin-topMargin-botMargin;
             var pxPerMm=c.width/usableW;
-            var pageHeightPx=Math.floor(usableHph*pxPerMm);
+            // Add 5% overlap to avoid hard cuts mid-glyph
+            var pageHeightPx=Math.floor(usableHph*pxPerMm*0.97);
             var totalSlices=Math.ceil(c.height/pageHeightPx);
 
             for(var p=0;p<totalSlices;p++){
               pdf.addPage();
               pageCount++;
-              addDecoratedPage(pdf,pageW,pageH,margin,sectionLabel,pageCount);
+              addDecoratedPage(pdf,pageW,pageH,margin,sectionLabel,pageCount,accentHex);
 
               var srcY=p*pageHeightPx;
               var srcH=Math.min(pageHeightPx,c.height-srcY);
@@ -4966,7 +4976,7 @@
               tmp.height=srcH;
               tmp.getContext('2d').drawImage(c,0,srcY,c.width,srcH,0,0,c.width,srcH);
               var sliceH=srcH/pxPerMm;
-              pdf.addImage(tmp.toDataURL('image/jpeg',0.93),'JPEG',margin,topMargin,usableW,sliceH);
+              pdf.addImage(tmp.toDataURL('image/jpeg',0.92),'JPEG',margin+1.5,topMargin,usableW-1.5,sliceH);
             }
             captureNextPhase(idx+1);
           }).catch(function(err){
