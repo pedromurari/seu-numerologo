@@ -4964,15 +4964,16 @@
           rgb=rgb||lastRgb;
           pdf.setFillColor(6,6,14);pdf.rect(0,0,pageW,pageH,'F');
           pdf.setFillColor(rgb[0],rgb[1],rgb[2]);
-          pdf.rect(0,0,pageW,2,'F');pdf.rect(0,0,2,pageH,'F');
+          pdf.rect(0,0,pageW,3,'F');pdf.rect(0,0,2,pageH,'F');
+          pdf.setFontSize(7);pdf.setTextColor(255,255,255);
+          pdf.text(label||curEsfLabel,margin+3,10);
+          pdf.setFontSize(6.5);pdf.setTextColor(160,140,120);
+          pdf.text('Pág.'+pageCount,pageW-margin,10,{align:'right'});
           pdf.setDrawColor(rgb[0],rgb[1],rgb[2]);pdf.setLineWidth(0.25);
-          pdf.setLineDashPattern([1.5,2],0);pdf.line(margin,12,pageW-margin,12);pdf.setLineDashPattern([],0);
-          pdf.setFontSize(6.5);pdf.setTextColor(rgb[0],rgb[1],rgb[2]);
-          pdf.text(label||curEsfLabel,margin+3,9);
-          pdf.setTextColor(100,80,60);
-          pdf.text(String(pageCount),pageW-margin,9,{align:'right'});
+          pdf.setLineDashPattern([1.5,2],0);pdf.line(margin,14,pageW-margin,14);pdf.setLineDashPattern([],0);
+          pdf.setFontSize(6);pdf.setTextColor(100,80,60);
           pdf.text('Mapa · '+nome,margin+3,pageH-4);
-          cY=16;lastRgb=rgb;
+          cY=18;lastRgb=rgb;
         }
 
         function ensY(need,rgb){if(cY+need>pageH-9)newTxtPage(rgb||lastRgb);}
@@ -5038,7 +5039,7 @@
 
           // Intro
           var introEl=el.querySelector('.v2-esfera-intro');
-          if(introEl){wText((introEl.innerText||introEl.textContent),8.5,165,165,165);cY+=4;}
+          if(introEl){wText((introEl.innerText||introEl.textContent),8.5,190,190,190);cY+=4;}
 
           // Reading
           var rdg=el.querySelector('.v2-reading');
@@ -5062,7 +5063,7 @@
                 pdf.text(tt,margin+6,cY);cY+=5;
               }
               var body=sec.querySelector('.reading-body');
-              if(body){wText((body.innerText||body.textContent),8.5,185,185,185);cY+=2;}
+              if(body){wText((body.innerText||body.textContent),8.5,215,215,215);cY+=2;}
             });
             var aff=rdg.querySelector('.reading-affirm');
             if(aff){
