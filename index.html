@@ -4977,10 +4977,22 @@
 
         function ensY(need,rgb){if(cY+need>pageH-9)newTxtPage(rgb||lastRgb);}
 
+        function sanitizePdf(s){
+          return (s||'')
+            .replace(/\x00/g,'')
+            .replace(/\r/g,'')
+            .replace(/[‘’ʼ]/g,"'")
+            .replace(/[“”«»]/g,'"')
+            .replace(/[–—‒]/g,'-')
+            .replace(/…/g,'...')
+            .replace(/•/g,'*')
+            .replace(/✓|✔|✅/g,'OK')
+            .replace(/⚠|️/g,'!')
+            .replace(/[^\x00-\xFF]/g,'');
+        }
         function wText(raw,fs,r,g,b,bold,indent){
           if(!raw)return;
-          // strip null bytes (UTF-16 artifact from docx extraction)
-          var cleaned=raw.replace(/\x00/g,'').replace(/\r/g,'');
+          var cleaned=sanitizePdf(raw);
           var paras=cleaned.split('\n').map(function(p){return p.replace(/[ \t]+/g,' ').trim();}).filter(Boolean);
           if(!paras.length)return;
           pdf.setFontSize(fs);pdf.setTextColor(r,g,b);
