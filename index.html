@@ -3325,6 +3325,8 @@
   <!-- PDF generation -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <!-- Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 </head>
 <body>
 
@@ -4298,6 +4300,7 @@
     if(!email||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){err.textContent='Por favor, informe um e-mail válido.';return;}
     err.textContent='';
     _nome=nome;_date=clean;_email=email;
+    window._nome=nome;window._email=email;
     /* Salva lead no Supabase (fire-and-forget) */
     var dateObj=parseDateBR(clean);
     var cv=dateObj?calcCaminhoVida(dateObj):null;
@@ -4319,6 +4322,7 @@
     setTimeout(function(){
       if(steps[3])steps[3].classList.remove('active'),steps[3].classList.add('done');
       _nums=buildNums(_nome,_date);
+      window._nums=_nums;window.reduzir=reduzir;
       setTimeout(showTeaser,400);
     },2400);
   }
@@ -4625,6 +4629,7 @@
       var base='https://checkout.institutodespertamente.shop/VCCL1O8SD04H';
       var params=new URLSearchParams({name:_nome,email:_email});
       window.open(base+'?'+params.toString(),'_blank');
+      if(window._markComprou)window._markComprou();
     };
     var freeBtn=document.getElementById('v2FreeBtn');
     if(freeBtn)freeBtn.onclick=function(){showScreen('v2Hero');};
@@ -5382,6 +5387,53 @@
       'Baixar PDF</button>'+
       '</div>';
   }
+
+})();
+
+/* ── SUPABASE INTEGRATION ── */
+(function(){
+  if(!window.supabase)return;
+
+  var SUPA_URL='https://usqiyekfmwwnvkmkdlej.supabase.co';
+  var SUPA_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVzcWl5ZWtmbXd3bnZrbWtkbGVqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ1NTM5MTIsImV4cCI6MjA5MDEyOTkxMn0.HImguQINgMUvuetgIfDL3sr7KwhSWGoXvaNMKldxYmQ';
+  var _db=window.supabase.createClient(SUPA_URL,SUPA_KEY);
+  var _leadId=null;
+
+  /* Salva lead assim que o formulário é enviado */
+  window._saveLead=function(nome,email,dataNasc,destino){
+    var sp=new URLSearchParams(location.search);
+    _db.from('seu_numerologo_leads').upsert({
+      nome:nome,email:email,
+      data_nascimento:dataNasc,
+      destino:destino||null,
+      status:'lead',
+      utm_source:sp.get('utm_source')||null,
+      utm_medium:sp.get('utm_medium')||null,
+      utm_campaign:sp.get('utm_campaign')||null
+    },{onConflict:'email',ignoreDuplicates:false})
+    .select('id').single()
+    .then(function(r){if(r.data)_leadId=r.data.id;})
+    .catch(function(){});
+  };
+
+  /* Atualiza lead com todos os números e status 'comprou' ao clicar em Comprar */
+  window._markComprou=function(){
+    if(!window._nums)return Promise.resolve();
+    var d=window._nums;
+    var talento=window.reduzir?window.reduzir(d.alma+d.expressao):null;
+    var payload={
+      status:'comprou',
+      alma:d.alma,imagem:d.personalidade,
+      expressao:d.expressao,talento:talento,
+      psiquico:d.dia,destino:d.caminho,
+      ano_pessoal:d.anoPessoal,
+      comprou_at:new Date().toISOString()
+    };
+    var q=_leadId
+      ?_db.from('seu_numerologo_leads').update(payload).eq('id',_leadId)
+      :_db.from('seu_numerologo_leads').update(payload).eq('email',window._email||'');
+    return q.then(function(){}).catch(function(){});
+  };
 
 })();
 </script>
