@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Oferta Especial · Seu Numerólogo</title>
+<style>
+:root{
+  --bg:#04040C;--bg2:#09091A;--bg3:#0F0F20;
+  --gold:#D4B06A;--gold2:#F0CC80;--gold3:#9A7020;
+  --text:#E8E8F0;--text2:#9090A8;--text3:#50506A;
+  --red:#E8453A;--green:#34C759;
+  --border:rgba(212,176,106,.12);--border2:rgba(212,176,106,.28);
+  --r:14px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-height:100vh;overflow-x:hidden}
+
+.bg-glow{
+  position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(ellipse 70% 50% at 50% -5%,rgba(212,176,106,.1),transparent),
+    radial-gradient(ellipse 40% 35% at 90% 40%,rgba(180,80,40,.07),transparent),
+    radial-gradient(ellipse 50% 40% at 10% 80%,rgba(80,60,160,.07),transparent);
+}
+
+.wrap{position:relative;z-index:1;max-width:680px;margin:0 auto;padding:0 20px 80px}
+
+/* ── Top bar ── */
+.topbar{
+  text-align:center;padding:18px 0 0;margin-bottom:24px;
+}
+.topbar-logo{font-size:.65rem;letter-spacing:.18em;color:var(--text3);text-transform:uppercase}
+
+/* ── Urgency banner ── */
+.urgency-banner{
+  background:rgba(232,69,58,.08);border:1px solid rgba(232,69,58,.22);
+  border-radius:8px;padding:12px 18px;
+  display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;
+  text-align:center;margin-bottom:28px;
+  font-size:.82rem;color:var(--text2);
+}
+.urgency-count{font-size:1rem;font-weight:800;color:#E8453A;font-variant-numeric:tabular-nums}
+
+/* ── Hero ── */
+.hero{text-align:center;padding:0 0 32px}
+.hero-eyebrow{
+  display:inline-block;font-size:.65rem;letter-spacing:.16em;color:var(--gold);
+  text-transform:uppercase;margin-bottom:14px;
+  background:rgba(212,176,106,.08);border:1px solid var(--border2);
+  border-radius:99px;padding:6px 16px;
+}
+.hero-h1{
+  font-size:clamp(1.55rem,5vw,2.2rem);font-weight:800;line-height:1.2;
+  color:#fff;margin-bottom:14px;
+}
+.hero-h1 em{
+  font-style:normal;
+  background:linear-gradient(135deg,var(--gold2),var(--gold));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.hero-sub{font-size:.92rem;color:var(--text2);line-height:1.65;max-width:560px;margin:0 auto}
+
+/* ── VSL player ── */
+.vsl-wrap{margin:32px 0;position:relative}
+.vsl-label{
+  text-align:center;font-size:.65rem;letter-spacing:.14em;color:var(--gold3);
+  text-transform:uppercase;margin-bottom:10px;
+}
+.vsl-container{
+  position:relative;width:100%;padding-top:56.25%;
+  background:#000;border-radius:12px;overflow:hidden;
+  border:1px solid var(--border2);
+  box-shadow:0 0 60px rgba(212,176,106,.1),0 20px 60px rgba(0,0,0,.6);
+}
+/* ✏️ EDITE: cole aqui o embed do Vimeo/YouTube/Panda */
+.vsl-container iframe{
+  position:absolute;inset:0;width:100%;height:100%;border:none;
+}
+/* Placeholder enquanto o vídeo não está configurado */
+.vsl-placeholder{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:14px;background:#08081A;
+}
+.vsl-play-btn{
+  width:72px;height:72px;border-radius:50%;
+  background:linear-gradient(135deg,var(--gold3),var(--gold));
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;border:none;
+  box-shadow:0 0 40px rgba(212,176,106,.4);
+  transition:transform .2s,box-shadow .2s;
+}
+.vsl-play-btn:hover{transform:scale(1.08);box-shadow:0 0 60px rgba(212,176,106,.6)}
+.vsl-play-icon{color:#1A1000;font-size:1.4rem;margin-left:4px}
+.vsl-placeholder-text{font-size:.78rem;color:var(--text3);letter-spacing:.08em}
+.vsl-hint{
+  text-align:center;font-size:.75rem;color:var(--text3);margin-top:10px;
+}
+
+/* ── Social proof strip ── */
+.proof-strip{
+  display:flex;gap:10px;margin:28px 0;flex-wrap:wrap;
+}
+.proof-item{
+  flex:1;min-width:120px;
+  background:var(--bg2);border:1px solid var(--border);
+  border-radius:10px;padding:14px 12px;text-align:center;
+}
+.proof-num{font-size:1.4rem;font-weight:800;color:var(--gold);margin-bottom:3px}
+.proof-label{font-size:.72rem;color:var(--text2);line-height:1.4}
+
+/* ── Offer section ── */
+.offer-section{margin:12px 0 28px}
+.offer-divider{
+  display:flex;align-items:center;gap:12px;margin-bottom:24px;
+}
+.offer-divider-line{flex:1;height:1px;background:var(--border)}
+.offer-divider-txt{font-size:.65rem;letter-spacing:.14em;color:var(--gold3);text-transform:uppercase;white-space:nowrap}
+
+.offer-card{
+  background:var(--bg2);border:1px solid var(--border2);border-radius:var(--r);
+  overflow:hidden;position:relative;
+}
+.offer-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+}
+.offer-head{padding:24px 24px 18px;border-bottom:1px solid var(--border)}
+.offer-tag{font-size:.63rem;letter-spacing:.14em;color:var(--gold3);text-transform:uppercase;margin-bottom:8px}
+.offer-name{font-size:1.25rem;font-weight:700;color:#fff;margin-bottom:6px}
+.offer-desc{font-size:.84rem;color:var(--text2);line-height:1.6}
+
+.offer-items{padding:18px 24px;display:grid;gap:9px}
+.offer-item{display:flex;align-items:flex-start;gap:10px;font-size:.83rem;color:var(--text2);line-height:1.5}
+.offer-item strong{color:var(--text);font-weight:600}
+.offer-check{color:var(--gold);flex-shrink:0;margin-top:1px}
+
+.offer-price{
+  padding:18px 24px 24px;border-top:1px solid var(--border);
+  display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+}
+.price-old{font-size:.82rem;color:var(--text3);text-decoration:line-through}
+.price-new{font-size:2rem;font-weight:900;background:linear-gradient(135deg,var(--gold2),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.price-note{font-size:.72rem;color:var(--text3);margin-left:auto;text-align:right;line-height:1.5}
+
+/* ── Testimonials ── */
+.testi-grid{display:grid;gap:12px;margin:24px 0}
+.testi{
+  background:var(--bg2);border:1px solid var(--border);
+  border-radius:12px;padding:18px 20px;position:relative;
+}
+.testi::before{
+  content:'"';position:absolute;top:8px;left:16px;
+  font-size:3.5rem;color:rgba(212,176,106,.1);font-family:Georgia,serif;line-height:1;
+}
+.testi-text{font-size:.83rem;color:var(--text2);line-height:1.7;padding-left:10px;margin-bottom:12px}
+.testi-footer{display:flex;align-items:center;gap:10px;padding-left:10px}
+.testi-av{
+  width:32px;height:32px;border-radius:50%;flex-shrink:0;
+  background:linear-gradient(135deg,var(--gold3),var(--gold));
+  display:flex;align-items:center;justify-content:center;
+  font-size:.68rem;font-weight:800;color:#1A1000;
+}
+.testi-name{font-size:.8rem;font-weight:600;color:var(--text)}
+.testi-meta{font-size:.72rem;color:var(--text3)}
+.testi-stars{color:var(--gold);font-size:.75rem}
+
+/* ── CTA block ── */
+.cta-block{margin-top:8px}
+.cta-yes{
+  display:block;width:100%;padding:18px 24px;
+  background:linear-gradient(135deg,#C8951A,var(--gold2),#C8951A);
+  background-size:200% 100%;
+  border:none;border-radius:var(--r);
+  font-size:1rem;font-weight:800;color:#1A1000;cursor:pointer;
+  letter-spacing:.02em;text-align:center;text-decoration:none;
+  box-shadow:0 6px 32px rgba(212,176,106,.3);
+  transition:background-position .4s,transform .15s,box-shadow .2s;
+  margin-bottom:10px;
+}
+.cta-yes:hover{background-position:100% 0;transform:translateY(-2px);box-shadow:0 10px 44px rgba(212,176,106,.45)}
+.cta-yes:active{transform:translateY(0)}
+.cta-no{
+  display:block;text-align:center;width:100%;padding:10px;
+  background:none;border:none;font-size:.78rem;color:var(--text3);cursor:pointer;
+  transition:color .2s;
+}
+.cta-no:hover{color:var(--text2)}
+.cta-trust{
+  display:flex;align-items:center;justify-content:center;gap:16px;
+  flex-wrap:wrap;margin-top:12px;font-size:.72rem;color:var(--text3);
+}
+
+/* ── Guarantee ── */
+.guarantee{
+  display:flex;align-items:flex-start;gap:14px;
+  background:rgba(52,199,89,.05);border:1px solid rgba(52,199,89,.18);
+  border-radius:var(--r);padding:18px 20px;margin:24px 0;
+}
+.guarantee-icon{font-size:1.6rem;flex-shrink:0}
+.guarantee-text{font-size:.82rem;color:var(--text2);line-height:1.6}
+.guarantee-text strong{display:block;color:var(--green);margin-bottom:3px;font-size:.86rem}
+
+/* ── Footer ── */
+.footer{text-align:center;padding-top:32px;border-top:1px solid var(--border);margin-top:40px}
+.footer-logo{font-size:.65rem;letter-spacing:.12em;color:var(--text3);text-transform:uppercase;margin-bottom:6px}
+.footer-safe{font-size:.7rem;color:var(--text3);display:flex;align-items:center;justify-content:center;gap:6px}
+
+/* Animations */
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.fade-in{animation:fadeUp .6s ease both}
+@keyframes pulse-dot{0%,100%{opacity:1}50%{opacity:.3}}
+</style>
+</head>
+<body>
+<div class="bg-glow"></div>
+<div class="wrap">
+
+  <div class="topbar"><div class="topbar-logo">Seu Numerólogo · Sistema Pitagórico Sistêmico</div></div>
+
+  <!-- Urgency -->
+  <div class="urgency-banner fade-in">
+    <span>⏳ Oferta disponível por</span>
+    <span class="urgency-count" id="timerDisplay">15:00</span>
+    <span>· exclusiva para quem acabou de adquirir o mapa</span>
+  </div>
+
+  <!-- Hero -->
+  <div class="hero fade-in">
+    <div class="hero-eyebrow">Parabéns — seu mapa está sendo preparado</div>
+    <h1 class="hero-h1">Antes de acessá-lo,<br><em>assista esse vídeo de 3 minutos</em></h1>
+    <p class="hero-sub">Descobrimos algo no seu mapa que vai muito além do que você comprou. Assista antes de sair desta página.</p>
+  </div>
+
+  <!-- VSL Player -->
+  <div class="vsl-wrap fade-in">
+    <div class="vsl-label">▶ Assista agora — não pule</div>
+    <div class="vsl-container" id="vslContainer">
+      <!--
+        ✏️ EDITE: Cole aqui o embed do seu vídeo.
+        Exemplos:
+        Vimeo:   <iframe src="https://player.vimeo.com/video/SEU-ID?autoplay=1" allowfullscreen allow="autoplay"></iframe>
+        YouTube: <iframe src="https://www.youtube.com/embed/SEU-ID?autoplay=1" allowfullscreen allow="autoplay"></iframe>
+        Panda:   <iframe src="https://player-vz.pandavideo.com.br/embed/?v=SEU-ID" allowfullscreen allow="autoplay"></iframe>
+      -->
+      <div class="vsl-placeholder" id="vslPlaceholder">
+        <button class="vsl-play-btn" onclick="document.getElementById('vslPlaceholder').style.display='none'">
+          <span class="vsl-play-icon">▶</span>
+        </button>
+        <div class="vsl-placeholder-text">Cole o embed do seu vídeo aqui</div>
+      </div>
+    </div>
+    <div class="vsl-hint">🔊 Ative o som · vídeo curto e direto</div>
+  </div>
+
+  <!-- Social proof -->
+  <div class="proof-strip">
+    <div class="proof-item"><div class="proof-num">+830</div><div class="proof-label">consultas realizadas</div></div>
+    <div class="proof-item"><div class="proof-num">4.9★</div><div class="proof-label">avaliação média</div></div>
+    <div class="proof-item"><div class="proof-num">97%</div><div class="proof-label">recomendam</div></div>
+    <div class="proof-item"><div class="proof-num">7 dias</div><div class="proof-label">garantia total</div></div>
+  </div>
+
+  <!-- Offer -->
+  <div class="offer-section">
+    <div class="offer-divider">
+      <div class="offer-divider-line"></div>
+      <div class="offer-divider-txt">O que estou oferecendo</div>
+      <div class="offer-divider-line"></div>
+    </div>
+
+    <div class="offer-card">
+      <div class="offer-head">
+        <div class="offer-tag">Upgrade exclusivo · só nesta página</div>
+        <!-- ✏️ EDITE: nome e descrição da oferta -->
+        <div class="offer-name">Consulta ao Vivo · 60 minutos</div>
+        <div class="offer-desc">Uma sessão individual onde leio seu mapa junto com você — aprofundo os pontos mais críticos e respondo tudo que surgir, sem limite de perguntas.</div>
+      </div>
+      <div class="offer-items">
+        <!-- ✏️ EDITE: itens da oferta -->
+        <div class="offer-item"><span class="offer-check">✦</span><div><strong>Leitura ao vivo do seu mapa completo</strong> — interpretação personalizada com foco no seu momento</div></div>
+        <div class="offer-item"><span class="offer-check">✦</span><div><strong>60 min sem limite de perguntas</strong> — todos os tópicos que você quiser explorar</div></div>
+        <div class="offer-item"><span class="offer-check">✦</span><div><strong>Plano de ação verbal</strong> — o que parar, começar e manter nos próximos 90 dias</div></div>
+        <div class="offer-item"><span class="offer-check">✦</span><div><strong>Gravação completa da sessão</strong> — acesso ao vídeo para rever quando precisar</div></div>
+        <div class="offer-item"><span class="offer-check">✦</span><div><strong>Agendamento prioritário</strong> — vagas com antecedência de até 7 dias</div></div>
+      </div>
+      <div class="offer-price">
+        <div>
+          <!-- ✏️ EDITE: preços -->
+          <div class="price-old">De R$ 297</div>
+          <div class="price-new">R$ 97</div>
+        </div>
+        <div class="price-note">valor único · sem recorrência<br>exclusivo nesta tela</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Testimonials -->
+  <div class="testi-grid">
+    <!-- ✏️ EDITE: depoimentos reais -->
+    <div class="testi">
+      <div class="testi-text">"A consulta ao vivo foi outro nível. Coisas que eu não tinha entendido ficaram claras na hora. As orientações práticas mudaram minha rotina — e o mais impressionante é a precisão das análises."</div>
+      <div class="testi-footer">
+        <div class="testi-av">MA</div>
+        <div><div class="testi-name">Mariana A.</div><div class="testi-meta">São Paulo · cliente verificada</div><div class="testi-stars">★★★★★</div></div>
+      </div>
+    </div>
+    <div class="testi">
+      <div class="testi-text">"Comprei o mapa e já ia sair quando vi essa oferta. Decidi arriscar. Foi a melhor decisão — a sessão me ajudou a entender padrões que eu repetia há anos sem perceber."</div>
+      <div class="testi-footer">
+        <div class="testi-av">RF</div>
+        <div><div class="testi-name">Ricardo F.</div><div class="testi-meta">Curitiba · cliente verificado</div><div class="testi-stars">★★★★★</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-block">
+    <!-- ✏️ EDITE: href com o link de pagamento do upsell -->
+    <a class="cta-yes" id="btnYes" href="#" onclick="handleAccept(event)">
+      ✦ Sim, quero a consulta ao vivo por R$ 97
+    </a>
+    <button class="cta-no" onclick="handleDecline()">Não, obrigado — vou acessar só o mapa</button>
+    <div class="cta-trust">
+      <span>🔒 Pagamento seguro</span>
+      <span>⚡ Agendamento imediato</span>
+      <span>🛡️ Garantia de 7 dias</span>
+    </div>
+  </div>
+
+  <!-- Guarantee -->
+  <div class="guarantee">
+    <div class="guarantee-icon">🛡️</div>
+    <div class="guarantee-text">
+      <strong>Garantia incondicional de 7 dias</strong>
+      Se por qualquer motivo a consulta não atender suas expectativas, devolvemos 100% — sem burocracia, sem perguntas.
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <div class="footer-logo">Seu Numerólogo · Sistema Pitagórico Sistêmico</div>
+    <div class="footer-safe">🔒 Compra segura · Dados protegidos</div>
+  </div>
+
+</div>
+
+<script>
+// ✏️ EDITE: configuração
+var CONFIG = {
+  paymentLink: 'https://checkout.institutodespertamente.shop/SEU-LINK-UPSELL', // link do checkout do upsell
+  declineUrl:  'https://mapa.seunumerologo.com.br/',                           // onde vai quem recusa
+  timerSeconds: 15 * 60,
+};
+
+// Personaliza com nome via URL
+(function(){
+  var p = new URLSearchParams(location.search);
+  var nome = p.get('nome');
+  if(nome){
+    var fn = nome.trim().split(' ')[0];
+    var h = document.querySelector('.hero-sub');
+    if(h) h.textContent = fn + ', descobrimos algo no seu mapa que vai muito além do que você comprou. Assista antes de sair desta página.';
+  }
+})();
+
+// Timer regressivo
+(function(){
+  var el = document.getElementById('timerDisplay');
+  var end = Date.now() + CONFIG.timerSeconds * 1000;
+  var iv = setInterval(function(){
+    var left = Math.max(0, end - Date.now());
+    var m = Math.floor(left / 60000), s = Math.floor((left % 60000) / 1000);
+    el.textContent = (m<10?'0':'')+m+':'+(s<10?'0':'')+s;
+    if(!left){ clearInterval(iv); el.style.color='#555'; }
+  }, 500);
+})();
+
+function handleAccept(e){
+  e.preventDefault();
+  var p = new URLSearchParams(location.search);
+  var nome = p.get('nome');
+  var url = CONFIG.paymentLink;
+  if(nome) url += (url.indexOf('?')>=0?'&':'?') + 'nome=' + encodeURIComponent(nome);
+  window.location.href = url;
+}
+
+function handleDecline(){
+  var p = new URLSearchParams(location.search);
+  var nome = p.get('nome');
+  var url = CONFIG.declineUrl;
+  if(nome) url += (url.indexOf('?')>=0?'&':'?') + 'nome=' + encodeURIComponent(nome);
+  window.location.href = url;
+}
+</script>
+</body>
+</html>
