@@ -4917,104 +4917,172 @@
         var usableW=pageW-margin*2;
         var usableH=pageH-margin*2;
 
-        /* ── Cover page ── */
-        pdf.setFillColor(0,0,0);
-        pdf.rect(0,0,pageW,pageH,'F');
-        // Top amber bar
-        pdf.setFillColor(245,166,35);
-        pdf.rect(0,0,pageW,2,'F');
-        // Bottom amber bar
-        pdf.rect(0,pageH-2,pageW,2,'F');
+        /* ── COVER PAGE — Premium Numerology ── */
+        var G=[212,176,106]; // gold
+        pdf.setFillColor(4,4,12); pdf.rect(0,0,pageW,pageH,'F');
+        // Border bars
+        pdf.setFillColor(G[0],G[1],G[2]);
+        pdf.rect(0,0,pageW,2.5,'F'); pdf.rect(0,pageH-2.5,pageW,2.5,'F');
+        pdf.rect(0,0,2,pageH,'F'); pdf.rect(pageW-2,0,2,pageH,'F');
 
-        pdf.setFontSize(10);
-        pdf.setTextColor(161,161,166);
-        pdf.text('SEU NUMERÓLOGO · SISTEMA PITAGÓRICO',pageW/2,28,{align:'center'});
+        // Subtle texture lines
+        pdf.setDrawColor(20,16,8); pdf.setLineWidth(0.15);
+        for(var gy=8;gy<pageH-8;gy+=4){pdf.line(2,gy,pageW-2,gy);}
 
-        pdf.setFontSize(32);
-        pdf.setTextColor(245,166,35);
-        pdf.text('Mapa Numerológico',pageW/2,50,{align:'center'});
+        // ── Header ──
+        pdf.setFontSize(7); pdf.setTextColor(G[0],G[1],G[2]); pdf.setFont('helvetica','normal');
+        pdf.text('SEU NUMERÓLOGO',pageW/2,10,{align:'center'});
+        pdf.setFontSize(5.5); pdf.setTextColor(100,80,40);
+        pdf.text('SISTEMA PITAGÓRICO SISTÊMICO · NPS',pageW/2,15,{align:'center'});
 
-        pdf.setFontSize(13);
-        pdf.setTextColor(240,232,214);
-        pdf.text(nome,pageW/2,65,{align:'center'});
+        // Title block
+        pdf.setFontSize(28); pdf.setTextColor(G[0],G[1],G[2]); pdf.setFont('helvetica','bold');
+        pdf.text('MAPA NUMEROLÓGICO',pageW/2,26,{align:'center'});
+        pdf.setFont('helvetica','normal'); pdf.setFontSize(8); pdf.setTextColor(100,80,40);
+        pdf.text('COMPLETO  ·  12 ANÁLISES PERSONALIZADAS',pageW/2,32,{align:'center'});
 
-        if(_nums&&_nums.dateRaw){
-          pdf.setFontSize(10);
-          pdf.setTextColor(161,161,166);
-          pdf.text(_nums.dateRaw,pageW/2,75,{align:'center'});
+        // ── Sacred Geometry — Nonagrama ──
+        var scx=pageW/2, scy=83;
+        var sr1=30, sr2=20, sr3=10;
+
+        // Outermost faint ring
+        pdf.setDrawColor(50,40,15); pdf.setLineWidth(0.15);
+        pdf.circle(scx,scy,sr1+8);
+
+        // 9 position marks on outer ring
+        for(var di=0;di<9;di++){
+          var ang9=(-90+di*40)*Math.PI/180;
+          var dpx=scx+(sr1+8)*Math.cos(ang9), dpy=scy+(sr1+8)*Math.sin(ang9);
+          pdf.setFillColor(G[0],G[1],G[2]);
+          pdf.circle(dpx,dpy,1.1,'F');
+          // Spoke from inner circle to dot
+          pdf.setDrawColor(50,40,15); pdf.setLineWidth(0.12);
+          pdf.line(scx+sr3*Math.cos(ang9), scy+sr3*Math.sin(ang9), dpx, dpy);
         }
 
-        // Divider
-        pdf.setDrawColor(245,166,35);
-        pdf.setLineWidth(0.4);
-        pdf.line(margin+20,84,pageW-margin-20,84);
+        // 3 triangles forming nonagram (sacred geometry)
+        pdf.setDrawColor(80,65,25); pdf.setLineWidth(0.22);
+        for(var tri=0;tri<3;tri++){
+          var tp=[];
+          for(var pv=0;pv<3;pv++){
+            var ta=(-90+tri*40+pv*120)*Math.PI/180;
+            tp.push([scx+sr1*Math.cos(ta), scy+sr1*Math.sin(ta)]);
+          }
+          pdf.setLineDashPattern([],0);
+          pdf.lines([[tp[1][0]-tp[0][0],tp[1][1]-tp[0][1]],[tp[2][0]-tp[1][0],tp[2][1]-tp[1][1]],[tp[0][0]-tp[2][0],tp[0][1]-tp[2][1]]],tp[0][0],tp[0][1],[1,1],'S',true);
+        }
 
-        // Number grid on cover — 7 esferas com cores vibracionais
+        // Main circles
+        pdf.setDrawColor(G[0],G[1],G[2]); pdf.setLineWidth(0.5);
+        pdf.circle(scx,scy,sr2); // golden ring
+        pdf.setDrawColor(60,48,20); pdf.setLineWidth(0.25);
+        pdf.circle(scx,scy,sr2+4); // outer golden ring faint
+
+        // Inner dark fill + circle
+        pdf.setFillColor(4,4,12); pdf.circle(scx,scy,sr3+1,'F');
+        pdf.setDrawColor(G[0],G[1],G[2]); pdf.setLineWidth(0.6);
+        pdf.circle(scx,scy,sr3);
+
+        // Main number (Caminho de Vida) in center
+        var mainN=_nums?_nums.caminho:'';
+        var mainT=sanitizePdf(TITULOS[mainN]||'');
+        pdf.setFontSize(22); pdf.setTextColor(G[0],G[1],G[2]); pdf.setFont('helvetica','bold');
+        pdf.text(String(mainN),scx,scy+4,{align:'center'});
+        pdf.setFont('helvetica','normal');
+
+        // Label under circle
+        pdf.setFontSize(6); pdf.setTextColor(100,80,40);
+        pdf.text('CAMINHO DE VIDA',scx,scy+sr2+6,{align:'center'});
+        pdf.setFontSize(8.5); pdf.setTextColor(G[0],G[1],G[2]);
+        pdf.text(mainT,scx,scy+sr2+13,{align:'center'});
+
+        // ── Name & Date ──
+        var nameBaseY=scy+sr1+28;
+        pdf.setFontSize(15); pdf.setTextColor(235,225,205); pdf.setFont('helvetica','bold');
+        pdf.text(sanitizePdf(nome),pageW/2,nameBaseY,{align:'center'});
+        pdf.setFont('helvetica','normal');
+        if(_nums&&_nums.dateRaw){
+          pdf.setFontSize(9); pdf.setTextColor(130,105,65);
+          pdf.text(_nums.dateRaw,pageW/2,nameBaseY+7,{align:'center'});
+        }
+
+        // Ornament divider
+        pdf.setFontSize(9); pdf.setTextColor(G[0],G[1],G[2]);
+        pdf.text('* * *',pageW/2,nameBaseY+16,{align:'center'});
+        pdf.setDrawColor(G[0],G[1],G[2]); pdf.setLineWidth(0.25);
+        pdf.line(margin+15,nameBaseY+16,pageW/2-8,nameBaseY+16);
+        pdf.line(pageW/2+8,nameBaseY+16,pageW-margin-15,nameBaseY+16);
+
+        // ── 7 Esferas list ──
+        var esfy=nameBaseY+23;
+        pdf.setFontSize(6.5); pdf.setTextColor(G[0],G[1],G[2]); pdf.setFont('helvetica','bold');
+        pdf.text('7 ESFERAS NUMEROLÓGICAS',margin+3,esfy);
+        esfy+=5; pdf.setFont('helvetica','normal');
+
+        var esfCoverData=[
+          {n:'1ª',esfera:'ALMA',ctx:'alma',v:(_nums&&_nums.alma)||''},
+          {n:'2ª',esfera:'IMAGEM',ctx:'personalidade',v:(_nums&&_nums.personalidade)||''},
+          {n:'3ª',esfera:'EXPRESSÃO',ctx:'expressao',v:(_nums&&_nums.expressao)||''},
+          {n:'4ª',esfera:'TALENTO OCULTO',ctx:'alma',v:(_nums?reduzir(_nums.alma+_nums.expressao):'')||''},
+          {n:'5ª',esfera:'PSÍQUICO',ctx:'dia',v:(_nums&&_nums.dia)||''},
+          {n:'6ª',esfera:'DESTINO',ctx:'caminho',v:(_nums&&_nums.caminho)||''},
+          {n:'7ª',esfera:'ANO PESSOAL',ctx:'ano',v:(_nums&&_nums.anoPessoal)||''}
+        ];
+        esfCoverData.forEach(function(e){
+          var rgb=hexToRgb(CORES[e.v]||'#888888');
+          var titulo=sanitizePdf(TITULOS[e.v]||'');
+          pdf.setFillColor(10,10,22);
+          pdf.roundedRect(margin+2,esfy,usableW-4,8,1.5,1.5,'F');
+          pdf.setFillColor(rgb[0],rgb[1],rgb[2]);
+          pdf.rect(margin+2,esfy,2,8,'F');
+          // Esfera ordinal
+          pdf.setFontSize(6.5); pdf.setTextColor(rgb[0],rgb[1],rgb[2]); pdf.setFont('helvetica','bold');
+          pdf.text(e.n,margin+7,esfy+5.5);
+          // Name
+          pdf.setFont('helvetica','normal'); pdf.setTextColor(200,200,215);
+          pdf.text(e.esfera,margin+15,esfy+5.5);
+          // Title (italic, centered-ish)
+          if(titulo){
+            pdf.setFontSize(6); pdf.setTextColor(130,105,60); pdf.setFont('helvetica','italic');
+            pdf.text(titulo,margin+65,esfy+5.5);
+            pdf.setFont('helvetica','normal');
+          }
+          // Number
+          pdf.setFontSize(11); pdf.setTextColor(rgb[0],rgb[1],rgb[2]); pdf.setFont('helvetica','bold');
+          pdf.text(String(e.v),pageW-margin-5,esfy+6,{align:'right'});
+          pdf.setFont('helvetica','normal');
+          esfy+=9;
+        });
+
+        // ── Derived numbers strip ──
+        esfy+=4;
         if(_nums){
-          var talentoCover=reduzir(_nums.alma+_nums.expressao);
-          var coverNums=[
-            {l:'Alma',v:_nums.alma},{l:'Imagem',v:_nums.personalidade},
-            {l:'Expressão',v:_nums.expressao},{l:'Talento',v:talentoCover},
-            {l:'Psíquico',v:_nums.dia},{l:'Destino',v:_nums.caminho},
-            {l:'Ano Pessoal',v:_nums.anoPessoal}
+          var sinteseCover=reduzir(_nums.alma+_nums.personalidade+_nums.expressao);
+          var maturCover=(_nums.caminho+_nums.expressao)>9?reduzir(_nums.caminho+_nums.expressao):(_nums.caminho+_nums.expressao);
+          var derivados=[
+            {l:'Síntese',v:sinteseCover},
+            {l:'Maturidade',v:maturCover},
+            {l:'Equilíbrio',v:reduzir(_nums.alma+_nums.expressao+_nums.personalidade)}
           ];
-          var cols=coverNums.length;
-          var colW=usableW/cols;
-          var gx=margin;
-          coverNums.forEach(function(n){
-            var cx=gx+colW/2;
-            var rgb=hexToRgb(CORES[n.v]||'#F5A623');
-            pdf.setFillColor(Math.floor(rgb[0]*.1),Math.floor(rgb[1]*.1),Math.floor(rgb[2]*.1));
-            pdf.roundedRect(gx+1,90,colW-2,26,2,2,'F');
-            // Colored top border on card
-            pdf.setFillColor(rgb[0],rgb[1],rgb[2]);
-            pdf.rect(gx+1,90,colW-2,1.5,'F');
-            pdf.setFontSize(18);
-            pdf.setTextColor(rgb[0],rgb[1],rgb[2]);
-            pdf.text(String(n.v),cx,103,{align:'center'});
-            pdf.setFontSize(5.5);
-            pdf.setTextColor(180,180,180);
-            pdf.text(n.l,cx,111,{align:'center'});
-            gx+=colW;
+          var dColW=(usableW-4)/3;
+          derivados.forEach(function(d,i){
+            var dx=margin+2+i*dColW;
+            var drgb=hexToRgb(CORES[d.v]||'#888888');
+            pdf.setFillColor(10,10,22);
+            pdf.roundedRect(dx,esfy,dColW-2,14,2,2,'F');
+            pdf.setFillColor(drgb[0],drgb[1],drgb[2]);
+            pdf.rect(dx,esfy,dColW-2,1.5,'F');
+            pdf.setFontSize(6); pdf.setTextColor(130,105,60); pdf.setFont('helvetica','normal');
+            pdf.text(d.l.toUpperCase(),dx+dColW/2,esfy+5,{align:'center'});
+            pdf.setFontSize(12); pdf.setTextColor(drgb[0],drgb[1],drgb[2]); pdf.setFont('helvetica','bold');
+            pdf.text(String(d.v),dx+dColW/2,esfy+12,{align:'center'});
+            pdf.setFont('helvetica','normal');
           });
         }
 
-        // 7 Esferas list on cover
-        var esfCover=[
-          {n:'1ª',label:'Alma',v:(_nums&&_nums.alma)||''},
-          {n:'2ª',label:'Imagem',v:(_nums&&_nums.personalidade)||''},
-          {n:'3ª',label:'Expressão',v:(_nums&&_nums.expressao)||''},
-          {n:'4ª',label:'Talento Oculto',v:(_nums?reduzir(_nums.alma+_nums.expressao):'')||''},
-          {n:'5ª',label:'Psíquico',v:(_nums&&_nums.dia)||''},
-          {n:'6ª',label:'Destino',v:(_nums&&_nums.caminho)||''},
-          {n:'7ª',label:'Ano Pessoal',v:(_nums&&_nums.anoPessoal)||''}
-        ];
-        var py=126;
-        pdf.setFontSize(7.5);
-        pdf.setTextColor(130,100,70);
-        pdf.text('7 ESFERAS DO MAPA',margin,py);
-        py+=7;
-        esfCover.forEach(function(e){
-          var rgb=hexToRgb(CORES[e.v]||'#888888');
-          pdf.setFillColor(12,12,20);
-          pdf.roundedRect(margin,py,usableW,9,2,2,'F');
-          // Left color strip
-          pdf.setFillColor(rgb[0],rgb[1],rgb[2]);
-          pdf.rect(margin,py,2,9,'F');
-          pdf.setFontSize(7);
-          pdf.setTextColor(rgb[0],rgb[1],rgb[2]);
-          pdf.text(e.n,margin+5,py+6);
-          pdf.setTextColor(220,220,220);
-          pdf.text(e.label,margin+14,py+6);
-          pdf.setTextColor(rgb[0],rgb[1],rgb[2]);
-          pdf.text(String(e.v),pageW-margin-3,py+6,{align:'right'});
-          py+=11;
-        });
-
-        // Footer cover
-        pdf.setFontSize(7.5);
-        pdf.setTextColor(100,100,100);
-        pdf.text('Leitura personalizada gerada pelo Sistema Pitagórico · seunumerólogo.com.br',pageW/2,pageH-8,{align:'center'});
+        // Footer
+        pdf.setFontSize(7); pdf.setTextColor(80,65,35);
+        pdf.text('Leitura personalizada · Sistema Pitagórico Sistêmico · seunumerologo.com.br',pageW/2,pageH-7,{align:'center'});
 
         /* ── Content pages — capture each phase separately ── */
         var phaseEls=Array.from(document.querySelectorAll('#v2Phases .v2-phase'));
@@ -5410,7 +5478,9 @@
               var ac=isP?[220,70,60]:isC?[52,199,89]:aRgb;
               var pt=node.querySelector('.v2-plano-title');
               var pl=node.querySelector('.v2-plano-list');
-              pdfCard(pt?pt.textContent.trim():'',null,pl?pl.textContent.trim():'',ac);
+              var plTxt='';
+              if(pl){var plLis=pl.querySelectorAll('li');plTxt=Array.from(plLis).map(function(li){return li.textContent.trim();}).join('\n\xb7 ');if(plTxt)plTxt='\xb7 '+plTxt;}
+              pdfCard(pt?pt.textContent.trim():'',null,plTxt,ac);
 
             } else if(cls.indexOf('v2-frase-box')>=0){
               var ft=node.querySelector('.v2-frase-text');
