@@ -4254,6 +4254,7 @@
 
   /* ── Navegação entre telas ── */
   var _nome='',_date='',_email='',_nums=null;
+  var _pdfSilentCb=null; // callback para geração silenciosa do PDF
 
   function showScreen(id){
     document.querySelectorAll('.v2-screen').forEach(function(s){s.classList.add('v2-hidden');s.classList.remove('enter');});
@@ -4354,6 +4355,8 @@
       _nums=buildNums(_nome,_date);
       window._nums=_nums;window.reduzir=reduzir;
       setTimeout(showTeaser,400);
+      // Gera PDF silenciosamente em background após teaser aparecer
+      setTimeout(function(){ if(window._autoGeneratePdf)window._autoGeneratePdf(); },2000);
     },2400);
   }
 
@@ -5431,8 +5434,17 @@
 
         function captureNextPhase(idx){
           if(idx>=phaseEls.length){
-            var filename=(nome||'Mapa').replace(/[^a-zA-ZÀ-ɏ0-9]/g,'_').replace(/_+/g,'_')+'_Mapa_Numerologico.pdf';
-            pdf.save(filename);cleanup();return;
+            if(_pdfSilentCb){
+              // silent mode — retorna bytes para upload
+              var b64=pdf.output('datauristring');
+              cleanup();
+              var cb=_pdfSilentCb; _pdfSilentCb=null;
+              cb(b64);
+            } else {
+              var filename=(nome||'Mapa').replace(/[^a-zA-ZÀ-ɏ0-9]/g,'_').replace(/_+/g,'_')+'_Mapa_Numerologico.pdf';
+              pdf.save(filename);cleanup();
+            }
+            return;
           }
           var el=phaseEls[idx];
           if(el.querySelector('.v2-esfera-intro')){renderEsfera(el);}
@@ -5838,6 +5850,78 @@
     return q.then(function(){}).catch(function(){});
   };
 
+})();
+
+/* ── Upload silencioso do PDF para Supabase Storage ── */
+(function(){
+  var SN_URL='https://usqiyekfmwwnvkmkdlej.supabase.co';
+  var SN_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVzcWl5ZWtmbXd3bnZrbWtkbGVqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ1NTM5MTIsImV4cCI6MjA5MDEyOTkxMn0.HImguQINgMUvuetgIfDL3sr7KwhSWGoXvaNMKldxYmQ';
+
+  function dataUriToBlob(dataUri){
+    var parts=dataUri.split(',');
+    var mime=parts[0].match(/:(.*?);/)[1];
+    var bstr=atob(parts[1]);
+    var n=bstr.length;
+    var u8=new Uint8Array(n);
+    while(n--)u8[n]=bstr.charCodeAt(n);
+    return new Blob([u8],{type:mime});
+  }
+
+  window._uploadMapaPdf=function(dataUri){
+    if(!_email||!dataUri)return;
+    var safeName=_email.replace(/[^a-zA-Z0-9@._-]/g,'_');
+    var path=safeName+'.pdf';
+    var blob=dataUriToBlob(dataUri);
+
+    fetch(SN_URL+'/storage/v1/object/mapa-pdfs/'+encodeURIComponent(path),{
+      method:'POST',
+      headers:{
+        'Authorization':'Bearer '+SN_KEY,
+        'apikey':SN_KEY,
+        'Content-Type':'application/pdf',
+        'x-upsert':'true'
+      },
+      body:blob
+    }).then(function(r){
+      if(r.ok){
+        // Atualiza lead com o caminho do PDF
+        fetch(SN_URL+'/rest/v1/seu_numerologo_leads?email=eq.'+encodeURIComponent(_email),{
+          method:'PATCH',
+          headers:{
+            'Authorization':'Bearer '+SN_KEY,
+            'apikey':SN_KEY,
+            'Content-Type':'application/json',
+            'Prefer':'return=minimal'
+          },
+          body:JSON.stringify({pdf_path:'mapa-pdfs/'+path})
+        }).catch(function(){});
+      }
+    }).catch(function(){});
+  };
+
+  /* Geração silenciosa: renderiza o mapa off-screen, gera PDF, faz upload */
+  window._autoGeneratePdf=function(){
+    if(typeof generatePDF==='undefined'||typeof buildMap==='undefined')return;
+    if(!_email||!_nums)return;
+
+    var mapEl=document.getElementById('v2Map');
+    if(!mapEl)return;
+
+    // Renderiza off-screen sem mostrar ao usuário
+    mapEl.classList.remove('v2-hidden');
+    mapEl.style.cssText='position:fixed;left:-9999px;top:0;width:390px;opacity:0;pointer-events:none;z-index:-999;';
+    buildMap();
+
+    _pdfSilentCb=function(b64){
+      // Restaura visibilidade
+      mapEl.style.cssText='';
+      mapEl.classList.add('v2-hidden');
+      // Faz upload
+      window._uploadMapaPdf(b64);
+    };
+
+    generatePDF();
+  };
 })();
 </script>
 
