@@ -4640,7 +4640,12 @@
     var nextBtn=document.getElementById('v2SlideNext');
     if(backBtn)backBtn.addEventListener('click',function(){goSlide(_curSlide-1);});
     if(nextBtn)nextBtn.addEventListener('click',function(){
-      if(_curSlide>=_TOTAL_SLIDES-1){showMap();}else{goSlide(_curSlide+1);}
+      if(_curSlide>=_TOTAL_SLIDES-1){
+        var base='https://checkout.institutodespertamente.shop/VCCL1O8SD04H';
+        var params=new URLSearchParams({name:_nome,email:_email});
+        window.open(base+'?'+params.toString(),'_blank');
+        if(window._markComprou)window._markComprou();
+      }else{goSlide(_curSlide+1);}
     });
     /* Swipe */
     var wrap=document.getElementById('v2SlidesWrap');
