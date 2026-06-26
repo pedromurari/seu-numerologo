@@ -957,70 +957,6 @@
     .v2-hero-cta-ghost svg{opacity:.7;transition:opacity .2s}
     .v2-hero-cta-ghost:hover svg{opacity:1}
 
-    /* ─ Modal "já tenho meu mapa" ─ */
-    .v2-already-modal{
-      position:fixed;inset:0;z-index:200;
-      background:rgba(0,0,0,.72);backdrop-filter:blur(6px);
-      display:flex;align-items:center;justify-content:center;padding:24px;
-      opacity:0;pointer-events:none;transition:opacity .25s;
-    }
-    .v2-already-modal.show{opacity:1;pointer-events:auto}
-    .v2-already-card{
-      width:min(440px,100%);
-      background:#0d0d15;border:1px solid rgba(208,94,42,.22);
-      border-radius:16px;padding:36px 32px 28px;
-      transform:translateY(16px) scale(.98);
-      transition:transform .3s cubic-bezier(.22,.68,0,1.2);
-      position:relative;
-      box-shadow:0 40px 120px rgba(0,0,0,.6), 0 0 60px rgba(208,94,42,.12);
-    }
-    .v2-already-modal.show .v2-already-card{transform:translateY(0) scale(1)}
-    .v2-already-close{
-      position:absolute;top:12px;right:12px;
-      width:32px;height:32px;border:none;background:transparent;
-      color:var(--text3);cursor:pointer;font-size:1.3rem;line-height:1;
-      border-radius:50%;transition:all .2s;
-    }
-    .v2-already-close:hover{background:rgba(255,255,255,.06);color:var(--text)}
-    .v2-already-eyebrow{
-      font-size:.68rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;
-      color:var(--amber);margin-bottom:14px;display:inline-flex;align-items:center;gap:8px;
-    }
-    .v2-already-eyebrow::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--amber)}
-    .v2-already-title{
-      font-family:'Poppins',sans-serif;font-size:1.6rem;font-weight:700;
-      color:#fff;line-height:1.1;margin-bottom:10px;letter-spacing:-.015em;
-    }
-    .v2-already-sub{
-      font-size:.88rem;color:var(--text2);line-height:1.55;margin-bottom:22px;
-    }
-    .v2-already-field{margin-bottom:14px}
-    .v2-already-field label{
-      display:block;font-size:.68rem;font-weight:700;letter-spacing:.14em;
-      text-transform:uppercase;color:var(--text3);margin-bottom:6px;
-    }
-    .v2-already-field input{
-      width:100%;padding:13px 14px;
-      background:#06060c;border:1px solid rgba(255,255,255,.08);
-      border-radius:8px;color:var(--text);font-family:'Poppins',sans-serif;font-size:.94rem;
-      transition:border-color .2s;outline:none;
-    }
-    .v2-already-field input:focus{border-color:var(--amber)}
-    .v2-already-err{
-      color:#f09090;font-size:.78rem;font-weight:600;min-height:1.2em;margin-bottom:10px;
-    }
-    .v2-already-btn{
-      width:100%;padding:15px 22px;margin-top:8px;
-      background:var(--amber);color:#000;
-      font-family:'Poppins',sans-serif;font-size:.92rem;font-weight:800;letter-spacing:.02em;
-      border:none;border-radius:999px;cursor:pointer;transition:all .2s;
-      display:inline-flex;align-items:center;justify-content:center;gap:10px;
-    }
-    .v2-already-btn:hover{background:var(--amber2);transform:translateY(-1px)}
-    .v2-already-btn:disabled{opacity:.6;cursor:wait}
-    .v2-already-foot{
-      margin-top:14px;font-size:.74rem;color:var(--text3);text-align:center;line-height:1.5;
-    }
     .v2-btn-primary{
       display:inline-flex;align-items:center;gap:10px;
       background:#fff;color:#000;
@@ -3379,10 +3315,6 @@
         <button class="v2-hero-cta" id="v2HeroCta" type="button">
           Revelar Meu Mapa Gratuitamente
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M8 3l5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
-        <button class="v2-hero-cta-ghost" id="v2AlreadyCta" type="button">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M12 3v13m0 0l-5-5m5 5l5-5M5 21h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          Já tenho meu mapa
         </button>
       </div>
       <p class="v2-cta-sub">100% Gratuito · Resultado em 30 segundos · Sem cadastro</p>
@@ -5930,111 +5862,6 @@
 })();
 </script>
 
-<!-- ═══════════════════════════════════
-     MODAL — JÁ TENHO MEU MAPA
-═══════════════════════════════════ -->
-<div class="v2-already-modal" id="v2AlreadyModal" role="dialog" aria-modal="true" aria-labelledby="v2AlreadyTitle">
-  <div class="v2-already-card">
-    <button class="v2-already-close" id="v2AlreadyClose" aria-label="Fechar">×</button>
-    <div class="v2-already-eyebrow">Baixar novamente</div>
-    <h2 class="v2-already-title" id="v2AlreadyTitle">Já tenho meu mapa</h2>
-    <p class="v2-already-sub">Digite o mesmo nome e data que você usou na primeira geração — vamos recriar seu mapa e iniciar o download.</p>
-    <div class="v2-already-field">
-      <label for="v2AlreadyName">Nome completo de nascimento</label>
-      <input type="text" id="v2AlreadyName" placeholder="Como consta na certidão" autocomplete="off" spellcheck="false"/>
-    </div>
-    <div class="v2-already-field">
-      <label for="v2AlreadyDate">Data de nascimento</label>
-      <input type="tel" id="v2AlreadyDate" placeholder="DD / MM / AAAA" inputmode="numeric" maxlength="14" autocomplete="off"/>
-    </div>
-    <div class="v2-already-err" id="v2AlreadyErr"></div>
-    <button class="v2-already-btn" id="v2AlreadySubmit" type="button">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 3v13m0 0l-5-5m5 5l5-5M5 21h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      Gerar e Baixar PDF
-    </button>
-    <p class="v2-already-foot">Seus dados não são armazenados. O mapa é gerado localmente no seu navegador.</p>
-  </div>
-</div>
-
-<script>
-(function(){
-  var modal = document.getElementById('v2AlreadyModal');
-  var openBtn = document.getElementById('v2AlreadyCta');
-  var closeBtn = document.getElementById('v2AlreadyClose');
-  var submitBtn = document.getElementById('v2AlreadySubmit');
-  var nameInput = document.getElementById('v2AlreadyName');
-  var dateInput = document.getElementById('v2AlreadyDate');
-  var errEl = document.getElementById('v2AlreadyErr');
-
-  function openModal(){modal.classList.add('show');setTimeout(function(){nameInput.focus();},200);}
-  function closeModal(){modal.classList.remove('show');}
-
-  openBtn.addEventListener('click',openModal);
-  closeBtn.addEventListener('click',closeModal);
-  modal.addEventListener('click',function(e){if(e.target===modal)closeModal();});
-  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&modal.classList.contains('show'))closeModal();});
-
-  /* Date mask */
-  dateInput.addEventListener('input',function(){
-    var raw=this.value.replace(/\D/g,'').slice(0,8);
-    var v='';
-    if(raw.length<=2)v=raw;
-    else if(raw.length<=4)v=raw.slice(0,2)+' / '+raw.slice(2);
-    else v=raw.slice(0,2)+' / '+raw.slice(2,4)+' / '+raw.slice(4);
-    this.value=v;
-  });
-
-  submitBtn.addEventListener('click',function(){
-    var name=nameInput.value.trim();
-    var dateVal=dateInput.value.replace(/\D/g,'');
-    errEl.textContent='';
-
-    if(!name){errEl.textContent='Digite seu nome completo de nascimento.';nameInput.focus();return;}
-    if(dateVal.length!==8){errEl.textContent='Digite a data completa: DD/MM/AAAA.';dateInput.focus();return;}
-
-    var dd=parseInt(dateVal.slice(0,2),10);
-    var mm=parseInt(dateVal.slice(2,4),10);
-    var yyyy=parseInt(dateVal.slice(4),10);
-    if(dd<1||dd>31||mm<1||mm>12||yyyy<1900||yyyy>new Date().getFullYear()){
-      errEl.textContent='Data inválida. Verifique dia, mês e ano.';dateInput.focus();return;
-    }
-
-    submitBtn.disabled=true;
-    submitBtn.textContent='Gerando…';
-
-    /* Populate the main form inputs and trigger the existing map generation flow */
-    var mainName=document.getElementById('v2Name');
-    var mainDate=document.getElementById('v2Date');
-    if(mainName)mainName.value=name;
-    if(mainDate)mainDate.value=dateInput.value;
-
-    /* Trigger submit to generate the map, then auto-download PDF */
-    var mainSubmit=document.getElementById('v2Submit');
-    if(mainSubmit){
-      closeModal();
-      /* Small delay so the modal close transition doesn't clash */
-      setTimeout(function(){
-        mainSubmit.click();
-        /* Wait for map to render then trigger PDF download */
-        var attempts=0;
-        var poller=setInterval(function(){
-          var pdfBtn=document.getElementById('v2PdfBtn');
-          attempts++;
-          if(pdfBtn){
-            clearInterval(poller);
-            setTimeout(function(){pdfBtn.click();},400);
-          }
-          if(attempts>60)clearInterval(poller);
-        },500);
-      },350);
-    }else{
-      submitBtn.disabled=false;
-      submitBtn.innerHTML='<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 3v13m0 0l-5-5m5 5l5-5M5 21h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Gerar e Baixar PDF';
-      errEl.textContent='Erro interno. Recarregue a página e tente novamente.';
-    }
-  });
-})();
-</script>
 
 </body>
 </html>
