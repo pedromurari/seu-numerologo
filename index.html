@@ -4015,8 +4015,13 @@
   function calcPersonalidade(nome){const s=limpar(nome).replace(/\s/g,'');return reduzirSimples([...s].filter(c=>!VOGAIS.has(c)&&TAB[c]).map(c=>TAB[c]||0).reduce((a,b)=>a+b,0))}
   // Psíquico: dia de nascimento → grupos 1-9 apenas, sem mestres
   function calcDia(date){return reduzirSimples(date.dia)}
-  // Ano Pessoal: DD+MM+ANO_ATUAL somados → reduz a 1-9, sem mestres
-  function calcAnoPessoal(date){return reduzirSimples(somarDigitos(String(date.dia))+somarDigitos(String(date.mes))+somarDigitos(String(ANO_ATUAL)))}
+  // Ano Pessoal: DD+MM+ANO_REFERÊNCIA — o ano só muda após o aniversário
+  function calcAnoPessoal(date){
+    var hoje=new Date();
+    var hm=hoje.getMonth()+1,hd=hoje.getDate();
+    var anoRef=(hm>date.mes||(hm===date.mes&&hd>=date.dia))?ANO_ATUAL:ANO_ATUAL-1;
+    return reduzirSimples(somarDigitos(String(date.dia))+somarDigitos(String(date.mes))+somarDigitos(String(anoRef)));
+  }
   // P1=dia+mes, P2=mes+ano, P3=P1+P2, P4=dia+ano (fórmula NPS verificada)
   function calcPinaculos(date){const dia=reduzir(somarDigitos(String(date.dia)));const mes=reduzir(somarDigitos(String(date.mes)));const ano=reduzir(somarDigitos(String(date.ano)));const p1=reduzir(dia+mes);const p2=reduzir(mes+ano);const p3=reduzir(p1+p2);const p4=reduzir(dia+ano);return[p1,p2,p3,p4]}
   function calcPeriodosPinaculos(caminho,anoNasc){const durP1=36-(MESTRES.has(caminho)?reduzirSimples(caminho):caminho);const ini1=anoNasc,fim1=anoNasc+durP1-1;const ini2=fim1+1,fim2=ini2+8;const ini3=fim2+1,fim3=ini3+8;const ini4=fim3+1;return[{ini:ini1,fim:fim1,label:`${ini1}–${fim1}`},{ini:ini2,fim:fim2,label:`${ini2}–${fim2}`},{ini:ini3,fim:fim3,label:`${ini3}–${fim3}`},{ini:ini4,fim:null,label:`${ini4} em diante`}]}
