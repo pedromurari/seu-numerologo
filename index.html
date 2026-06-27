@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Mapa Numerológico Pitagórico · Leitura Completa</title>
   <meta name="theme-color" content="#07070e"/>
+  <link rel="icon" type="image/png" href="/assets/logo.png"/>
+  <link rel="apple-touch-icon" href="/assets/logo.png"/>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=Cinzel:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -3267,6 +3269,15 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <!-- Supabase -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <!-- Meta Pixel — substitua 1335107355260306 pelo ID numérico do seu pixel -->
+  <script>
+  var META_PIXEL_ID='1335107355260306';
+  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init',META_PIXEL_ID);
+  fbq('track','PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1335107355260306&ev=PageView&noscript=1"/></noscript>
+  <!-- End Meta Pixel -->
 </head>
 <body>
 
@@ -4247,6 +4258,12 @@
     if(!parseDateBR(clean)){err.textContent='Data inválida. Use o formato DD/MM/AAAA.';return;}
     if(!email||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){err.textContent='Por favor, informe um e-mail válido.';return;}
     err.textContent='';
+    if(window.fbq){
+      /* Advanced Matching: reinit com email + nome para melhorar match score */
+      var _parts=nome.trim().split(' ');
+      fbq('init',META_PIXEL_ID,{em:email,fn:(_parts[0]||'').toLowerCase(),ln:(_parts.slice(1).join(' ')||'').toLowerCase()});
+      fbq('track','Lead',{content_name:'Mapa Numerológico Pitagórico Aplicado'});
+    }
     _nome=nome;_date=clean;_email=email;
     window._nome=nome;window._email=email;
     /* Salva lead no Supabase (fire-and-forget) */
@@ -4568,6 +4585,7 @@
       '<div class="v2-taste-blur"></div>';
 
     /* Mostra tela e dispara sequência */
+    if(window.fbq)fbq('track','ViewContent',{content_name:'Mapa Numerológico Pitagórico Aplicado',content_type:'product',content_ids:['mapa-sn'],value:37.00,currency:'BRL'});
     showScreen('v2Teaser');
     hudUpdate(0);
     var teaserEl=document.getElementById('v2Teaser');
@@ -4578,6 +4596,9 @@
     if(buyBtn)buyBtn.onclick=function(){
       var base='https://checkout.institutodespertamente.shop/VCCL1O8SD04H';
       var params=new URLSearchParams({name:_nome,email:_email});
+      var snEid='sn_'+btoa(_email||'').replace(/[+=\/]/g,'');
+      try{localStorage.setItem('sn_eid',snEid);localStorage.setItem('sn_em',_email||'');}catch(e){}
+      if(window.fbq)fbq('track','InitiateCheckout',{content_name:'Mapa Numerológico Pitagórico Aplicado',content_type:'product',content_ids:['mapa-sn'],value:37.00,currency:'BRL'},{eventID:snEid});
       window.open(base+'?'+params.toString(),'_blank');
       if(window._markComprou)window._markComprou();
     };
@@ -4623,6 +4644,9 @@
       if(_curSlide>=_TOTAL_SLIDES-1){
         var base='https://checkout.institutodespertamente.shop/VCCL1O8SD04H';
         var params=new URLSearchParams({name:_nome,email:_email});
+        var snEid='sn_'+btoa(_email||'').replace(/[+=\/]/g,'');
+        try{localStorage.setItem('sn_eid',snEid);localStorage.setItem('sn_em',_email||'');}catch(e){}
+        if(window.fbq)fbq('track','InitiateCheckout',{content_name:'Mapa Numerológico Pitagórico Aplicado',content_type:'product',content_ids:['mapa-sn'],value:37.00,currency:'BRL'},{eventID:snEid});
         window.open(base+'?'+params.toString(),'_blank');
         if(window._markComprou)window._markComprou();
       }else{goSlide(_curSlide+1);}
@@ -5737,16 +5761,68 @@
   var _leadId=null;
 
   /* Salva lead assim que o formulário é enviado */
-  window._saveLead=function(nome,email,dataNasc,destino){
+  /* Captura UTMs, fbc (fbclid) e fbp na chegada da página */
+  (function(){
     var sp=new URLSearchParams(location.search);
+
+    /* fbc — Facebook Click ID (máxima atribuição de anúncio) */
+    var fbclid=sp.get('fbclid');
+    if(fbclid){
+      try{localStorage.setItem('sn_fbc','fb.1.'+Date.now()+'.'+fbclid);}catch(e){}
+    }
+
+    /* UTMs — first-touch */
+    var keys=['utm_source','utm_medium','utm_campaign','utm_term','utm_content'];
+    if(keys.some(function(k){return !!sp.get(k);})){
+      var saved={};
+      try{saved=JSON.parse(localStorage.getItem('sn_utms')||'{}');}catch(e){}
+      keys.forEach(function(k){if(sp.get(k))saved[k]=sp.get(k);});
+      saved.landing_page=location.origin+location.pathname+(location.search||'');
+      try{localStorage.setItem('sn_utms',JSON.stringify(saved));}catch(e){}
+    }
+
+    /* fbp — cookie do Pixel (lê após o script da Meta carregar) */
+    setTimeout(function(){
+      try{
+        var fbp=document.cookie.split(';').reduce(function(v,c){
+          var p=c.trim().split('=');return p[0]==='_fbp'?decodeURIComponent(p[1]||''):v;
+        },'');
+        if(fbp)localStorage.setItem('sn_fbp',fbp);
+      }catch(e){}
+    },1500);
+  })();
+
+  window._saveLead=function(nome,email,dataNasc,destino){
+    var utms={};
+    try{utms=JSON.parse(localStorage.getItem('sn_utms')||'{}');}catch(e){}
+    /* Fallback: lê diretamente da URL se localStorage vazio */
+    if(!utms.utm_source){
+      var sp=new URLSearchParams(location.search);
+      utms={
+        utm_source:sp.get('utm_source')||null,
+        utm_medium:sp.get('utm_medium')||null,
+        utm_campaign:sp.get('utm_campaign')||null,
+        utm_term:sp.get('utm_term')||null,
+        utm_content:sp.get('utm_content')||null,
+        landing_page:location.origin+location.pathname+(location.search||''),
+      };
+    }
+    var fbc='';var fbp='';
+    try{fbc=localStorage.getItem('sn_fbc')||'';}catch(e){}
+    try{fbp=localStorage.getItem('sn_fbp')||'';}catch(e){}
     _db.from('seu_numerologo_leads').upsert({
       nome:nome,email:email,
       data_nascimento:dataNasc,
       destino:destino||null,
       status:'lead',
-      utm_source:sp.get('utm_source')||null,
-      utm_medium:sp.get('utm_medium')||null,
-      utm_campaign:sp.get('utm_campaign')||null
+      utm_source:utms.utm_source||null,
+      utm_medium:utms.utm_medium||null,
+      utm_campaign:utms.utm_campaign||null,
+      utm_term:utms.utm_term||null,
+      utm_content:utms.utm_content||null,
+      utm_landing_page:utms.landing_page||null,
+      fbc:fbc||null,
+      fbp:fbp||null,
     },{onConflict:'email',ignoreDuplicates:false})
     .select('id').single()
     .then(function(r){if(r.data)_leadId=r.data.id;})

@@ -25,6 +25,68 @@ const cors = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-hub-signature, event',
 };
 
+// ── Meta CAPI ─────────────────────────────────────────────────────────────────
+
+async function sha256hex(text: string): Promise<string> {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+async function sendCapiPurchase(opts: {
+  email: string; phone: string; nome: string;
+  value: number; eventSourceUrl: string; eventId: string;
+  fbc?: string | null; fbp?: string | null; externalId?: string | null;
+}): Promise<void> {
+  const pixelId  = Deno.env.get('META_PIXEL_ID')  ?? '';
+  const apiToken = Deno.env.get('META_CAPI_TOKEN') ?? '';
+  if (!pixelId || !apiToken) { console.warn('META_PIXEL_ID ou META_CAPI_TOKEN não configurados'); return; }
+
+  const nameParts = opts.nome.trim().split(' ');
+  const [emHash, phHash, fnHash, lnHash, countryHash] = await Promise.all([
+    opts.email ? sha256hex(opts.email.toLowerCase().trim()) : Promise.resolve(null),
+    opts.phone ? sha256hex(opts.phone) : Promise.resolve(null),
+    nameParts[0]  ? sha256hex(nameParts[0].toLowerCase())                   : Promise.resolve(null),
+    nameParts[1]  ? sha256hex(nameParts.slice(1).join(' ').toLowerCase())   : Promise.resolve(null),
+    sha256hex('br'),
+  ]);
+
+  const userData: Record<string, unknown> = { country: [countryHash] };
+  if (emHash)           userData.em          = [emHash];
+  if (phHash)           userData.ph          = [phHash];
+  if (fnHash)           userData.fn          = [fnHash];
+  if (lnHash)           userData.ln          = [lnHash];
+  if (opts.fbc)         userData.fbc         = opts.fbc;
+  if (opts.fbp)         userData.fbp         = opts.fbp;
+  if (opts.externalId)  userData.external_id = [await sha256hex(opts.externalId)];
+
+  const payload = {
+    data: [{
+      event_name:       'Purchase',
+      event_time:       Math.floor(Date.now() / 1000),
+      event_id:         opts.eventId,
+      event_source_url: opts.eventSourceUrl,
+      action_source:    'website',
+      user_data:        userData,
+      custom_data: {
+        currency:     'BRL',
+        value:        opts.value.toFixed(2),
+        content_name: 'Mapa Numerológico Pitagórico Aplicado',
+        content_ids:  ['mapa-sn'],
+        content_type: 'product',
+      },
+    }],
+    access_token: apiToken,
+  };
+
+  const res = await fetch(`https://graph.facebook.com/v19.0/${pixelId}/events`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+  });
+  if (!res.ok) console.warn(`CAPI ${res.status}: ${(await res.text()).slice(0, 300)}`);
+  else console.log(`CAPI Purchase enviado → event_id=${opts.eventId}`);
+}
+
 const PRODUTO_ALVO = 'Mapa Numerológico Pitagórico Aplicado - SN';
 const SITE_URL     = Deno.env.get('SITE_URL') ?? 'https://mapa.seunumerologo.com.br';
 
@@ -217,7 +279,7 @@ async function process(body: Record<string, unknown>, eventType: string) {
     if (email) {
       const { data: lead } = await db
         .from('seu_numerologo_leads')
-        .select('pdf_path')
+        .select('pdf_path, fbc, fbp, id')
         .eq('email', email)
         .maybeSingle();
       pdfPath = lead?.pdf_path ?? null;
@@ -252,6 +314,23 @@ async function process(body: Record<string, unknown>, eventType: string) {
     // 4. WPP
     if (numero) {
       await sendWpp(numero, wppBoasVindas(nome));
+    }
+
+    // 5. CAPI Purchase (server-side — captura o que o pixel browser pode perder)
+    if (email) {
+      const rawAmount = (body as any)?.amount ?? (body as any)?.order?.amount ?? (body as any)?.plans?.[0]?.amount;
+      const saleValue = rawAmount ? Number(rawAmount) / 100 : 37.00;
+      const eventId   = 'sn_' + btoa(email).replace(/[+=\/]/g, '');
+      const leadData  = (body as any)?._lead as { fbc?: string; fbp?: string; id?: string } | undefined;
+      await sendCapiPurchase({
+        email, phone: numero, nome,
+        value: saleValue,
+        eventSourceUrl: `${SITE_URL}/obrigado`,
+        eventId,
+        fbc:        (lead as any)?.fbc        ?? leadData?.fbc        ?? null,
+        fbp:        (lead as any)?.fbp        ?? leadData?.fbp        ?? null,
+        externalId: (lead as any)?.id         ?? leadData?.id         ?? null,
+      });
     }
   }
 }
