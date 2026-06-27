@@ -3217,6 +3217,98 @@
     pointer-events:none;
   }
 
+  /* ── Unlock CTA (slide 4) ── */
+  .v2-ucta{
+    border-radius:18px;overflow:hidden;
+    background:rgba(0,0,0,.5);
+    border:1px solid rgba(245,166,35,.28);
+    position:relative;margin-bottom:24px;
+  }
+  .v2-ucta::before{
+    content:'';position:absolute;top:0;left:0;right:0;height:2px;
+    background:linear-gradient(90deg,transparent 0%,var(--amber) 50%,transparent 100%);
+  }
+  .v2-ucta-hd{
+    text-align:center;padding:26px 20px 18px;
+    border-bottom:1px solid rgba(255,255,255,.06);
+    background:linear-gradient(180deg,rgba(245,166,35,.07) 0%,transparent 100%);
+  }
+  .v2-ucta-map-icon{font-size:2rem;display:block;margin-bottom:10px}
+  .v2-ucta-htitle{
+    font-size:1rem;font-weight:700;color:#fff;
+    letter-spacing:.01em;margin-bottom:8px;
+  }
+  .v2-ucta-hchips{
+    font-size:.77rem;color:var(--text3);
+    display:flex;justify-content:center;align-items:center;gap:6px;flex-wrap:wrap;
+  }
+  .v2-ucta-sep{opacity:.4}
+  .v2-ucta-list{
+    padding:16px 20px;
+    border-bottom:1px solid rgba(255,255,255,.06);
+  }
+  .v2-ucta-list-lbl{
+    font-size:.65rem;text-transform:uppercase;letter-spacing:.11em;
+    color:var(--text3);font-weight:700;margin-bottom:12px;
+  }
+  .v2-ucta-row{
+    display:flex;align-items:center;gap:10px;
+    padding:8px 0;border-bottom:1px solid rgba(255,255,255,.04);
+    font-size:.82rem;color:rgba(255,255,255,.52);
+  }
+  .v2-ucta-row:last-of-type{border:none}
+  .v2-ucta-row-ico{flex-shrink:0;font-size:.85rem;opacity:.7}
+  .v2-ucta-more{
+    text-align:center;font-size:.75rem;
+    color:rgba(245,166,35,.55);font-style:italic;
+    padding:10px 0 2px;
+  }
+  .v2-ucta-tease{
+    margin:16px 20px;
+    background:linear-gradient(135deg,rgba(245,166,35,.13),rgba(245,166,35,.06));
+    border:1px solid rgba(245,166,35,.32);
+    border-radius:13px;padding:16px 18px;
+  }
+  .v2-ucta-tease-badge{
+    display:inline-flex;align-items:center;gap:5px;
+    font-size:.65rem;font-weight:800;letter-spacing:.13em;
+    text-transform:uppercase;color:var(--amber);margin-bottom:9px;
+  }
+  .v2-ucta-tease-badge::before{
+    content:'';width:6px;height:6px;border-radius:50%;
+    background:var(--amber);animation:pulseAmber 1.5s ease-in-out infinite;
+  }
+  .v2-ucta-tease-copy{
+    font-size:.86rem;color:rgba(255,255,255,.82);line-height:1.65;
+  }
+  .v2-ucta-tease-copy strong{color:#fff}
+  .v2-ucta-arrow{
+    display:flex;flex-direction:column;align-items:center;
+    gap:6px;padding:14px 20px 22px;
+  }
+  .v2-ucta-arr-lbl{
+    font-size:.78rem;color:var(--text3);text-align:center;
+  }
+  .v2-ucta-arr-lbl strong{color:var(--amber)}
+  .v2-ucta-arr-ico{
+    font-size:1.5rem;color:var(--amber);
+    animation:uctaBounce .85s ease-in-out infinite;
+  }
+  @keyframes uctaBounce{
+    0%,100%{transform:translateY(0);opacity:.9}
+    50%{transform:translateY(7px);opacity:.5}
+  }
+  /* Slide nav: estado pré-oferta */
+  .v2-snav-next.pre-offer{
+    background:linear-gradient(135deg,#f5a623,#d97c10)!important;
+    color:#000!important;font-weight:700!important;
+    box-shadow:0 0 22px rgba(245,166,35,.45)!important;
+    animation:preOfferPulse 1.8s ease-in-out infinite;
+  }
+  @keyframes preOfferPulse{
+    0%,100%{box-shadow:0 0 22px rgba(245,166,35,.45)}
+    50%{box-shadow:0 0 38px rgba(245,166,35,.75)}
+  }
 
   /* ── Três Movimentos ── */
   .v2-tres-mov{
@@ -3761,7 +3853,7 @@
           <div class="v2-adv-title">Análises adicionais aguardando desbloqueio:</div>
           <div class="v2-adv-grid" id="v2AdvGrid"></div>
         </div>
-        <div class="v2-taste-box" style="margin-top:14px" id="v2TasteBox"></div>
+        <div style="margin-top:14px" id="v2TasteBox"></div>
       </div>
     </div>
 
@@ -4568,21 +4660,36 @@
     var personaColorT=NUM_COLOR_HEX[personalidade]||'#c8a96e';
     var anoColorT=NUM_COLOR_HEX[anoPessoal]||'#c8a96e';
     document.getElementById('v2TasteBox').innerHTML=
-      '<div class="v2-taste-kicker">◈ O que seu mapa revela sobre você agora</div>'+
-      '<div style="font-size:.87rem;color:var(--text2);line-height:1.75;margin-bottom:14px">'+
-        'Seu <strong style="color:'+personaColorT+'">Personalidade '+personalidade+'</strong> projeta uma imagem que o mundo espera de você. '+
-        'Sua <strong style="color:'+almaColorT+'">Alma '+alma+'</strong> move algo diferente por dentro. '+
-        'E o <strong style="color:'+anoColorT+'">Ano Pessoal '+anoPessoal+'</strong> está pedindo: '+anoData.luz.split('.')[0].toLowerCase()+'.'+
-      '</div>'+
-      '<div style="font-size:.87rem;color:var(--text2);line-height:1.75;margin-bottom:14px">'+
-        '<strong style="color:#fff">Quando esses três não estão alinhados</strong> — o que você projeta, o que você sente por dentro, e o que o ciclo atual pede — você repete o mesmo padrão sem saber por quê. '+
-        'Isso tem nome no seu mapa.'+
-      '</div>'+
-      '<div class="v2-taste-quote">&#8220;'+tasteLine+'&#8221;</div>'+
-      '<div style="font-size:.8rem;color:'+caminhoColor+';margin-top:14px;font-style:italic;line-height:1.6">'+
-        '↳ O Mapa Completo mostra como alinhar seu Caminho '+caminho+', sua Alma '+alma+' e seu momento atual — e o que muda quando eles trabalham juntos.'+
-      '</div>'+
-      '<div class="v2-taste-blur"></div>';
+      '<div class="v2-ucta">'+
+        '<div class="v2-ucta-hd">'+
+          '<span class="v2-ucta-map-icon">🗺️</span>'+
+          '<div class="v2-ucta-htitle">Seu Mapa Completo Está Pronto</div>'+
+          '<div class="v2-ucta-hchips">'+
+            '<span style="color:'+caminhoColor+'">Caminho '+caminho+'</span>'+
+            '<span class="v2-ucta-sep">·</span>'+
+            '<span style="color:'+almaColorT+'">Alma '+alma+'</span>'+
+            '<span class="v2-ucta-sep">·</span>'+
+            '<span style="color:'+personaColorT+'">Personalidade '+personalidade+'</span>'+
+          '</div>'+
+        '</div>'+
+        '<div class="v2-ucta-list">'+
+          '<div class="v2-ucta-list-lbl">🔒 Aguardando desbloqueio</div>'+
+          '<div class="v2-ucta-row"><span class="v2-ucta-row-ico">🔒</span><span>Número de Expressão — sua missão e talentos ocultos</span></div>'+
+          '<div class="v2-ucta-row"><span class="v2-ucta-row-ico">🔒</span><span>Os 4 Pináculos — fases exatas da sua vida com datas</span></div>'+
+          '<div class="v2-ucta-row"><span class="v2-ucta-row-ico">🔒</span><span>Padrões de Autossabotagem — por que você se bloqueia</span></div>'+
+          '<div class="v2-ucta-row"><span class="v2-ucta-row-ico">🔒</span><span>Destino, Psíquico, Talento Oculto e mais 5 análises</span></div>'+
+          '<div class="v2-ucta-row"><span class="v2-ucta-row-ico">🔒</span><span>Plano de Ação Real — o que parar, começar e manter</span></div>'+
+          '<div class="v2-ucta-more">+ síntese completa · pirâmide pitagórica · PDF premium</div>'+
+        '</div>'+
+        '<div class="v2-ucta-tease">'+
+          '<div class="v2-ucta-tease-badge">condição especial de lançamento</div>'+
+          '<div class="v2-ucta-tease-copy">Na próxima tela você vai ter a chance de desbloquear <strong>tudo isso</strong> — personalizado para o seu Caminho '+caminho+' — por um valor que não vai se repetir.</div>'+
+        '</div>'+
+        '<div class="v2-ucta-arrow">'+
+          '<span class="v2-ucta-arr-lbl">Toque em <strong>próximo</strong> para ver a oferta</span>'+
+          '<span class="v2-ucta-arr-ico">↓</span>'+
+        '</div>'+
+      '</div>';
 
     /* Mostra tela e dispara sequência */
     if(window.fbq)fbq('track','ViewContent',{content_name:'Mapa Numerológico Pitagórico Aplicado',content_type:'product',content_ids:['mapa-sn'],value:37.00,currency:'BRL'});
@@ -4705,8 +4812,12 @@
     var next=document.getElementById('v2SlideNext');
     if(next){
       var isLast=(_curSlide===_TOTAL_SLIDES-1);
-      next.textContent=isLast?'🔓 Quero Meu Mapa Completo':'Próximo →';
+      var isPreOffer=(_curSlide===4);
+      if(isLast){next.textContent='🔓 Quero Meu Mapa Completo';}
+      else if(isPreOffer){next.textContent='✦ Ver oferta especial →';}
+      else{next.textContent='Próximo →';}
       next.classList.toggle('last',isLast);
+      next.classList.toggle('pre-offer',isPreOffer&&!isLast);
     }
   }
 
