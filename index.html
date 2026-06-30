@@ -3441,11 +3441,12 @@
       <span class="v2-eyebrow-dot"></span>
     </div>
     <h1 class="v2-hero-h1">
-      Seu nome e sua data escondem<br>
-      <span class="v2-hero-accent">um código que explica tudo</span>
+      Existe um padrão invisível<br>
+      <span class="v2-hero-accent">influenciando suas escolhas.</span><br>
+      Descubra qual é o seu.
     </h1>
     <p class="v2-hero-sub">
-      Seus padrões, seus bloqueios, seu propósito — tudo está codificado na vibração do seu nome e da sua data de nascimento. O Sistema Pitagórico revela isso em 30 segundos.
+      A numerologia pitagórica revela o que está por trás dos seus resultados, relacionamentos e desafios — gratuitamente, em 30 segundos.
     </p>
     <p style="font-size:.72rem;color:var(--muted);font-family:'Poppins',sans-serif;margin-top:4px">🟢 <span id="liveCount">247</span> pessoas revelando o mapa agora</p>
   </div>
@@ -4208,8 +4209,8 @@
   }
 
   function goToForm(){var s=document.getElementById('v2HeroFormSection');if(s){s.scrollIntoView({behavior:'smooth'});setTimeout(function(){var n=document.getElementById('v2Name');if(n)n.focus();},500);}}
-  document.getElementById('v2NavCta').addEventListener('click',goToForm);
-  document.getElementById('v2FooterCta').addEventListener('click',goToForm);
+  var _navCta=document.getElementById('v2NavCta');if(_navCta)_navCta.addEventListener('click',goToForm);
+  var _footerCta=document.getElementById('v2FooterCta');if(_footerCta)_footerCta.addEventListener('click',goToForm);
 
   /* ── AIDA: Live counter (social proof — Cialdini) ── */
   (function(){
