@@ -3282,12 +3282,13 @@
   .lp-video-section{max-width:400px;margin:48px auto 0;text-align:center;}
   .lp-video-wrap{
     position:relative;width:100%;aspect-ratio:9/16;max-height:680px;
-    background:#0a0a18;
-    border:1px solid rgba(208,94,42,.2);border-radius:16px;overflow:hidden;cursor:pointer;
+    background:linear-gradient(160deg,#1a0e30,#0d0616);
+    border:1.5px solid rgba(208,94,42,.45);border-radius:16px;overflow:hidden;cursor:pointer;
+    box-shadow:0 0 60px rgba(208,94,42,.12),inset 0 0 40px rgba(0,0,0,.5);
   }
   .lp-video-thumb{
     position:absolute;inset:0;
-    background:linear-gradient(135deg,#0d0820,#080814);
+    background:linear-gradient(160deg,#1a0e30,#120818,#0d0616);
     display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;
     transition:opacity .3s;
   }
@@ -3451,7 +3452,7 @@
   <div class="lp-video-section">
     <div class="lp-video-wrap" id="lpVideoWrap">
       <div class="lp-video-thumb">
-        <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:.07" viewBox="0 0 400 700" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:.15" viewBox="0 0 400 700" fill="none" xmlns="http://www.w3.org/2000/svg">
           <circle cx="200" cy="350" r="280" stroke="#D05E2A" stroke-width="1"/>
           <circle cx="200" cy="350" r="200" stroke="#D05E2A" stroke-width="1"/>
           <circle cx="200" cy="350" r="120" stroke="#D05E2A" stroke-width="1"/>
