@@ -2225,7 +2225,9 @@
   .v2-res-cta-bar{
     flex-shrink:0;padding:14px 20px;background:rgba(0,0,0,.97);
     backdrop-filter:blur(20px);border-top:1px solid rgba(255,255,255,.09);z-index:20;
+    opacity:0;pointer-events:none;transform:translateY(100%);transition:opacity .4s ease,transform .4s cubic-bezier(.22,.68,0,1.2);
   }
+  .v2-res-cta-bar.is-visible{opacity:1;pointer-events:auto;transform:translateY(0);}
   .v2-res-cta-btn{
     width:100%;padding:16px 22px;border-radius:50px;
     background:var(--amber);border:none;color:#000;
@@ -3846,7 +3848,7 @@
         </div>
 
         <!-- Oferta + CTA -->
-        <div class="sp-offer-block">
+        <div class="sp-offer-block" id="v2OfferBlock">
           <div class="sp-offer-badge">✦ Acesso Completo · Instantâneo</div>
           <h2 class="sp-offer-h">Seu Mapa Numerológico<br>Pitagórico Completo</h2>
           <p class="sp-offer-sub">12 análises personalizadas · PDF premium · Plano de Ação</p>
