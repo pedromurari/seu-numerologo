@@ -854,17 +854,18 @@
     /* Navbar */
     .v2-nav{
       position:fixed;top:0;left:0;right:0;z-index:100;
-      padding:0 32px;height:56px;
-      display:flex;align-items:center;justify-content:space-between;
+      padding:0 0 0 12px;height:56px;
+      display:flex;align-items:center;gap:0;
       background:rgba(0,0,0,.8);
       backdrop-filter:saturate(180%) blur(20px);
       border-bottom:1px solid var(--border);
+      overflow:hidden;
     }
     .v2-nav-logo{
       display:inline-flex;align-items:center;justify-content:flex-start;
       height:48px;width:48px;text-decoration:none;
       font-size:0;line-height:0;
-      flex-shrink:0;
+      flex-shrink:0;position:relative;z-index:2;
     }
     .v2-nav-logo img{
       height:48px;width:48px;display:block;object-fit:contain;
@@ -874,18 +875,29 @@
     @media(max-width:640px){
       .v2-nav-logo,.v2-nav-logo img{height:40px;width:40px}
     }
-    .v2-nav-cta{
-      font-size:.78rem;font-weight:600;color:var(--amber);
-      letter-spacing:.05em;cursor:pointer;padding:6px 14px;
-      border:1px solid var(--amberLine);border-radius:20px;
-      transition:all .25s;background:var(--amberBg);
+    /* Ticker embutido no nav */
+    .v2-nav-ticker{
+      flex:1;min-width:0;overflow:hidden;
+      height:100%;display:flex;align-items:center;
+      -webkit-mask-image:linear-gradient(to right,transparent 0,transparent 30px,rgba(0,0,0,.5) 60px,black 100px);
+      mask-image:linear-gradient(to right,transparent 0,transparent 30px,rgba(0,0,0,.5) 60px,black 100px);
     }
-    .v2-nav-cta:hover{background:rgba(245,166,35,.15);border-color:rgba(245,166,35,.4)}
+    .v2-nav-ticker .v2-ticker-inner{
+      display:flex;white-space:nowrap;
+      animation:ticker 35s linear infinite;
+    }
+    .v2-nav-ticker .v2-ticker-inner span{
+      display:inline-block;padding:0 36px;
+      font-family:'Poppins',sans-serif;
+      font-size:.58rem;font-weight:500;
+      color:rgba(144,144,168,.75);letter-spacing:.18em;
+      text-transform:uppercase;
+    }
 
-    /* Ticker social proof */
+    /* Ticker social proof — herdado por v2-nav-ticker */
     .v2-ticker{
       background:rgba(245,166,35,.06);border-bottom:1px solid rgba(245,166,35,.1);
-      overflow:hidden;height:36px;display:flex;align-items:center;margin-top:56px;
+      overflow:hidden;height:36px;display:flex;align-items:center;
     }
     .v2-ticker-inner{
       display:flex;gap:0;white-space:nowrap;
@@ -1717,8 +1729,8 @@
   #v2Load.v2-hidden{display:none!important}
   /* amberLine / amberBg vars fallback */
   :root{--amberLine:rgba(208,94,42,.22);--amberBg:rgba(208,94,42,.06)}
-  /* Ticker positioning fix */
-  .v2-ticker{margin-top:56px}
+  /* Ticker positioning fix — ticker agora está dentro do nav */
+  .v2-ticker{margin-top:0}
   /* v2-back-btn button reset */
   .v2-back-btn{background:none;border:none;cursor:pointer}
   /* Form inner centering */
@@ -3404,11 +3416,7 @@
 <div id="v2Hero" class="v2-screen">
   <nav class="v2-nav">
     <a class="v2-nav-logo" href="#" aria-label="Seu Numerólogo"><img src="assets/logo.png" alt="Seu Numerólogo"/></a>
-    <button class="v2-nav-cta" id="v2NavCta" type="button">Revelar Meu Mapa — Grátis →</button>
-  </nav>
-
-  <div class="v2-ticker-wrap" aria-hidden="true">
-    <div class="v2-ticker">
+    <div class="v2-nav-ticker" aria-hidden="true">
       <div class="v2-ticker-inner">
         <span>✦ 47.000+ mapas revelados</span>
         <span>✦ Sistema Pitagórico Autêntico · 2.500 anos de sabedoria</span>
@@ -3422,7 +3430,7 @@
         <span>✦ "Fez mais sentido do que anos de terapia" — Ana L., São Paulo</span>
       </div>
     </div>
-  </div>
+  </nav>
 
   <!-- ABOVE FOLD -->
   <div class="v2-hero-body">
