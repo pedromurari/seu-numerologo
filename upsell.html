@@ -71,8 +71,10 @@ body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSy
   text-transform:uppercase;margin-bottom:10px;
 }
 .vsl-container{
-  position:relative;width:100%;padding-top:56.25%;
-  background:#06061A;border-radius:12px;overflow:hidden;
+  position:relative;width:100%;max-width:360px;
+  padding-top:min(177.78%,70vh);
+  margin:0 auto;
+  background:#06061A;border-radius:16px;overflow:hidden;
   border:1px solid var(--border2);
   box-shadow:0 0 60px rgba(212,176,106,.1),0 20px 60px rgba(0,0,0,.6);
 }
@@ -409,8 +411,7 @@ fbq('track','ViewContent',{content_name:'Sessão de Interpretação · Seu Numer
 <!-- YouTube IFrame API -->
 <script src="https://www.youtube.com/iframe_api"></script>
 <script>
-// ✏️ EDITE: ID do vídeo do YouTube (parte depois de ?v= ou youtu.be/)
-var VSL_VIDEO_ID = 'SEU_VIDEO_ID_AQUI';
+var VSL_VIDEO_ID = '7OcYe5SYBaM';
 
 var _vslPlayer = null;
 var _vslMuted  = true;
