@@ -3232,6 +3232,151 @@
   .v2-ticker{font-family:'Poppins',sans-serif !important}
 
   /* ── Print / PDF optimizations ── */
+
+  /* ═══ SCROLL-REVEAL ANIMATIONS ═══ */
+  .v2-res-block{
+    opacity:0;
+    transform:translateY(36px);
+    transition:opacity .65s cubic-bezier(.22,.68,0,1.1), transform .65s cubic-bezier(.22,.68,0,1.1);
+  }
+  .v2-res-block.v2-res-hero{opacity:1!important;transform:none!important;}
+  .v2-res-block.is-visible{opacity:1;transform:translateY(0);}
+
+  /* bounce arrow */
+  .v2-scroll-cue{
+    display:flex;flex-direction:column;align-items:center;gap:6px;
+    margin:28px auto 8px;cursor:pointer;opacity:.85;
+    font-family:'Poppins',sans-serif;font-size:.75rem;
+    color:var(--muted);letter-spacing:.12em;text-transform:uppercase;
+    animation:bounceCue 2.2s ease-in-out infinite;
+    user-select:none;width:fit-content;
+  }
+  .v2-scroll-cue svg{color:var(--gold2);}
+  @keyframes bounceCue{0%,100%{transform:translateY(0);}50%{transform:translateY(9px);}}
+  .v2-block-cue{opacity:.5;animation:bounceCue 2s ease-in-out infinite;}
+  .v2-block-cue:hover{opacity:.9;}
+
+  /* insight text on hero block */
+  .v2-reveal-insight{
+    font-family:'Poppins',sans-serif;
+    font-size:.97rem;line-height:1.8;
+    color:var(--text2);
+    max-width:560px;margin:20px auto 0;
+    text-align:left;
+  }
+  .v2-reveal-insight p{margin:0 0 12px}
+  .v2-reveal-insight p:last-child{margin-bottom:0}
+  .v2-reveal-insight strong{color:#fff;font-weight:600}
+
+  /* block separator */
+  .v2-block-sep{
+    width:60px;height:2px;
+    background:linear-gradient(90deg,transparent,var(--goldLine),transparent);
+    margin:24px auto 0;
+  }
+
+  /* ═══ LANDING PAGE INLINE FORM ═══ */
+  .lp-video-section{max-width:400px;margin:48px auto 0;text-align:center;}
+  .lp-video-wrap{
+    position:relative;width:100%;aspect-ratio:9/16;max-height:680px;
+    background:#0a0a18;
+    border:1px solid rgba(208,94,42,.2);border-radius:16px;overflow:hidden;cursor:pointer;
+  }
+  .lp-video-thumb{
+    position:absolute;inset:0;
+    background:linear-gradient(135deg,#0d0820,#080814);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;
+    transition:opacity .3s;
+  }
+  .lp-video-play{
+    width:72px;height:72px;border-radius:50%;background:var(--gold);
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 0 40px rgba(208,94,42,.5);transition:transform .2s,box-shadow .2s;
+  }
+  .lp-video-wrap:hover .lp-video-play{transform:scale(1.1);box-shadow:0 0 60px rgba(208,94,42,.7);}
+  .lp-video-play svg{transform:translateX(3px)}
+  .lp-video-label{font-family:'Poppins',sans-serif;font-size:.8rem;color:rgba(244,232,220,.45);letter-spacing:.1em;}
+  .lp-video-wrap video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none;}
+  .lp-video-wrap.playing .lp-video-thumb{opacity:0;pointer-events:none;}
+  .lp-video-wrap.playing video{display:block;}
+
+  .lp-inline-form-section{max-width:480px;margin:56px auto 0;padding:0 16px;}
+  .lp-form-eyebrow{
+    text-align:center;font-family:'Poppins',sans-serif;font-size:.7rem;
+    font-weight:700;letter-spacing:.25em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;
+  }
+  .lp-form-h{
+    text-align:center;font-family:'Poppins',sans-serif;
+    font-size:1.55rem;font-weight:800;color:#fff;margin-bottom:6px;
+  }
+  .lp-form-sub{
+    text-align:center;font-family:'Poppins',sans-serif;
+    font-size:.88rem;color:var(--text3);margin-bottom:24px;line-height:1.55;
+  }
+  .lp-form-card{
+    background:linear-gradient(160deg,rgba(16,16,30,.98),rgba(10,10,22,1));
+    border:1px solid rgba(208,94,42,.15);border-top:1px solid rgba(208,94,42,.28);
+    border-radius:14px;padding:32px 28px;
+    box-shadow:0 40px 80px rgba(0,0,0,.8);position:relative;overflow:hidden;
+  }
+  .lp-form-card::before{
+    content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);
+    width:60%;height:2px;
+    background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:.5;
+  }
+  .lp-form-security{
+    display:flex;align-items:center;justify-content:center;gap:8px;
+    font-family:'Poppins',sans-serif;font-size:.72rem;color:var(--muted);margin-top:14px;
+    text-align:center;line-height:1.5;
+  }
+
+  /* 3 curiosity points */
+  .lp-tease-section{margin:72px auto 0;max-width:680px;padding:0 20px;}
+  .lp-tease-kicker{
+    text-align:center;font-family:'Poppins',sans-serif;font-size:.7rem;
+    font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--gold2);margin-bottom:10px;
+  }
+  .lp-tease-h{
+    text-align:center;font-family:'Poppins',sans-serif;
+    font-size:clamp(1.4rem,4vw,2rem);font-weight:800;color:#fff;line-height:1.2;margin-bottom:32px;
+  }
+  .lp-tease-grid{display:grid;grid-template-columns:1fr;gap:14px;}
+  .lp-tease-card{
+    background:rgba(208,94,42,.04);border:1px solid rgba(208,94,42,.14);
+    border-left:3px solid var(--gold);border-radius:12px;
+    padding:20px 22px;display:flex;gap:16px;align-items:flex-start;
+  }
+  .lp-tease-icon{font-size:1.4rem;flex-shrink:0;margin-top:2px;}
+  .lp-tease-card-h{font-family:'Poppins',sans-serif;font-size:.97rem;font-weight:700;color:#fff;margin-bottom:5px;}
+  .lp-tease-card-p{font-family:'Poppins',sans-serif;font-size:.86rem;color:var(--text3);line-height:1.65;}
+
+  /* 7 esferas */
+  .lp-esferas-section{margin:72px auto 0;max-width:680px;padding:0 20px;}
+  .lp-esferas-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-top:24px;}
+  .lp-esfera-item{
+    background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.07);
+    border-radius:10px;padding:16px 14px;text-align:center;
+  }
+  .lp-esfera-num{font-family:'Poppins',sans-serif;font-size:1.6rem;font-weight:800;color:var(--gold2);line-height:1;margin-bottom:6px;}
+  .lp-esfera-name{font-family:'Poppins',sans-serif;font-size:.78rem;font-weight:600;color:var(--text2);}
+
+  /* about NP */
+  .lp-np-section{margin:72px auto 0;max-width:640px;padding:0 20px;text-align:center;}
+  .lp-np-quote{
+    font-family:'Poppins',sans-serif;font-style:italic;font-size:1rem;
+    color:var(--text2);line-height:1.8;
+    border-left:3px solid var(--gold);padding:12px 18px;text-align:left;
+    background:rgba(208,94,42,.04);border-radius:0 8px 8px 0;margin:20px 0;
+  }
+  .lp-np-source{font-family:'Poppins',sans-serif;font-size:.76rem;color:var(--muted);margin-top:10px;font-style:normal;}
+
+  @media(max-width:600px){
+    .lp-video-section{max-width:90vw;}
+    .lp-inline-form-section{padding:0 12px;}
+    .lp-form-card{padding:24px 18px;}
+    .lp-esferas-grid{grid-template-columns:repeat(3,1fr);}
+  }
+
   @media print{
     body{background:#fff !important;color:#111 !important}
     .v2-phase{page-break-inside:avoid;break-inside:avoid}
@@ -3283,248 +3428,167 @@
       <span class="v2-eyebrow-dot"></span>
     </div>
     <h1 class="v2-hero-h1">
-      Já parou pra pensar por que<br>
-      <span class="v2-hero-accent">você repete sempre os mesmos padrões?</span>
+      Seu nome e sua data escondem<br>
+      <span class="v2-hero-accent">um código que explica tudo</span>
     </h1>
     <p class="v2-hero-sub">
-      Seu nome e data de nascimento carregam um código único — e ele explica<br>seus padrões de comportamento, seus bloqueios e o seu propósito de vida.
+      Seus padrões, seus bloqueios, seu propósito — tudo está codificado na vibração do seu nome e da sua data de nascimento. O Sistema Pitagórico revela isso em 30 segundos.
     </p>
     <div class="v2-hero-cta-wrap">
-      <div class="v2-hero-cta-row">
-        <button class="v2-hero-cta" id="v2HeroCta" type="button">
-          Revelar Meu Mapa Gratuitamente
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M8 3l5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
-      </div>
-      <p class="v2-cta-sub">100% Gratuito · Resultado em 30 segundos · Sem cadastro</p>
-      <p style="margin-top:10px;font-size:.72rem;color:var(--muted);font-family:'Poppins',sans-serif">🟢 <span id="liveCount">247</span> pessoas revelando o mapa agora</p>
+      <button class="v2-hero-cta" id="v2HeroCta" type="button" onclick="document.getElementById('v2HeroFormSection').scrollIntoView({behavior:'smooth'});setTimeout(function(){document.getElementById('v2Name').focus()},500)">
+        Revelar Meu Mapa Gratuitamente
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M8 3l5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <p class="v2-cta-sub">100% Gratuito · Resultado em 30 segundos</p>
+      <p style="margin-top:8px;font-size:.72rem;color:var(--muted);font-family:'Poppins',sans-serif">🟢 <span id="liveCount">247</span> pessoas revelando o mapa agora</p>
     </div>
   </div>
 
-  <!-- DOR / PADRÕES -->
-  <section class="lp-section">
-    <div class="lp-inner">
-      <div class="lp-label" title="AIDA · Interest">Você se reconhece aqui?</div>
-      <h2 class="lp-h2">Há padrões na sua vida que<br>se repetem — e você não sabe por quê</h2>
-      <div class="lp-what-grid" style="margin-top:28px">
-        <div class="lp-what-card" style="border-color:rgba(255,80,80,.2);background:rgba(255,80,80,.04)">
-          <div class="lp-what-title" style="color:#ff9090">Relacionamentos</div>
-          <p class="lp-what-text">Você atrai sempre o mesmo tipo de pessoa — ou repete os mesmos conflitos com pessoas diferentes.</p>
+  <!-- VIDEO EM PÉ -->
+  <div class="lp-video-section">
+    <div class="lp-video-wrap" id="lpVideoWrap">
+      <div class="lp-video-thumb">
+        <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:.07" viewBox="0 0 400 700" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="200" cy="350" r="280" stroke="#D05E2A" stroke-width="1"/>
+          <circle cx="200" cy="350" r="200" stroke="#D05E2A" stroke-width="1"/>
+          <circle cx="200" cy="350" r="120" stroke="#D05E2A" stroke-width="1"/>
+          <circle cx="200" cy="350" r="60" stroke="#D05E2A" stroke-width="1"/>
+          <line x1="200" y1="70" x2="200" y2="630" stroke="#D05E2A" stroke-width="0.5"/>
+          <line x1="-80" y1="350" x2="480" y2="350" stroke="#D05E2A" stroke-width="0.5"/>
+        </svg>
+        <div class="lp-video-play" id="lpPlayBtn">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
         </div>
-        <div class="lp-what-card" style="border-color:rgba(255,80,80,.2);background:rgba(255,80,80,.04)">
-          <div class="lp-what-title" style="color:#ff9090">Propósito</div>
-          <p class="lp-what-text">Sente que há algo maior pra sua vida, mas não consegue nomear o que é — nem por onde começar.</p>
-        </div>
-        <div class="lp-what-card" style="border-color:rgba(255,80,80,.2);background:rgba(255,80,80,.04)">
-          <div class="lp-what-title" style="color:#ff9090">Decisões</div>
-          <p class="lp-what-text">Fica em dúvida constante, como se nunca soubesse ao certo qual caminho é genuinamente seu.</p>
-        </div>
-        <div class="lp-what-card" style="border-color:rgba(255,80,80,.2);background:rgba(255,80,80,.04)">
-          <div class="lp-what-title" style="color:#ff9090">Autossabotagem</div>
-          <p class="lp-what-text">Chega perto do que quer e algo acontece — interno ou externo — que te faz recuar no último momento.</p>
-        </div>
-        <div class="lp-what-card" style="border-color:rgba(255,80,80,.2);background:rgba(255,80,80,.04)">
-          <div class="lp-what-title" style="color:#ff9090">Identidade</div>
-          <p class="lp-what-text">Não sabe ao certo quem é sem as expectativas dos outros moldando quem você deveria ser.</p>
-        </div>
-        <div class="lp-what-card" style="border-color:rgba(255,80,80,.2);background:rgba(255,80,80,.04)">
-          <div class="lp-what-title" style="color:#ff9090">Ciclos</div>
-          <p class="lp-what-text">Vive como se o tempo passasse mas os mesmos temas voltassem — sempre no mesmo ponto.</p>
-        </div>
+        <div class="lp-video-label">Assista antes de gerar seu mapa</div>
       </div>
-      <p class="lp-lead" style="margin-top:32px"><strong style="color:#fff">Esses padrões não são acidente.</strong> Eles estão codificados na vibração do seu nome e da sua data de nascimento. O Mapa Pitagórico Sistêmico foi desenvolvido para decifrá-los — com precisão, profundidade e sem julgamento.</p>
+      <video id="lpVideo" playsinline controls data-src="SEU_VIDEO_URL_AQUI.mp4"></video>
     </div>
-  </section>
+  </div>
 
-  <!-- ═══ O QUE É ═══ -->
-  <section class="lp-section">
-    <div class="lp-inner">
-      <div class="lp-label">O Método</div>
-      <h2 class="lp-h2">O Mapa que revela<br>os 7 códigos do seu ser</h2>
-      <p class="lp-lead">Há mais de 2.500 anos, Pitágoras descobriu que números são a linguagem da estrutura da realidade. O Mapa Pitagórico Sistêmico — desenvolvido por Rodrygo Murari — usa essa sabedoria ancestral para decodificar os padrões únicos codificados no seu nome e data de nascimento.</p>
-      <p class="lp-lead" style="margin-top:16px">Não é misticismo. É um sistema preciso de autoconhecimento — que trabalha com <em style="color:#fff;font-style:normal">quem você já é</em>, revelando os três movimentos que regem toda a sua experiência: o que você reage (temperamental), o que você manifesta (comportamental) e o que você veio ser (essencial).</p>
-      <div class="lp-what-grid">
-        <div class="lp-what-card" data-num="I">
-          <div class="lp-what-title">Caminho de Vida</div>
-          <p class="lp-what-text">A direção central da sua jornada — o que você veio aprender e como navegar seus principais desafios.</p>
-        </div>
-        <div class="lp-what-card" data-num="II">
-          <div class="lp-what-title">Missão de Vida</div>
-          <p class="lp-what-text">O propósito mais profundo codificado no seu nome — o que você veio realizar nessa existência.</p>
-        </div>
-        <div class="lp-what-card" data-num="III">
-          <div class="lp-what-title">Expressão e Talentos</div>
-          <p class="lp-what-text">Como você naturalmente se comunica, cria e impacta as pessoas ao seu redor.</p>
-        </div>
-        <div class="lp-what-card" data-num="IV">
-          <div class="lp-what-title">Motivação Interior</div>
-          <p class="lp-what-text">O que te move por dentro — seus desejos mais profundos que raramente você expressa em voz alta.</p>
-        </div>
-        <div class="lp-what-card" data-num="V">
-          <div class="lp-what-title">Padrões de Comportamento</div>
-          <p class="lp-what-text">Os ciclos que você repete sem perceber — e por que eles aparecem exatamente onde aparecem.</p>
-        </div>
-        <div class="lp-what-card" data-num="VI">
-          <div class="lp-what-title">Próximo Ciclo</div>
-          <p class="lp-what-text">O que a numerologia indica para seu ciclo atual — o que priorizar e o que está amadurecendo.</p>
-        </div>
+  <!-- FORMULÁRIO INLINE -->
+  <div class="lp-inline-form-section" id="v2HeroFormSection">
+    <div class="lp-form-eyebrow">Gratuito · Resultado em 30 segundos</div>
+    <h2 class="lp-form-h">Gere seu Mapa Agora</h2>
+    <p class="lp-form-sub">Informe seus dados de nascimento — usamos apenas para calcular seu mapa numerológico.</p>
+    <div class="lp-form-card">
+      <div class="v2-field">
+        <label class="v2-field-label" for="v2Name">Nome completo de nascimento</label>
+        <input class="v2-field-input" id="v2Name" type="text"
+          placeholder="Como consta na certidão"
+          autocomplete="off" spellcheck="false"/>
+        <span class="v2-field-hint">Use o nome exato — sem apelidos</span>
       </div>
+      <div class="v2-field">
+        <label class="v2-field-label" for="v2Date">Data de nascimento</label>
+        <input class="v2-field-input" id="v2Date" type="tel"
+          placeholder="DD / MM / AAAA"
+          inputmode="numeric" maxlength="14" autocomplete="off"/>
+        <span class="v2-field-hint">Dia, mês e ano exatos</span>
+      </div>
+      <div class="v2-field">
+        <label class="v2-field-label" for="v2Email">E-mail</label>
+        <input class="v2-field-input" id="v2Email" type="email"
+          placeholder="email@exemplo.com"
+          autocomplete="email" spellcheck="false"/>
+      </div>
+      <div class="v2-field">
+        <label class="v2-field-label" for="v2Phone">WhatsApp</label>
+        <div class="v2-phone-wrap">
+          <span class="v2-phone-prefix">+55</span>
+          <input class="v2-field-input v2-phone-input" id="v2Phone" type="tel"
+            placeholder="(11) 99999-0000"
+            inputmode="numeric" autocomplete="tel" maxlength="15"/>
+        </div>
+        <span class="v2-field-hint">Com DDD · para receber seu mapa no WhatsApp</span>
+      </div>
+      <div class="v2-err" id="v2Err"></div>
+      <button class="v2-submit-btn" id="v2Submit" type="button">Calcular Meu Mapa Grátis →</button>
     </div>
-  </section>
+    <div class="lp-form-security">🔒 Seus dados são usados apenas para gerar o mapa · não compartilhamos com ninguém</div>
+  </div>
 
-  <!-- ═══ DESEJO — Transformação ═══ -->
-  <section class="lp-section" style="background:linear-gradient(180deg,transparent,rgba(208,94,42,.04),transparent)">
-    <div class="lp-inner" style="max-width:760px">
-      <div class="lp-label">O que muda quando você entende</div>
-      <h2 class="lp-h2">Imagine saber exatamente<br>por que você é como é</h2>
-      <p class="lp-lead">Não como um julgamento — como um mapa. Imagine ter acesso a uma leitura que nomeia o que você sente mas nunca conseguiu articular, que explica por que certas situações te drenam enquanto outras te energizam, e que mostra o que o período que você está vivendo agora está pedindo de você.</p>
-      <div style="margin-top:32px;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px">
-        <div style="background:rgba(112,208,160,.05);border:1px solid rgba(112,208,160,.18);border-radius:12px;padding:22px 20px">
-          <div style="font-family:'Poppins',sans-serif;font-weight:700;color:#70d0a0;font-size:.88rem;margin-bottom:10px">✓ Antes</div>
-          <p style="font-size:.88rem;color:var(--text3);line-height:1.65">"Não sei por que tomo sempre as mesmas decisões ruins. Me sinto preso num ciclo que não consigo sair."</p>
-        </div>
-        <div style="background:rgba(208,94,42,.06);border:1px solid rgba(208,94,42,.22);border-radius:12px;padding:22px 20px">
-          <div style="font-family:'Poppins',sans-serif;font-weight:700;color:var(--gold,#d05e2a);font-size:.88rem;margin-bottom:10px">✦ Depois</div>
-          <p style="font-size:.88rem;color:var(--text2);line-height:1.65">"Finalmente entendo o mecanismo por trás do meu comportamento. Não preciso lutar contra mim — preciso me alinhar comigo."</p>
+  <!-- 3 PONTOS ISCA -->
+  <section class="lp-tease-section">
+    <div class="lp-tease-kicker">O que seu mapa revela</div>
+    <h2 class="lp-tease-h">Três verdades sobre você<br>que os números sabem</h2>
+    <div class="lp-tease-grid">
+      <div class="lp-tease-card">
+        <div class="lp-tease-icon">🔁</div>
+        <div>
+          <div class="lp-tease-card-h">Por que você repete os mesmos padrões</div>
+          <p class="lp-tease-card-p">Não é fraqueza, não é azar. Existe um mecanismo codificado no seu Caminho de Vida que sustenta os ciclos que você tenta quebrar — e ele tem nome.</p>
         </div>
       </div>
-      <div style="margin-top:28px;padding:20px 24px;background:rgba(255,255,255,.03);border-left:3px solid var(--gold,#d05e2a);border-radius:0 8px 8px 0">
-        <p style="font-size:.95rem;color:var(--text2);line-height:1.7;font-style:italic">"A diferença entre quem muda e quem não muda não é força de vontade — é autoconhecimento. Você precisa saber quem você é antes de tentar ser diferente."</p>
-        <p style="font-size:.78rem;color:var(--muted);margin-top:10px">— Rodrygo Murari, criador do Método NPS</p>
+      <div class="lp-tease-card">
+        <div class="lp-tease-icon">🔒</div>
+        <div>
+          <div class="lp-tease-card-h">Onde está seu maior bloqueio — e por que ele volta</div>
+          <p class="lp-tease-card-p">O bloqueio que você sente em dinheiro, relacionamentos ou propósito não é aleatório. Ele está no ponto exato de tensão entre sua Personalidade, sua Alma e seu momento de vida.</p>
+        </div>
       </div>
-    </div>
-  </section>
-
-  <!-- ═══ MID CTA ═══ -->
-  <section class="lp-cta-mid">
-    <div style="margin-bottom:12px;font-family:'Poppins',sans-serif;font-size:.75rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--muted)">Gratuito · Instantâneo · Sem cadastro</div>
-    <button class="v2-hero-cta" id="v2MidCta" type="button">
-      Quero Entender Meu Mapa Agora
-      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M8 3l5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </button>
-    <p style="margin-top:12px;font-size:.78rem;color:var(--muted)">Junte-se a mais de 47.000 pessoas que já revelaram seu mapa</p>
-  </section>
-
-  <!-- ═══ DEPOIMENTOS ═══ -->
-  <section class="lp-section">
-    <div class="lp-inner">
-      <div class="lp-label">Transformações reais</div>
-      <h2 class="lp-h2">Pessoas que finalmente<br>entenderam a si mesmas</h2>
-      <p class="lp-lead">Mais de 47.000 mapas revelados. Estas são histórias reais de quem encontrou clareza onde antes só havia dúvida.</p>
-      <div class="lp-video-grid">
-        <div class="lp-testimonial-card">
-          <div class="lp-testimonial-stars">★★★★★</div>
-          <p class="lp-testimonial-text">"Fiz o mapa achando que seria genérico. Saí em choque. Tudo que eu nunca consegui nomear sobre mim estava ali — os padrões, as contradições, o motivo de eu me autossabotar exatamente quando estou quase chegando lá. Chorei. Fez mais sentido do que anos de terapia."</p>
-          <div class="lp-testimonial-meta">
-            <div class="lp-testimonial-avatar">A</div>
-            <div>
-              <div class="lp-testimonial-name">Ana Luísa M.</div>
-              <div class="lp-testimonial-detail">Caminho de Vida 7 · São Paulo · Coach</div>
-            </div>
-          </div>
-        </div>
-        <div class="lp-testimonial-card">
-          <div class="lp-testimonial-stars">★★★★★</div>
-          <p class="lp-testimonial-text">"Eu não acreditava. Fiz por curiosidade. Mas o mapa foi tão preciso que não dava pra ignorar. Ele descreveu exatamente como eu funciono nos relacionamentos — algo que levei 34 anos tentando entender. Agora tenho um nome pra isso."</p>
-          <div class="lp-testimonial-meta">
-            <div class="lp-testimonial-avatar">F</div>
-            <div>
-              <div class="lp-testimonial-name">Felipe R.</div>
-              <div class="lp-testimonial-detail">Caminho de Vida 4 · Belo Horizonte · Engenheiro</div>
-            </div>
-          </div>
-        </div>
-        <div class="lp-testimonial-card">
-          <div class="lp-testimonial-stars">★★★★★</div>
-          <p class="lp-testimonial-text">"A profundidade me surpreendeu. Não é horóscopo genérico — vai fundo em quem você é de verdade, nos seus bloqueios reais. Li três vezes. Cada leitura me mostrou algo novo sobre mim que eu ainda não tinha visto."</p>
-          <div class="lp-testimonial-meta">
-            <div class="lp-testimonial-avatar">C</div>
-            <div>
-              <div class="lp-testimonial-name">Camila T.</div>
-              <div class="lp-testimonial-detail">Número Mestre 11 · Curitiba · Psicóloga</div>
-            </div>
-          </div>
-        </div>
-        <div class="lp-testimonial-card">
-          <div class="lp-testimonial-stars">★★★★★</div>
-          <p class="lp-testimonial-text">"Estava num momento de crise de identidade — 40 anos, sem saber pra onde ir. O mapa me deu uma bússola. Não me disse o que fazer — me mostrou quem eu sou. A diferença que isso fez foi imediata."</p>
-          <div class="lp-testimonial-meta">
-            <div class="lp-testimonial-avatar">R</div>
-            <div>
-              <div class="lp-testimonial-name">Ricardo S.</div>
-              <div class="lp-testimonial-detail">Caminho de Vida 1 · Porto Alegre · Empreendedor</div>
-            </div>
-          </div>
-        </div>
-        <div class="lp-testimonial-card">
-          <div class="lp-testimonial-stars">★★★★★</div>
-          <p class="lp-testimonial-text">"O meu número de Alma me fez entender por que certas coisas me machucam tanto enquanto os outros nem percebem. Finalmente faz sentido. Compartilhei com minha mãe e ela disse: 'é você no papel.'"</p>
-          <div class="lp-testimonial-meta">
-            <div class="lp-testimonial-avatar">M</div>
-            <div>
-              <div class="lp-testimonial-name">Mariana F.</div>
-              <div class="lp-testimonial-detail">Caminho de Vida 9 · Florianópolis · Artista</div>
-            </div>
-          </div>
-        </div>
-        <div class="lp-testimonial-card">
-          <div class="lp-testimonial-stars">★★★★★</div>
-          <p class="lp-testimonial-text">"Paguei pelo mapa completo sem hesitar depois de ver o teaser. Foi a melhor decisão. Cada seção explica um nó que eu tinha dentro — e por que esse nó existe. Agora sei trabalhar com ele, não contra ele."</p>
-          <div class="lp-testimonial-meta">
-            <div class="lp-testimonial-avatar">T</div>
-            <div>
-              <div class="lp-testimonial-name">Thiago L.</div>
-              <div class="lp-testimonial-detail">Caminho de Vida 6 · Rio de Janeiro · Terapeuta</div>
-            </div>
-          </div>
+      <div class="lp-tease-card">
+        <div class="lp-tease-icon">✦</div>
+        <div>
+          <div class="lp-tease-card-h">O que este período da sua vida está pedindo de você</div>
+          <p class="lp-tease-card-p">Cada ciclo tem uma vibração diferente. O que funcionava antes pode estar sabotando você agora — e o que parece difícil pode ser exatamente o que este momento pede.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ═══ RODRYGO MURARI ═══ -->
-  <section class="lp-section">
+  <!-- MAPA 7 ESFERAS -->
+  <section class="lp-esferas-section">
+    <div class="lp-tease-kicker">O Método</div>
+    <h2 class="lp-tease-h" style="text-align:center;margin-bottom:10px">O Mapa das 7 Esferas</h2>
+    <p style="text-align:center;font-family:'Poppins',sans-serif;font-size:.9rem;color:var(--text3);max-width:480px;margin:0 auto 20px;line-height:1.7">Cada esfera revela uma camada de quem você é — como você age, o que te move por dentro e o que você veio ser.</p>
+    <div class="lp-esferas-grid">
+      <div class="lp-esfera-item"><div class="lp-esfera-num">I</div><div class="lp-esfera-name">Caminho de Vida</div></div>
+      <div class="lp-esfera-item"><div class="lp-esfera-num">II</div><div class="lp-esfera-name">Expressão</div></div>
+      <div class="lp-esfera-item"><div class="lp-esfera-num">III</div><div class="lp-esfera-name">Alma</div></div>
+      <div class="lp-esfera-item"><div class="lp-esfera-num">IV</div><div class="lp-esfera-name">Personalidade</div></div>
+      <div class="lp-esfera-item"><div class="lp-esfera-num">V</div><div class="lp-esfera-name">Imagem</div></div>
+      <div class="lp-esfera-item"><div class="lp-esfera-num">VI</div><div class="lp-esfera-name">Destino</div></div>
+      <div class="lp-esfera-item"><div class="lp-esfera-num">VII</div><div class="lp-esfera-name">Ano Pessoal</div></div>
+    </div>
+    <div style="margin-top:28px;text-align:center">
+      <button class="v2-hero-cta" type="button" onclick="document.getElementById('v2HeroFormSection').scrollIntoView({behavior:'smooth'});setTimeout(function(){document.getElementById('v2Name').focus()},500)">
+        Gerar Meu Mapa Grátis →
+      </button>
+    </div>
+  </section>
+
+  <!-- NUMEROLOGIA PITAGÓRICA -->
+  <section class="lp-np-section">
+    <div class="lp-tease-kicker">A Origem</div>
+    <h2 class="lp-tease-h" style="margin-bottom:14px">Numerologia Pitagórica</h2>
+    <p style="font-family:'Poppins',sans-serif;font-size:.9rem;color:var(--text3);line-height:1.75;margin-bottom:16px">
+      Há mais de 2.500 anos, Pitágoras descobriu que os números não são apenas quantidades — são a estrutura da realidade. Cada número carrega uma frequência vibracional única que se manifesta na personalidade, nos padrões e no propósito de cada ser humano.
+    </p>
+    <div class="lp-np-quote">
+      "Não é misticismo. É um sistema preciso de autoconhecimento — que trabalha com quem você já é, revelando os padrões que regem toda a sua experiência."
+      <div class="lp-np-source">— Rodrygo Murari, criador do Método NPS</div>
+    </div>
+    <p style="font-family:'Poppins',sans-serif;font-size:.88rem;color:var(--text3);line-height:1.7">
+      O Sistema NPS (Numerologia Pitagórica Sistêmica) integra essa sabedoria ancestral com uma leitura profunda do comportamento humano — mapeando os Três Movimentos do Ser: o que você reage, o que você manifesta e o que você veio ser.
+    </p>
+  </section>
+
+  <!-- RODRYGO -->
+  <section class="lp-section" style="margin-top:56px">
     <div class="lp-inner">
       <div class="lp-label">O Idealizador</div>
       <div class="lp-founder-grid">
         <div>
           <h2 class="lp-founder-name">Rodrygo Murari</h2>
           <div class="lp-founder-role">Criador do Método Pitagórico Sistêmico · NPS</div>
-          <p class="lp-founder-text">Numerólogo, pesquisador e facilitador de autoconhecimento há mais de uma década, Rodrygo Murari desenvolveu o sistema NPS (Numerologia Pitagórica Sistêmica) — uma metodologia própria que integra a sabedoria milenar de Pitágoras com uma leitura sistêmica e profunda do comportamento humano.</p>
-          <p class="lp-founder-text">O método trabalha com os Três Movimentos do Ser: o que você reage (Temperamental), o que você manifesta (Comportamental) e o que você veio ser (Essencial). A soma desses três movimentos revela o mapa completo de quem você é — e porque você age como age.</p>
-          <p class="lp-founder-text">Mais de 47.000 mapas revelados. Milhares de pessoas que finalmente entenderam seus padrões, seus dons e seu propósito.</p>
+          <p class="lp-founder-text">Numerólogo e pesquisador de autoconhecimento há mais de uma década, Rodrygo desenvolveu o método NPS — que integra a sabedoria de Pitágoras com uma leitura sistêmica dos padrões humanos. Mais de 47.000 mapas revelados.</p>
         </div>
-        <div class="lp-founder-nums" aria-hidden="true" style="margin-top:28px;opacity:.5">
-          <span style="font-family:'Poppins',sans-serif;font-size:.58rem;letter-spacing:.35em;color:var(--gold);text-transform:uppercase">Sistema Pitagórico Sistêmico · NPS</span>
-        </div>
+        <div></div>
       </div>
     </div>
   </section>
 
-  <!-- ═══ GARANTIA ═══ -->
-  <section class="lp-section" style="border-top:1px solid rgba(112,208,160,.15)">
-    <div class="lp-inner" style="text-align:center;max-width:640px">
-      <div style="width:64px;height:64px;border-radius:50%;background:rgba(112,208,160,.1);border:1px solid rgba(112,208,160,.3);display:flex;align-items:center;justify-content:center;font-size:1.8rem;margin:0 auto 24px">🛡️</div>
-      <h2 class="lp-h2" style="font-size:clamp(1.5rem,3.5vw,2.2rem)">Garantia de satisfação total</h2>
-      <p class="lp-lead" style="margin:16px auto 0">Se ao receber o seu mapa completo você sentir que ele não trouxe clareza, profundidade ou valor real — basta nos contatar. Simples assim. Você não perde nada ao dar esse passo.</p>
-    </div>
-  </section>
-
-  <!-- ═══ ACTION — CTA Final ═══ -->
-  <section class="lp-section" style="border-top:1px solid rgba(208,94,42,.25);background:linear-gradient(135deg,rgba(208,94,42,.06),rgba(208,94,42,.02));text-align:center">
-    <div class="lp-inner" style="max-width:620px">
-      <div style="font-family:'Poppins',sans-serif;font-weight:700;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:20px">Comece agora — é gratuito</div>
-      <h2 class="lp-h2" style="font-size:clamp(1.8rem,4vw,2.6rem);margin-bottom:16px">Você já tem todas as respostas.<br>Elas só precisam ser reveladas.</h2>
-      <p class="lp-lead" style="margin:0 auto 32px">Seu nome e sua data de nascimento carregam um mapa que existe desde que você nasceu. A única diferença é que agora você pode lê-lo.</p>
-      <button class="v2-hero-cta" onclick="document.getElementById('v2HeroCta').click()" type="button" style="font-size:1rem !important;padding:20px 48px !important;letter-spacing:.05em !important">
-        Revelar Meu Mapa Agora — Grátis
-        <svg width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M8 3l5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
-      <p style="margin-top:16px;font-size:.75rem;color:var(--muted);font-family:'Poppins',sans-serif">🔒 Sem cadastro · Sem cartão de crédito · Resultado em 30 segundos</p>
-    </div>
-  </section>
-
-  <!-- ═══ FOOTER ═══ -->
+  <!-- FOOTER -->
   <footer class="lp-footer">
     <div class="lp-footer-inner">
       <div>
@@ -3538,16 +3602,12 @@
           <a href="https://www.youtube.com/@seunumerologo" target="_blank" class="lp-social-btn" aria-label="YouTube">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="5" width="20" height="14" rx="4"/><path d="M10 9l5 3-5 3V9z" fill="currentColor" stroke="none"/></svg>
           </a>
-          <a href="#" class="lp-social-btn" aria-label="WhatsApp">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 11.5a8.4 8.4 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.4 8.4 0 01-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.4 8.4 0 013.8-.9h.5a8.5 8.5 0 018 8v.5z"/></svg>
-          </a>
         </div>
       </div>
       <div>
         <div class="lp-footer-col-title">Acesso rápido</div>
-        <a class="lp-footer-link" id="v2FooterCta">Fazer meu mapa</a>
+        <a class="lp-footer-link" id="v2FooterCta" href="#">Fazer meu mapa</a>
         <a href="#" class="lp-footer-link">O método</a>
-        <a href="#" class="lp-footer-link">Depoimentos</a>
       </div>
       <div>
         <div class="lp-footer-col-title">Legal</div>
@@ -3561,54 +3621,6 @@
     </div>
   </footer>
 
-</div>
-
-<!-- ═══════════════════════════════════
-     TELA 2 — FORMULÁRIO
-═══════════════════════════════════ -->
-<div id="v2Form" class="v2-screen v2-hidden">
-  <div class="v2-form-inner">
-    <button class="v2-back-btn" id="v2FormBack" type="button">← Voltar</button>
-    <div class="v2-form-eyebrow">Seus dados de nascimento</div>
-    <h2 class="v2-form-h2">Vamos criar seu mapa</h2>
-    <p class="v2-form-sub">Usamos seu nome completo e data de nascimento para calcular os padrões vibratórios do sistema pitagórico.</p>
-    <div class="v2-form-card">
-      <div class="v2-field">
-        <label class="v2-field-label" for="v2Name">Nome completo de nascimento</label>
-        <input class="v2-field-input" id="v2Name" type="text"
-          placeholder="Como consta na certidão"
-          autocomplete="off" spellcheck="false"/>
-        <span class="v2-field-hint">Use o nome exato como foi registrado — sem apelidos</span>
-      </div>
-      <div class="v2-field">
-        <label class="v2-field-label" for="v2Date">Data de nascimento</label>
-        <input class="v2-field-input" id="v2Date" type="tel"
-          placeholder="DD / MM / AAAA"
-          inputmode="numeric" maxlength="14" autocomplete="off"/>
-        <span class="v2-field-hint">Dia, mês e ano — exatamente como nasceu</span>
-      </div>
-      <div class="v2-field">
-        <label class="v2-field-label" for="v2Email">Seu melhor e-mail</label>
-        <input class="v2-field-input" id="v2Email" type="email"
-          placeholder="email@exemplo.com"
-          autocomplete="email" spellcheck="false"/>
-        <span class="v2-field-hint">Para receber seu mapa e novidades</span>
-      </div>
-      <div class="v2-field">
-        <label class="v2-field-label" for="v2Phone">WhatsApp</label>
-        <div class="v2-phone-wrap">
-          <span class="v2-phone-prefix">+55</span>
-          <input class="v2-field-input v2-phone-input" id="v2Phone" type="tel"
-            placeholder="(11) 99999-0000"
-            inputmode="numeric" autocomplete="tel" maxlength="15"/>
-        </div>
-        <span class="v2-field-hint">Com DDD · para receber seu mapa no WhatsApp</span>
-      </div>
-      <div class="v2-err" id="v2Err"></div>
-      <button class="v2-submit-btn" id="v2Submit" type="button">Calcular Meu Mapa</button>
-    </div>
-    <p class="v2-form-footer">Seus dados não são armazenados ou compartilhados.</p>
-  </div>
 </div>
 
 <!-- ═══════════════════════════════════
@@ -3674,6 +3686,12 @@
         <div class="v2-reveal-big" id="v2TeaserNum">0</div>
         <div class="v2-reveal-name" id="v2TeaserTitle"></div>
         <div class="v2-reveal-hook" id="v2TeaserHook"></div>
+        <div class="v2-reveal-insight" id="v2TeaserInsight" style="opacity:0;transition:opacity .8s ease"></div>
+        <div class="v2-block-sep" id="v2TeaserSep" style="opacity:0;transition:opacity .5s ease"></div>
+        <div class="v2-scroll-cue" id="v2ScrollCue" style="opacity:0;transition:opacity .5s ease" onclick="document.querySelector('#v2Teaser .v2-res-block:not(.v2-res-hero)').scrollIntoView({behavior:'smooth'})">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+          continuar lendo
+        </div>
       </div>
     </div>
 
@@ -3690,6 +3708,8 @@
           <div class="v2-num-card-body" id="v2PersonaBody"></div>
           <div class="v2-num-obs" id="v2PersonaObs"></div>
         </div>
+
+        <div class="v2-block-cue" onclick="this.closest('.v2-res-block').nextElementSibling&&this.closest('.v2-res-block').nextElementSibling.scrollIntoView({behavior:'smooth'})"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
       </div>
     </div>
 
@@ -3706,6 +3726,8 @@
           <div class="v2-num-card-body" id="v2AlmaBody"></div>
           <div class="v2-num-obs" id="v2AlmaObs"></div>
         </div>
+
+        <div class="v2-block-cue" onclick="this.closest('.v2-res-block').nextElementSibling&&this.closest('.v2-res-block').nextElementSibling.scrollIntoView({behavior:'smooth'})"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
       </div>
     </div>
 
@@ -3722,27 +3744,14 @@
           <div class="v2-num-card-body" id="v2AnoBody"></div>
           <div class="v2-num-obs" id="v2AnoObs"></div>
         </div>
+
+        <div class="v2-block-cue" onclick="this.closest('.v2-res-block').nextElementSibling&&this.closest('.v2-res-block').nextElementSibling.scrollIntoView({behavior:'smooth'})"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
       </div>
     </div>
 
-    <!-- Slide 4: Mapa bloqueado -->
-    <div class="v2-res-block">
-      <div class="v2-slide-inner">
-        <div class="v2-map-divider">
-          <div class="v2-map-div-line"></div>
-          <div class="v2-map-div-badge">🗺️ Seu Mapa · Calculado</div>
-          <div class="v2-map-div-line"></div>
-        </div>
-        <div class="v2-locked-cards" id="v2LockedCards"></div>
-        <div class="v2-advanced-teaser" style="margin-top:14px">
-          <div class="v2-adv-title">Análises adicionais aguardando desbloqueio:</div>
-          <div class="v2-adv-grid" id="v2AdvGrid"></div>
-        </div>
-        <div class="v2-taste-box" style="margin-top:14px" id="v2TasteBox"></div>
-      </div>
-    </div>
 
-    <!-- Slide 5: Sales Page 2026 -->
+    <!-- Slide 4: Sales Page -->
+    <!-- Slide 5:<!-- Slide 5: Sales Page 2026 -->
     <div class="v2-res-block">
       <div class="v2-slide-inner">
 
@@ -4184,12 +4193,9 @@
     if(el){el.classList.remove('v2-hidden');el.classList.add('enter');el.scrollTop=0;}
   }
 
-  function goToForm(){showScreen('v2Form');setTimeout(function(){var n=document.getElementById('v2Name');if(n)n.focus();},300);}
-  document.getElementById('v2HeroCta').addEventListener('click',goToForm);
+  function goToForm(){var s=document.getElementById('v2HeroFormSection');if(s){s.scrollIntoView({behavior:'smooth'});setTimeout(function(){var n=document.getElementById('v2Name');if(n)n.focus();},500);}}
   document.getElementById('v2NavCta').addEventListener('click',goToForm);
-  document.getElementById('v2MidCta').addEventListener('click',goToForm);
   document.getElementById('v2FooterCta').addEventListener('click',goToForm);
-  document.getElementById('v2FormBack').addEventListener('click',function(){showScreen('v2Hero');});
 
   /* ── AIDA: Live counter (social proof — Cialdini) ── */
   (function(){
@@ -4490,7 +4496,7 @@
       {key:'alma',label:'Alma',num:alma,title:TEASER_TITULO[alma]||''},
       {key:'personalidade',label:'Personalidade',num:personalidade,title:TEASER_TITULO[personalidade]||''}
     ];
-    document.getElementById('v2LockedCards').innerHTML=lockedCards.map(function(lc){
+    var _lcEl=document.getElementById('v2LockedCards');if(_lcEl)_lcEl.innerHTML=lockedCards.map(function(lc){
       var im=(lc.num===11||lc.num===22||lc.num===33);
       var lcColor=NUM_COLOR_HEX[lc.num]||'#c8a96e';
       var lcColorName=NUM_COLOR_NAME[lc.num]||'Dourado';
@@ -4529,7 +4535,7 @@
       {name:'Plano de Ação específico para seu Caminho de Vida'},
       {name:'Direcionamento de carreira + onde você perde energia'}
     ];
-    document.getElementById('v2AdvGrid').innerHTML=advNums.map(function(it){
+    var _agEl=document.getElementById('v2AdvGrid');if(_agEl)_agEl.innerHTML=advNums.map(function(it){
       return '<div class="v2-adv-item">'+
         '<span class="v2-adv-item-lock">🔒</span>'+
         '<span class="v2-adv-item-name">'+it.name+'</span>'+
@@ -4556,7 +4562,7 @@
     var almaColorT=NUM_COLOR_HEX[alma]||'#c8a96e';
     var personaColorT=NUM_COLOR_HEX[personalidade]||'#c8a96e';
     var anoColorT=NUM_COLOR_HEX[anoPessoal]||'#c8a96e';
-    document.getElementById('v2TasteBox').innerHTML=
+    var _tbEl=document.getElementById('v2TasteBox');if(_tbEl)_tbEl.innerHTML=
       '<div class="v2-taste-kicker">◈ O que seu mapa revela sobre você agora</div>'+
       '<div style="font-size:.87rem;color:var(--text2);line-height:1.75;margin-bottom:14px">'+
         'Seu <strong style="color:'+personaColorT+'">Personalidade '+personalidade+'</strong> projeta uma imagem que o mundo espera de você. '+
@@ -4576,6 +4582,18 @@
     /* Mostra tela e dispara sequência */
     showScreen('v2Teaser');
     hudUpdate(0);
+    /* ── Scroll-reveal IntersectionObserver ── */
+    setTimeout(function(){
+      var blocks=document.querySelectorAll('#v2Teaser .v2-res-block:not(.v2-res-hero)');
+      blocks.forEach(function(b,i){b.style.transitionDelay=(i*0.06)+'s';});
+      if(!window.IntersectionObserver){blocks.forEach(function(b){b.classList.add('is-visible');});return;}
+      var obs=new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+          if(e.isIntersecting){e.target.classList.add('is-visible');obs.unobserve(e.target);}
+        });
+      },{threshold:0.1,rootMargin:'0px 0px -30px 0px'});
+      blocks.forEach(function(b){obs.observe(b);});
+    },300);
     var teaserEl=document.getElementById('v2Teaser');
     if(teaserEl)teaserEl.scrollTop=0;
 
@@ -4608,11 +4626,34 @@
       if(hookEl){hookEl.style.opacity='0';hookEl.style.transition='opacity .7s ease';
       requestAnimationFrame(function(){hookEl.style.opacity='1';});}
     },1700);
+    var insightEl=document.getElementById('v2TeaserInsight');
+    var sepEl=document.getElementById('v2TeaserSep');
+    var cueEl=document.getElementById('v2ScrollCue');
+    if(insightEl&&aida.insight)insightEl.innerHTML=aida.insight;
+    setTimeout(function(){
+      if(insightEl&&aida.insight)insightEl.style.opacity='1';
+      if(sepEl&&aida.insight)sepEl.style.opacity='1';
+      if(cueEl)cueEl.style.opacity='1';
+    },2300);
   }
 
   /* slide engine removed */
     function showMap(){buildMap();showScreen('v2Map');}
   window.showScreen=showScreen;
+
+  /* ── Video click-to-play ── */
+  (function(){
+    var wrap=document.getElementById('lpVideoWrap');
+    var vid=document.getElementById('lpVideo');
+    if(!wrap||!vid)return;
+    wrap.addEventListener('click',function(){
+      if(wrap.classList.contains('playing'))return;
+      var src=vid.getAttribute('data-src');
+      if(src&&src!=='SEU_VIDEO_URL_AQUI.mp4'&&!vid.src)vid.src=src;
+      wrap.classList.add('playing');
+      vid.play().catch(function(){});
+    });
+  })();
 
   /* Nova Consulta delegation */
   document.addEventListener('click',function(e){
