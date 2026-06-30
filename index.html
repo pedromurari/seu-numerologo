@@ -3632,7 +3632,7 @@
     </div>
     <div class="lp-footer-bottom">
       <span class="lp-footer-copy">© 2026 Seu Numerólogo · Todos os direitos reservados</span>
-      <span class="lp-footer-copy">Desenvolvido com ♥ por Rodrygo Murari</span>
+      <span class="lp-footer-copy">Desenvolvido por 11 Digital</span>
     </div>
   </footer>
 
@@ -4298,6 +4298,7 @@
       if(steps[3])steps[3].classList.remove('active'),steps[3].classList.add('done');
       _nums=buildNums(_nome,_date);
       window._nums=_nums;window.reduzir=reduzir;
+      if(window._updateLeadNums)window._updateLeadNums();
       setTimeout(showTeaser,400);
       // Gera PDF silenciosamente em background após teaser aparecer
       setTimeout(function(){ if(window._autoGeneratePdf)window._autoGeneratePdf(); },2000);
@@ -5744,11 +5745,33 @@
       status:'lead',
       utm_source:sp.get('utm_source')||null,
       utm_medium:sp.get('utm_medium')||null,
-      utm_campaign:sp.get('utm_campaign')||null
+      utm_campaign:sp.get('utm_campaign')||null,
+      utm_content:sp.get('utm_content')||null,
+      utm_term:sp.get('utm_term')||null,
+      referrer:document.referrer||null
     },{onConflict:'email',ignoreDuplicates:false})
     .select('id').single()
     .then(function(r){if(r.data)_leadId=r.data.id;})
     .catch(function(){});
+  };
+
+  /* Salva números calculados imediatamente após buildNums (status: calculou) */
+  window._updateLeadNums=function(){
+    if(!window._nums)return;
+    var d=window._nums;
+    var talento=window.reduzir?window.reduzir(d.alma+d.expressao):null;
+    var payload={
+      status:'calculou',
+      alma:d.alma,imagem:d.personalidade,
+      expressao:d.expressao,talento:talento,
+      psiquico:d.dia,destino:d.caminho,
+      ano_pessoal:d.anoPessoal,
+      calculou_at:new Date().toISOString()
+    };
+    var q=_leadId
+      ?_db.from('seu_numerologo_leads').update(payload).eq('id',_leadId)
+      :_db.from('seu_numerologo_leads').update(payload).eq('email',window._email||'');
+    q.then(function(){}).catch(function(){});
   };
 
   /* Atualiza lead com todos os números e status 'comprou' ao clicar em Comprar */
