@@ -4955,18 +4955,24 @@
         function newTxtPage(rgb,label){
           pdf.addPage();pageCount++;
           rgb=rgb||lastRgb;
-          pdf.setFillColor(6,6,14);pdf.rect(0,0,pageW,pageH,'F');
+          pdf.setFillColor(5,5,13);pdf.rect(0,0,pageW,pageH,'F');
           pdf.setFillColor(rgb[0],rgb[1],rgb[2]);
-          pdf.rect(0,0,pageW,3,'F');pdf.rect(0,0,2,pageH,'F');
-          pdf.setFontSize(7);pdf.setTextColor(255,255,255);
-          pdf.text(label||curEsfLabel,margin+3,10);
-          pdf.setFontSize(6.5);pdf.setTextColor(160,140,120);
-          pdf.text('Pág.'+pageCount,pageW-margin,10,{align:'right'});
-          pdf.setDrawColor(rgb[0],rgb[1],rgb[2]);pdf.setLineWidth(0.25);
-          pdf.setLineDashPattern([1.5,2],0);pdf.line(margin,14,pageW-margin,14);pdf.setLineDashPattern([],0);
-          pdf.setFontSize(6);pdf.setTextColor(100,80,60);
-          pdf.text('Mapa · '+nome,margin+3,pageH-4);
-          cY=18;lastRgb=rgb;
+          pdf.rect(0,0,3,pageH,'F');
+          pdf.setFillColor(Math.floor(rgb[0]*.35),Math.floor(rgb[1]*.35),Math.floor(rgb[2]*.35));
+          pdf.rect(3,0,pageW-3,1.5,'F');
+          pdf.setFillColor(9,9,21);pdf.rect(3,1.5,pageW-3,14,'F');
+          pdf.setFontSize(8);pdf.setTextColor(rgb[0],rgb[1],rgb[2]);pdf.setFont('helvetica','bold');
+          pdf.text((label||curEsfLabel).toUpperCase(),margin+3,11);
+          pdf.setFont('helvetica','normal');
+          pdf.setFontSize(7);pdf.setTextColor(100,80,60);
+          pdf.text(''+pageCount,pageW-margin,11,{align:'right'});
+          pdf.setDrawColor(rgb[0],rgb[1],rgb[2]);pdf.setLineWidth(0.3);
+          pdf.setLineDashPattern([2,3],0);pdf.line(margin,17,pageW-margin,17);pdf.setLineDashPattern([],0);
+          pdf.setFillColor(7,7,17);pdf.rect(0,pageH-8,pageW,8,'F');
+          pdf.setFontSize(6.5);pdf.setTextColor(80,65,45);
+          pdf.text(nome,margin+4,pageH-3);
+          pdf.text('seunumerologo.com.br',pageW-margin,pageH-3,{align:'right'});
+          cY=22;lastRgb=rgb;
         }
 
         function ensY(need,rgb){if(cY+need>pageH-9)newTxtPage(rgb||lastRgb);}
@@ -4989,14 +4995,15 @@
           var cleaned=sanitizePdf(raw);
           var paras=cleaned.split('\n').map(function(p){return p.replace(/[ \t]+/g,' ').trim();}).filter(Boolean);
           if(!paras.length)return;
-          pdf.setFontSize(fs);pdf.setTextColor(r,g,b);
+          var realFs=Math.max(fs,9);
+          pdf.setFontSize(realFs);pdf.setTextColor(r,g,b);
           pdf.setFont('helvetica',bold?'bold':'normal');
-          var x=margin+3+(indent||0);
-          var lh=fs*0.352778*1.6;
+          var x=margin+4+(indent||0);
+          var lh=realFs*0.352778*1.8;
           paras.forEach(function(para,i){
-            var lines=pdf.splitTextToSize(para,pageW-x-margin-1);
-            lines.forEach(function(ln){ensY(lh,lastRgb);pdf.text(ln,x,cY);cY+=lh;});
-            if(i<paras.length-1)cY+=lh*0.35;
+            var lines=pdf.splitTextToSize(para,pageW-x-margin-3);
+            lines.forEach(function(ln){ensY(lh+1,lastRgb);pdf.text(ln,x,cY);cY+=lh;});
+            if(i<paras.length-1)cY+=lh*0.55;
           });
           pdf.setFont('helvetica','normal');
         }
@@ -5008,27 +5015,39 @@
           var numVal=(el.querySelector('.v2-esfera-big-num')||{textContent:''}).textContent.trim();
           var titulo=(el.querySelector('.v2-esfera-titulo')||{textContent:''}).textContent.trim();
 
-          // Header page
+          // Header page - Premium
           pdf.addPage();pageCount++;
-          pdf.setFillColor(6,6,14);pdf.rect(0,0,pageW,pageH,'F');
+          pdf.setFillColor(5,5,13);pdf.rect(0,0,pageW,pageH,'F');
+          /* Accent strip left */
           pdf.setFillColor(rgb[0],rgb[1],rgb[2]);
-          pdf.rect(0,0,pageW,3,'F');pdf.rect(0,0,2,pageH,'F');
-          pdf.setFillColor(14,14,26);pdf.rect(0,3,pageW,44,'F');
-          pdf.setFontSize(8);pdf.setTextColor(rgb[0],rgb[1],rgb[2]);
-          pdf.text(curEsfLabel,margin+3,13);
-          pdf.setFontSize(6.5);pdf.setTextColor(100,80,60);
-          pdf.text(nome,pageW-margin,13,{align:'right'});
-          pdf.setFontSize(34);pdf.setTextColor(rgb[0],rgb[1],rgb[2]);
-          pdf.text(numVal,margin+3,39);
-          var nw=pdf.getTextWidth(numVal);
-          pdf.setFontSize(12);pdf.setTextColor(220,220,220);
-          pdf.text(titulo,margin+3+nw+5,39);
-          pdf.setDrawColor(rgb[0],rgb[1],rgb[2]);pdf.setLineWidth(0.4);
-          pdf.line(margin,49,pageW-margin,49);
-          pdf.setFontSize(6.5);pdf.setTextColor(100,80,60);
-          pdf.text('Mapa · '+nome,margin+3,pageH-4);
-          pdf.text(String(pageCount),pageW-margin,pageH-4,{align:'right'});
-          cY=55;
+          pdf.rect(0,0,3,pageH,'F');
+          /* Dark header band */
+          pdf.setFillColor(9,9,21);pdf.rect(3,0,pageW-3,62,'F');
+          /* Thin top highlight */
+          pdf.setFillColor(Math.min(255,Math.floor(rgb[0]*1.4)),Math.min(255,Math.floor(rgb[1]*1.4)),Math.min(255,Math.floor(rgb[2]*1.4)));
+          pdf.rect(3,0,pageW-3,1.5,'F');
+          /* Breadcrumb */
+          pdf.setFontSize(6.5);pdf.setTextColor(rgb[0],rgb[1],rgb[2]);pdf.setFont('helvetica','bold');
+          pdf.text('SEU NUMERÓLOGO · '+curEsfLabel.toUpperCase(),margin+3,12);
+          pdf.setFont('helvetica','normal');
+          pdf.setFontSize(6.5);pdf.setTextColor(90,75,55);
+          pdf.text(nome,pageW-margin,12,{align:'right'});
+          /* Big accent number */
+          pdf.setFontSize(48);pdf.setTextColor(rgb[0],rgb[1],rgb[2]);pdf.setFont('helvetica','bold');
+          pdf.text(numVal,margin+4,50);
+          var nw=pdf.getTextWidth(numVal)+3;
+          /* Title */
+          pdf.setFontSize(14);pdf.setTextColor(235,225,215);pdf.setFont('helvetica','normal');
+          pdf.text(titulo,margin+4+nw,47);
+          /* Divider */
+          pdf.setDrawColor(rgb[0],rgb[1],rgb[2]);pdf.setLineWidth(0.5);
+          pdf.line(margin,63,pageW-margin,63);
+          /* Footer */
+          pdf.setFillColor(7,7,17);pdf.rect(0,pageH-8,pageW,8,'F');
+          pdf.setFontSize(6.5);pdf.setTextColor(80,65,45);pdf.setFont('helvetica','normal');
+          pdf.text(nome,margin+4,pageH-3);
+          pdf.text('Pág. '+pageCount,pageW-margin,pageH-3,{align:'right'});
+          cY=69;
 
           // Intro
           var introEl=el.querySelector('.v2-esfera-intro');
@@ -5117,12 +5136,14 @@
 
           // ── Helpers ──
           function pdfSecHeader(txt){
-            cY+=6; ensY(14,aRgb);
-            pdf.setFillColor(28,22,8);
-            pdf.roundedRect(margin+2,cY-5,W,9,1.5,1.5,'F');
-            pdf.setFontSize(7.5); pdf.setTextColor(aRgb[0],aRgb[1],aRgb[2]);
+            cY+=9; ensY(15,aRgb);
+            pdf.setFillColor(18,14,6);
+            pdf.roundedRect(margin+2,cY-5,W,11,1.5,1.5,'F');
+            pdf.setFillColor(aRgb[0],aRgb[1],aRgb[2]);
+            pdf.rect(margin+2,cY-5,2.5,11,'F');
+            pdf.setFontSize(8.5); pdf.setTextColor(aRgb[0],aRgb[1],aRgb[2]);
             pdf.setFont('helvetica','bold');
-            pdf.text(sanitizePdf(txt).toUpperCase(),margin+6,cY); cY+=8;
+            pdf.text(sanitizePdf(txt).toUpperCase(),margin+8,cY+1.5); cY+=11;
             pdf.setFont('helvetica','normal');
           }
 
@@ -5150,8 +5171,8 @@
               pdf.text(sanitizePdf(String(numTxt)),margin+7,ty); ty+=7;
             }
             if(bodyTxt){
-              pdf.setFontSize(8); pdf.setTextColor(200,200,210);
-              bLines.forEach(function(ln){pdf.text(ln,margin+7,ty);ty+=5;});
+              pdf.setFontSize(9); pdf.setTextColor(200,200,215);
+              bLines.forEach(function(ln){pdf.text(ln,margin+7,ty);ty+=5.5;});
             }
             cY+=cardH+4;
           }
@@ -5213,7 +5234,7 @@
           }
 
           // ── Walk DOM in order, render each card type ──
-          var CARD_SEL='.v2-sist-card,.v2-sabota-item,.v2-ciclo-card,.v2-pin-row,.v2-desafio-card,.v2-licao-item,.v2-mini-grid,.v2-direc-card,.v2-plano-card,.v2-frase-box';
+          var CARD_SEL='.v2-sist-card,.v2-sabota-item,.v2-ciclo-card,.v2-pin-row,.v2-desafio-card,.v2-licao-item,.v2-mini-grid,.v2-direc-card,.v2-plano-card,.v2-frase-box,.pyramidWrap,.resumoBox';
           var cardParents=new Set(Array.from(phBody.querySelectorAll(CARD_SEL)));
 
           function isNested(node){
