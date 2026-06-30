@@ -5,8 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Mapa Numerológico Pitagórico · Leitura Completa</title>
   <meta name="theme-color" content="#07070e"/>
-  <link rel="icon" type="image/png" href="/assets/logo.png"/>
-  <link rel="apple-touch-icon" href="/assets/logo.png"/>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=Cinzel:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -2209,32 +2207,32 @@
 
 
   /* ═══════ SLIDES TEASER ═══════ */
+  /* Results scroll layout */
   #v2Teaser{display:flex;flex-direction:column;overflow:hidden}
-  .v2-slide-hud{
+  .v2-res-header{
     flex-shrink:0;display:flex;align-items:center;justify-content:space-between;
-    padding:13px 20px;background:rgba(0,0,0,.95);backdrop-filter:blur(20px);
+    padding:12px 20px;background:rgba(0,0,0,.95);backdrop-filter:blur(20px);
     border-bottom:1px solid rgba(255,255,255,.07);z-index:10;
   }
-  .v2-slide-dots{display:flex;align-items:center;gap:6px;flex:1;justify-content:center}
-  .v2-slide-dot{
-    width:7px;height:7px;border-radius:50%;
-    background:rgba(255,255,255,.18);transition:all .35s;cursor:pointer;
+  .v2-res-tag{font-size:.72rem;font-weight:700;letter-spacing:.12em;color:var(--amber);text-transform:uppercase}
+  .v2-results-scroll{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch}
+  .v2-res-block{max-width:640px;margin:0 auto;padding:24px 20px 8px}
+  .v2-res-hero{padding:40px 24px 8px;text-align:center}
+  .v2-res-cta-bar{
+    flex-shrink:0;padding:14px 20px;background:rgba(0,0,0,.97);
+    backdrop-filter:blur(20px);border-top:1px solid rgba(255,255,255,.09);z-index:20;
   }
-  .v2-slide-dot.active{background:var(--amber);width:22px;border-radius:4px}
-  .v2-slide-dot.done{background:rgba(48,209,88,.55)}
-  .v2-slide-counter{
-    font-size:.7rem;font-weight:700;color:var(--text3);
-    letter-spacing:.06em;white-space:nowrap;min-width:36px;text-align:right;
+  .v2-res-cta-btn{
+    width:100%;padding:16px 22px;border-radius:50px;
+    background:var(--amber);border:none;color:#000;
+    font-family:'Poppins',sans-serif;font-size:1rem;font-weight:800;
+    cursor:pointer;transition:all .25s;
+    background:linear-gradient(135deg,var(--amber),#e8920a);
+    box-shadow:0 8px 32px rgba(245,166,35,.4);
+    animation:pulseAmber 2s ease-in-out infinite;
   }
-  .v2-slides-wrap{flex:1;position:relative;overflow:hidden;min-height:0}
-  .v2-slide{
-    position:absolute;inset:0;overflow-y:auto;
-    transform:translateX(100%);
-    transition:transform .42s cubic-bezier(.22,.68,0,1.2);
-    -webkit-overflow-scrolling:touch;
-  }
-  .v2-slide.active{transform:translateX(0)}
-  .v2-slide.prev{transform:translateX(-100%)}
+  .v2-res-cta-btn:hover{background:var(--amber2);box-shadow:0 8px 40px rgba(245,166,35,.6)}
+  /* keep slide-inner styles */
   .v2-slide-inner{
     max-width:640px;margin:0 auto;
     padding:36px 20px 20px;
@@ -2324,32 +2322,7 @@
     letter-spacing:.04em;font-family:'Poppins',sans-serif;
   }
   /* Nav bottom — always visible */
-  .v2-slide-nav{
-    flex-shrink:0;display:flex;align-items:center;gap:12px;
-    padding:14px 20px;background:rgba(0,0,0,.97);backdrop-filter:blur(20px);
-    border-top:1px solid rgba(255,255,255,.09);
-    position:relative;z-index:20;
-  }
-  .v2-snav-back{
-    padding:13px 20px;border-radius:50px;
-    background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
-    color:var(--text2);font-family:'Poppins',sans-serif;
-    font-size:.88rem;font-weight:700;cursor:pointer;transition:all .2s;white-space:nowrap;
-  }
-  .v2-snav-back:hover:not(:disabled){background:rgba(255,255,255,.1);color:#fff}
-  .v2-snav-back:disabled{opacity:.28;cursor:default}
-  .v2-snav-next{
-    flex:1;padding:14px 22px;border-radius:50px;
-    background:var(--amber);border:none;color:#000;
-    font-family:'Poppins',sans-serif;font-size:.95rem;font-weight:800;
-    cursor:pointer;transition:all .25s;
-  }
-  .v2-snav-next:hover{background:var(--amber2);box-shadow:0 6px 24px rgba(245,166,35,.4)}
-  .v2-snav-next.last{
-    background:linear-gradient(135deg,var(--amber),#e8920a);
-    box-shadow:0 8px 32px rgba(245,166,35,.4);
-    animation:pulseAmber 2s ease-in-out infinite;
-  }
+  /* nav CSS removed */
   /* Achievement */
   .v2-ach-slot{
     position:fixed;bottom:90px;left:50%;transform:translateX(-50%);
@@ -3217,98 +3190,6 @@
     pointer-events:none;
   }
 
-  /* ── Unlock CTA (slide 4) ── */
-  .v2-ucta{
-    border-radius:18px;overflow:hidden;
-    background:rgba(0,0,0,.5);
-    border:1px solid rgba(245,166,35,.28);
-    position:relative;margin-bottom:24px;
-  }
-  .v2-ucta::before{
-    content:'';position:absolute;top:0;left:0;right:0;height:2px;
-    background:linear-gradient(90deg,transparent 0%,var(--amber) 50%,transparent 100%);
-  }
-  .v2-ucta-hd{
-    text-align:center;padding:26px 20px 18px;
-    border-bottom:1px solid rgba(255,255,255,.06);
-    background:linear-gradient(180deg,rgba(245,166,35,.07) 0%,transparent 100%);
-  }
-  .v2-ucta-map-icon{font-size:2rem;display:block;margin-bottom:10px}
-  .v2-ucta-htitle{
-    font-size:1rem;font-weight:700;color:#fff;
-    letter-spacing:.01em;margin-bottom:8px;
-  }
-  .v2-ucta-hchips{
-    font-size:.77rem;color:var(--text3);
-    display:flex;justify-content:center;align-items:center;gap:6px;flex-wrap:wrap;
-  }
-  .v2-ucta-sep{opacity:.4}
-  .v2-ucta-list{
-    padding:16px 20px;
-    border-bottom:1px solid rgba(255,255,255,.06);
-  }
-  .v2-ucta-list-lbl{
-    font-size:.65rem;text-transform:uppercase;letter-spacing:.11em;
-    color:var(--text3);font-weight:700;margin-bottom:12px;
-  }
-  .v2-ucta-row{
-    display:flex;align-items:center;gap:10px;
-    padding:8px 0;border-bottom:1px solid rgba(255,255,255,.04);
-    font-size:.82rem;color:rgba(255,255,255,.52);
-  }
-  .v2-ucta-row:last-of-type{border:none}
-  .v2-ucta-row-ico{flex-shrink:0;font-size:.85rem;opacity:.7}
-  .v2-ucta-more{
-    text-align:center;font-size:.75rem;
-    color:rgba(245,166,35,.55);font-style:italic;
-    padding:10px 0 2px;
-  }
-  .v2-ucta-tease{
-    margin:16px 20px;
-    background:linear-gradient(135deg,rgba(245,166,35,.13),rgba(245,166,35,.06));
-    border:1px solid rgba(245,166,35,.32);
-    border-radius:13px;padding:16px 18px;
-  }
-  .v2-ucta-tease-badge{
-    display:inline-flex;align-items:center;gap:5px;
-    font-size:.65rem;font-weight:800;letter-spacing:.13em;
-    text-transform:uppercase;color:var(--amber);margin-bottom:9px;
-  }
-  .v2-ucta-tease-badge::before{
-    content:'';width:6px;height:6px;border-radius:50%;
-    background:var(--amber);animation:pulseAmber 1.5s ease-in-out infinite;
-  }
-  .v2-ucta-tease-copy{
-    font-size:.86rem;color:rgba(255,255,255,.82);line-height:1.65;
-  }
-  .v2-ucta-tease-copy strong{color:#fff}
-  .v2-ucta-arrow{
-    display:flex;flex-direction:column;align-items:center;
-    gap:6px;padding:14px 20px 22px;
-  }
-  .v2-ucta-arr-lbl{
-    font-size:.78rem;color:var(--text3);text-align:center;
-  }
-  .v2-ucta-arr-lbl strong{color:var(--amber)}
-  .v2-ucta-arr-ico{
-    font-size:1.5rem;color:var(--amber);
-    animation:uctaBounce .85s ease-in-out infinite;
-  }
-  @keyframes uctaBounce{
-    0%,100%{transform:translateY(0);opacity:.9}
-    50%{transform:translateY(7px);opacity:.5}
-  }
-  /* Slide nav: estado pré-oferta */
-  .v2-snav-next.pre-offer{
-    background:linear-gradient(135deg,#f5a623,#d97c10)!important;
-    color:#000!important;font-weight:700!important;
-    box-shadow:0 0 22px rgba(245,166,35,.45)!important;
-    animation:preOfferPulse 1.8s ease-in-out infinite;
-  }
-  @keyframes preOfferPulse{
-    0%,100%{box-shadow:0 0 22px rgba(245,166,35,.45)}
-    50%{box-shadow:0 0 38px rgba(245,166,35,.75)}
-  }
 
   /* ── Três Movimentos ── */
   .v2-tres-mov{
@@ -3361,15 +3242,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <!-- Supabase -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-  <!-- Meta Pixel — substitua 1335107355260306 pelo ID numérico do seu pixel -->
-  <script>
-  var META_PIXEL_ID='1335107355260306';
-  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
-  fbq('init',META_PIXEL_ID);
-  fbq('track','PageView');
-  </script>
-  <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1335107355260306&ev=PageView&noscript=1"/></noscript>
-  <!-- End Meta Pixel -->
 </head>
 <body>
 
@@ -3718,6 +3590,13 @@
           autocomplete="email" spellcheck="false"/>
         <span class="v2-field-hint">Para receber seu mapa e novidades</span>
       </div>
+      <div class="v2-field">
+        <label class="v2-field-label" for="v2Phone">WhatsApp (com DDD)</label>
+        <input class="v2-field-input" id="v2Phone" type="tel"
+          placeholder="(11) 99999-0000"
+          inputmode="numeric" autocomplete="tel"/>
+        <span class="v2-field-hint">Para te avisar quando seu mapa estiver pronto</span>
+      </div>
       <div class="v2-err" id="v2Err"></div>
       <button class="v2-submit-btn" id="v2Submit" type="button">Calcular Meu Mapa</button>
     </div>
@@ -3768,32 +3647,31 @@
 ╣═══════════════════════════════════ -->
 <div id="v2Teaser" class="v2-screen v2-hidden">
 
-  <!-- HUD: logo + dots -->
-  <div class="v2-slide-hud">
+  <!-- Header minimalista -->
+  <div class="v2-res-header">
     <span class="v2-nav-logo" aria-label="Seu Numerólogo"><img src="assets/logo.png" alt="Seu Numerólogo"/></span>
-    <div class="v2-slide-dots" id="v2SlideDots"></div>
-    <span class="v2-slide-counter"><span id="v2SlideNum">1</span> / <span id="v2SlideTotal">6</span></span>
+    <span class="v2-res-tag">✶ Seu Mapa Calculado</span>
+    <button class="v2-link-btn" id="v2FreeBtn" style="font-size:.8rem;opacity:.6">← Nova consulta</button>
   </div>
 
   <!-- Achievement slot -->
   <div id="v2AchSlot" class="v2-ach-slot"></div>
 
-  <!-- Slides viewport -->
-  <div class="v2-slides-wrap" id="v2SlidesWrap">
+  <!-- Scroll único de resultados -->
+  <div class="v2-results-scroll" id="v2SlidesWrap">
 
-    <!-- Slide 0: Revelação -->
-    <div class="v2-slide active" data-slide="0">
+    <!-- Bloco 0: Caminho de Vida -->
+    <div class="v2-res-block v2-res-hero">
       <div class="v2-slide-inner center">
         <div class="v2-reveal-kicker">Seu Caminho de Vida</div>
         <div class="v2-reveal-big" id="v2TeaserNum">0</div>
         <div class="v2-reveal-name" id="v2TeaserTitle"></div>
         <div class="v2-reveal-hook" id="v2TeaserHook"></div>
-        <div class="v2-slide-hint">deslize para continuar →</div>
       </div>
     </div>
 
     <!-- Slide 1: Personalidade -->
-    <div class="v2-slide" data-slide="1">
+    <div class="v2-res-block">
       <div class="v2-slide-inner">
         <div class="v2-num-card" id="v2PersonaCard">
           <div class="v2-gcard-badge free" style="margin-bottom:18px">✓ Gratuito · Revelado para você</div>
@@ -3809,7 +3687,7 @@
     </div>
 
     <!-- Slide 2: Alma -->
-    <div class="v2-slide" data-slide="2">
+    <div class="v2-res-block">
       <div class="v2-slide-inner">
         <div class="v2-num-card" id="v2AlmaCard">
           <div class="v2-gcard-badge amber" style="margin-bottom:18px">✦ Gratuito · Revelado para você</div>
@@ -3825,7 +3703,7 @@
     </div>
 
     <!-- Slide 3: Ano Pessoal -->
-    <div class="v2-slide" data-slide="3">
+    <div class="v2-res-block">
       <div class="v2-slide-inner">
         <div class="v2-num-card" id="v2AnoCard">
           <div class="v2-gcard-badge" style="margin-bottom:18px;background:rgba(159,122,234,.12);border:1px solid rgba(159,122,234,.25);color:#b794f4">☽ Seu Momento Atual</div>
@@ -3841,7 +3719,7 @@
     </div>
 
     <!-- Slide 4: Mapa bloqueado -->
-    <div class="v2-slide" data-slide="4">
+    <div class="v2-res-block">
       <div class="v2-slide-inner">
         <div class="v2-map-divider">
           <div class="v2-map-div-line"></div>
@@ -3853,12 +3731,12 @@
           <div class="v2-adv-title">Análises adicionais aguardando desbloqueio:</div>
           <div class="v2-adv-grid" id="v2AdvGrid"></div>
         </div>
-        <div style="margin-top:14px" id="v2TasteBox"></div>
+        <div class="v2-taste-box" style="margin-top:14px" id="v2TasteBox"></div>
       </div>
     </div>
 
     <!-- Slide 5: Sales Page 2026 -->
-    <div class="v2-slide" data-slide="5">
+    <div class="v2-res-block">
       <div class="v2-slide-inner">
 
         <!-- Ponte emocional -->
@@ -3988,19 +3866,16 @@
           </div>
         </div>
 
-        <div class="v2-nova-consulta-link" style="margin-top:16px">
-          <button class="v2-link-btn" id="v2FreeBtn" type="button">← Nova consulta</button>
-        </div>
+
 
       </div>
     </div>
 
-  </div><!-- /slides-wrap -->
+  </div><!-- /results-scroll -->
 
-  <!-- Nav bottom -->
-  <div class="v2-slide-nav">
-    <button class="v2-snav-back" id="v2SlideBack" type="button">← Voltar</button>
-    <button class="v2-snav-next" id="v2SlideNext" type="button">Próximo →</button>
+  <!-- Barra CTA fixa -->
+  <div class="v2-res-cta-bar">
+    <button class="v2-res-cta-btn" id="v2ResCta" type="button">🔓 Quero Meu Mapa Completo</button>
   </div>
 
 </div>
@@ -4344,24 +4219,20 @@
     var nome=document.getElementById('v2Name').value.trim();
     var dataRaw=document.getElementById('v2Date').value.trim();
     var email=document.getElementById('v2Email').value.trim();
+    var phone=document.getElementById('v2Phone').value.replace(/\D/g,'');
     var err=document.getElementById('v2Err');
     if(!nome){err.textContent='Por favor, informe o nome completo.';return;}
     var clean=dataRaw.replace(/\s/g,'').replace(/\/+/g,'/');
     if(!parseDateBR(clean)){err.textContent='Data inválida. Use o formato DD/MM/AAAA.';return;}
     if(!email||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){err.textContent='Por favor, informe um e-mail válido.';return;}
+    if(!phone||phone.length<10){err.textContent='Por favor, informe um WhatsApp válido com DDD.';return;}
     err.textContent='';
-    if(window.fbq){
-      /* Advanced Matching: reinit com email + nome para melhorar match score */
-      var _parts=nome.trim().split(' ');
-      fbq('init',META_PIXEL_ID,{em:email,fn:(_parts[0]||'').toLowerCase(),ln:(_parts.slice(1).join(' ')||'').toLowerCase()});
-      fbq('track','Lead',{content_name:'Mapa Numerológico Pitagórico Aplicado'});
-    }
     _nome=nome;_date=clean;_email=email;
-    window._nome=nome;window._email=email;
+    window._nome=nome;window._email=email;window._phone=phone;
     /* Salva lead no Supabase (fire-and-forget) */
     var dateObj=parseDateBR(clean);
     var cv=dateObj?calcCaminhoVida(dateObj):null;
-    if(window._saveLead)window._saveLead(nome,email,clean,cv);
+    if(window._saveLead)window._saveLead(nome,email,clean,cv,phone);
     runLoading();
   });
 
@@ -4660,39 +4531,23 @@
     var personaColorT=NUM_COLOR_HEX[personalidade]||'#c8a96e';
     var anoColorT=NUM_COLOR_HEX[anoPessoal]||'#c8a96e';
     document.getElementById('v2TasteBox').innerHTML=
-      '<div class="v2-ucta">'+
-        '<div class="v2-ucta-hd">'+
-          '<span class="v2-ucta-map-icon">🗺️</span>'+
-          '<div class="v2-ucta-htitle">Seu Mapa Completo Está Pronto</div>'+
-          '<div class="v2-ucta-hchips">'+
-            '<span style="color:'+caminhoColor+'">Caminho '+caminho+'</span>'+
-            '<span class="v2-ucta-sep">·</span>'+
-            '<span style="color:'+almaColorT+'">Alma '+alma+'</span>'+
-            '<span class="v2-ucta-sep">·</span>'+
-            '<span style="color:'+personaColorT+'">Personalidade '+personalidade+'</span>'+
-          '</div>'+
-        '</div>'+
-        '<div class="v2-ucta-list">'+
-          '<div class="v2-ucta-list-lbl">🔒 Aguardando desbloqueio</div>'+
-          '<div class="v2-ucta-row"><span class="v2-ucta-row-ico">🔒</span><span>Número de Expressão — sua missão e talentos ocultos</span></div>'+
-          '<div class="v2-ucta-row"><span class="v2-ucta-row-ico">🔒</span><span>Os 4 Pináculos — fases exatas da sua vida com datas</span></div>'+
-          '<div class="v2-ucta-row"><span class="v2-ucta-row-ico">🔒</span><span>Padrões de Autossabotagem — por que você se bloqueia</span></div>'+
-          '<div class="v2-ucta-row"><span class="v2-ucta-row-ico">🔒</span><span>Destino, Psíquico, Talento Oculto e mais 5 análises</span></div>'+
-          '<div class="v2-ucta-row"><span class="v2-ucta-row-ico">🔒</span><span>Plano de Ação Real — o que parar, começar e manter</span></div>'+
-          '<div class="v2-ucta-more">+ síntese completa · pirâmide pitagórica · PDF premium</div>'+
-        '</div>'+
-        '<div class="v2-ucta-tease">'+
-          '<div class="v2-ucta-tease-badge">condição especial de lançamento</div>'+
-          '<div class="v2-ucta-tease-copy">Na próxima tela você vai ter a chance de desbloquear <strong>tudo isso</strong> — personalizado para o seu Caminho '+caminho+' — por um valor que não vai se repetir.</div>'+
-        '</div>'+
-        '<div class="v2-ucta-arrow">'+
-          '<span class="v2-ucta-arr-lbl">Toque em <strong>próximo</strong> para ver a oferta</span>'+
-          '<span class="v2-ucta-arr-ico">↓</span>'+
-        '</div>'+
-      '</div>';
+      '<div class="v2-taste-kicker">◈ O que seu mapa revela sobre você agora</div>'+
+      '<div style="font-size:.87rem;color:var(--text2);line-height:1.75;margin-bottom:14px">'+
+        'Seu <strong style="color:'+personaColorT+'">Personalidade '+personalidade+'</strong> projeta uma imagem que o mundo espera de você. '+
+        'Sua <strong style="color:'+almaColorT+'">Alma '+alma+'</strong> move algo diferente por dentro. '+
+        'E o <strong style="color:'+anoColorT+'">Ano Pessoal '+anoPessoal+'</strong> está pedindo: '+anoData.luz.split('.')[0].toLowerCase()+'.'+
+      '</div>'+
+      '<div style="font-size:.87rem;color:var(--text2);line-height:1.75;margin-bottom:14px">'+
+        '<strong style="color:#fff">Quando esses três não estão alinhados</strong> — o que você projeta, o que você sente por dentro, e o que o ciclo atual pede — você repete o mesmo padrão sem saber por quê. '+
+        'Isso tem nome no seu mapa.'+
+      '</div>'+
+      '<div class="v2-taste-quote">&#8220;'+tasteLine+'&#8221;</div>'+
+      '<div style="font-size:.8rem;color:'+caminhoColor+';margin-top:14px;font-style:italic;line-height:1.6">'+
+        '↳ O Mapa Completo mostra como alinhar seu Caminho '+caminho+', sua Alma '+alma+' e seu momento atual — e o que muda quando eles trabalham juntos.'+
+      '</div>'+
+      '<div class="v2-taste-blur"></div>';
 
     /* Mostra tela e dispara sequência */
-    if(window.fbq)fbq('track','ViewContent',{content_name:'Mapa Numerológico Pitagórico Aplicado',content_type:'product',content_ids:['mapa-sn'],value:37.00,currency:'BRL'});
     showScreen('v2Teaser');
     hudUpdate(0);
     var teaserEl=document.getElementById('v2Teaser');
@@ -4703,128 +4558,33 @@
     if(buyBtn)buyBtn.onclick=function(){
       var base='https://checkout.institutodespertamente.shop/VCCL1O8SD04H';
       var params=new URLSearchParams({name:_nome,email:_email});
-      var snEid='sn_'+btoa(_email||'').replace(/[+=\/]/g,'');
-      try{localStorage.setItem('sn_eid',snEid);localStorage.setItem('sn_em',_email||'');}catch(e){}
-      if(window.fbq)fbq('track','InitiateCheckout',{content_name:'Mapa Numerológico Pitagórico Aplicado',content_type:'product',content_ids:['mapa-sn'],value:37.00,currency:'BRL'},{eventID:snEid});
       window.open(base+'?'+params.toString(),'_blank');
       if(window._markComprou)window._markComprou();
     };
     var freeBtn=document.getElementById('v2FreeBtn');
     if(freeBtn)freeBtn.onclick=function(){showScreen('v2Hero');};
 
-    /* Sequência gamificada */
-    setTimeout(function(){playTeaserSequence(caminho,titulo);},200);
-  }
-
-  /* ─── Slide engine ─── */
-  var _curSlide=0;
-  var _TOTAL_SLIDES=6;
-  var _SLIDE_ACHS=[
-    null,
-    {i:'🎭',t:'Personalidade revelada'},
-    {i:'💫',t:'Alma identificada'},
-    {i:'☽',t:'Ano Pessoal calculado'},
-    {i:'🗺️',t:'Mapa calculado · análises aguardando'},
-    {i:'🔓',t:'Pronto para desbloquear'}
-  ];
-
-  function initSlides(caminho,titulo){
-    _curSlide=0;
-    /* Dots */
-    var dotsEl=document.getElementById('v2SlideDots');
-    if(dotsEl){
-      dotsEl.innerHTML='';
-      for(var i=0;i<_TOTAL_SLIDES;i++){
-        var d=document.createElement('div');
-        d.className='v2-slide-dot'+(i===0?' active':'');
-        d.setAttribute('data-dot',i);
-        (function(idx){d.addEventListener('click',function(){goSlide(idx);});})(i);
-        dotsEl.appendChild(d);
-      }
-    }
-    document.getElementById('v2SlideTotal').textContent=_TOTAL_SLIDES;
-    /* Buttons */
-    var backBtn=document.getElementById('v2SlideBack');
-    var nextBtn=document.getElementById('v2SlideNext');
-    if(backBtn)backBtn.addEventListener('click',function(){goSlide(_curSlide-1);});
-    if(nextBtn)nextBtn.addEventListener('click',function(){
-      if(_curSlide>=_TOTAL_SLIDES-1){
-        var base='https://checkout.institutodespertamente.shop/VCCL1O8SD04H';
-        var params=new URLSearchParams({name:_nome,email:_email});
-        var snEid='sn_'+btoa(_email||'').replace(/[+=\/]/g,'');
-        try{localStorage.setItem('sn_eid',snEid);localStorage.setItem('sn_em',_email||'');}catch(e){}
-        if(window.fbq)fbq('track','InitiateCheckout',{content_name:'Mapa Numerológico Pitagórico Aplicado',content_type:'product',content_ids:['mapa-sn'],value:37.00,currency:'BRL'},{eventID:snEid});
-        window.open(base+'?'+params.toString(),'_blank');
-        if(window._markComprou)window._markComprou();
-      }else{goSlide(_curSlide+1);}
-    });
-    /* Swipe */
-    var wrap=document.getElementById('v2SlidesWrap');
-    if(wrap){
-      var tx0=0,ty0=0;
-      wrap.addEventListener('touchstart',function(e){tx0=e.touches[0].clientX;ty0=e.touches[0].clientY;},{passive:true});
-      wrap.addEventListener('touchend',function(e){
-        var dx=e.changedTouches[0].clientX-tx0;
-        var dy=e.changedTouches[0].clientY-ty0;
-        if(Math.abs(dx)>Math.abs(dy)&&Math.abs(dx)>48){
-          goSlide(dx<0?_curSlide+1:_curSlide-1);
-        }
-      },{passive:true});
-    }
-    /* Animate first slide */
+    /* Wire CTA bar */
+    var resBtn=document.getElementById('v2ResCta');
+    if(resBtn)resBtn.onclick=function(){
+      var base='https://checkout.institutodespertamente.shop/VCCL1O8SD04H';
+      var params=new URLSearchParams({name:_nome,email:_email});
+      window.open(base+'?'+params.toString(),'_blank');
+      if(window._markComprou)window._markComprou();
+    };
+    /* Anima Caminho de Vida */
     var numEl=document.getElementById('v2TeaserNum');
     var titleEl=document.getElementById('v2TeaserTitle');
     var hookEl=document.getElementById('v2TeaserHook');
-    if(numEl)setTimeout(function(){countUp(numEl,caminho,700);},250);
-    if(titleEl)setTimeout(function(){typeIn(titleEl,titulo,55);},1050);
-    if(hookEl){
-      hookEl.style.opacity='0';
-      setTimeout(function(){hookEl.style.transition='opacity .7s ease';hookEl.style.opacity='1';},1850);
-    }
-    updateSlideUI();
+    setTimeout(function(){if(numEl)countUp(numEl,caminho,700);},200);
+    setTimeout(function(){if(titleEl)typeIn(titleEl,titulo,45);},950);
+    setTimeout(function(){
+      if(hookEl){hookEl.style.opacity='0';hookEl.style.transition='opacity .7s ease';
+      requestAnimationFrame(function(){hookEl.style.opacity='1';});}
+    },1700);
   }
 
-  function goSlide(idx){
-    if(idx<0||idx>=_TOTAL_SLIDES)return;
-    var slides=document.querySelectorAll('.v2-slide');
-    slides.forEach(function(s){
-      var si=parseInt(s.getAttribute('data-slide'));
-      s.classList.remove('active','prev');
-      if(si===idx){s.classList.add('active');}
-      else if(si<idx){s.classList.add('prev');}
-      if(si===idx)s.scrollTop=0;
-    });
-    _curSlide=idx;
-    updateSlideUI();
-    var ach=_SLIDE_ACHS[idx];
-    if(ach)showAch(ach.i,ach.t,'');
-  }
-
-  function updateSlideUI(){
-    document.querySelectorAll('.v2-slide-dot').forEach(function(d,i){
-      d.classList.toggle('active',i===_curSlide);
-      d.classList.toggle('done',i<_curSlide);
-    });
-    var sn=document.getElementById('v2SlideNum');
-    if(sn)sn.textContent=_curSlide+1;
-    var back=document.getElementById('v2SlideBack');
-    if(back)back.disabled=(_curSlide===0);
-    var next=document.getElementById('v2SlideNext');
-    if(next){
-      var isLast=(_curSlide===_TOTAL_SLIDES-1);
-      var isPreOffer=(_curSlide===4);
-      if(isLast){next.textContent='🔓 Quero Meu Mapa Completo';}
-      else if(isPreOffer){next.textContent='✦ Ver oferta especial →';}
-      else{next.textContent='Próximo →';}
-      next.classList.toggle('last',isLast);
-      next.classList.toggle('pre-offer',isPreOffer&&!isLast);
-    }
-  }
-
-  function playTeaserSequence(caminho,titulo){
-    initSlides(caminho,titulo);
-  }
-
+  /* slide engine removed */
     function showMap(){buildMap();showScreen('v2Map');}
   window.showScreen=showScreen;
 
@@ -5872,68 +5632,17 @@
   var _leadId=null;
 
   /* Salva lead assim que o formulário é enviado */
-  /* Captura UTMs, fbc (fbclid) e fbp na chegada da página */
-  (function(){
+  window._saveLead=function(nome,email,dataNasc,destino,whatsapp){
     var sp=new URLSearchParams(location.search);
-
-    /* fbc — Facebook Click ID (máxima atribuição de anúncio) */
-    var fbclid=sp.get('fbclid');
-    if(fbclid){
-      try{localStorage.setItem('sn_fbc','fb.1.'+Date.now()+'.'+fbclid);}catch(e){}
-    }
-
-    /* UTMs — first-touch */
-    var keys=['utm_source','utm_medium','utm_campaign','utm_term','utm_content'];
-    if(keys.some(function(k){return !!sp.get(k);})){
-      var saved={};
-      try{saved=JSON.parse(localStorage.getItem('sn_utms')||'{}');}catch(e){}
-      keys.forEach(function(k){if(sp.get(k))saved[k]=sp.get(k);});
-      saved.landing_page=location.origin+location.pathname+(location.search||'');
-      try{localStorage.setItem('sn_utms',JSON.stringify(saved));}catch(e){}
-    }
-
-    /* fbp — cookie do Pixel (lê após o script da Meta carregar) */
-    setTimeout(function(){
-      try{
-        var fbp=document.cookie.split(';').reduce(function(v,c){
-          var p=c.trim().split('=');return p[0]==='_fbp'?decodeURIComponent(p[1]||''):v;
-        },'');
-        if(fbp)localStorage.setItem('sn_fbp',fbp);
-      }catch(e){}
-    },1500);
-  })();
-
-  window._saveLead=function(nome,email,dataNasc,destino){
-    var utms={};
-    try{utms=JSON.parse(localStorage.getItem('sn_utms')||'{}');}catch(e){}
-    /* Fallback: lê diretamente da URL se localStorage vazio */
-    if(!utms.utm_source){
-      var sp=new URLSearchParams(location.search);
-      utms={
-        utm_source:sp.get('utm_source')||null,
-        utm_medium:sp.get('utm_medium')||null,
-        utm_campaign:sp.get('utm_campaign')||null,
-        utm_term:sp.get('utm_term')||null,
-        utm_content:sp.get('utm_content')||null,
-        landing_page:location.origin+location.pathname+(location.search||''),
-      };
-    }
-    var fbc='';var fbp='';
-    try{fbc=localStorage.getItem('sn_fbc')||'';}catch(e){}
-    try{fbp=localStorage.getItem('sn_fbp')||'';}catch(e){}
     _db.from('seu_numerologo_leads').upsert({
       nome:nome,email:email,
       data_nascimento:dataNasc,
       destino:destino||null,
+      whatsapp:whatsapp||null,
       status:'lead',
-      utm_source:utms.utm_source||null,
-      utm_medium:utms.utm_medium||null,
-      utm_campaign:utms.utm_campaign||null,
-      utm_term:utms.utm_term||null,
-      utm_content:utms.utm_content||null,
-      utm_landing_page:utms.landing_page||null,
-      fbc:fbc||null,
-      fbp:fbp||null,
+      utm_source:sp.get('utm_source')||null,
+      utm_medium:sp.get('utm_medium')||null,
+      utm_campaign:sp.get('utm_campaign')||null
     },{onConflict:'email',ignoreDuplicates:false})
     .select('id').single()
     .then(function(r){if(r.data)_leadId=r.data.id;})
