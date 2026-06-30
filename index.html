@@ -1691,6 +1691,10 @@
   .v2-field-input:focus{border-color:var(--amber);background:rgba(245,166,35,.04);box-shadow:0 0 0 3px rgba(245,166,35,.12)}
   .v2-field-input::placeholder{color:var(--text3)}
   .v2-field-hint{display:block;font-size:.7rem;color:var(--text3);margin-top:6px;font-weight:400}
+  .v2-phone-wrap{display:flex;align-items:stretch;border:1.5px solid var(--border);border-radius:var(--r-sm);overflow:hidden;transition:border-color .25s,box-shadow .25s;background:var(--s2)}
+  .v2-phone-wrap:focus-within{border-color:var(--amber);box-shadow:0 0 0 3px rgba(245,166,35,.12)}
+  .v2-phone-prefix{display:flex;align-items:center;padding:0 14px;background:rgba(245,166,35,.08);border-right:1.5px solid var(--border);font-size:.95rem;font-weight:700;color:var(--amber);white-space:nowrap;letter-spacing:.04em;user-select:none}
+  .v2-phone-input{border:none!important;border-radius:0!important;box-shadow:none!important;flex:1;background:transparent!important}
   .v2-submit-btn{width:100%;padding:17px;margin-top:8px;background:var(--amber);color:#000;border:none;border-radius:var(--r-sm);font-family:'Poppins',sans-serif;font-size:1rem;font-weight:800;cursor:pointer;transition:all .25s}
   .v2-submit-btn:hover{background:var(--amber2);transform:translateY(-1px);box-shadow:0 8px 24px rgba(245,166,35,.35)}
   .v2-form-eyebrow{font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--amber);margin-bottom:12px;display:block}
@@ -3591,11 +3595,14 @@
         <span class="v2-field-hint">Para receber seu mapa e novidades</span>
       </div>
       <div class="v2-field">
-        <label class="v2-field-label" for="v2Phone">WhatsApp (com DDD)</label>
-        <input class="v2-field-input" id="v2Phone" type="tel"
-          placeholder="(11) 99999-0000"
-          inputmode="numeric" autocomplete="tel"/>
-        <span class="v2-field-hint">Para te avisar quando seu mapa estiver pronto</span>
+        <label class="v2-field-label" for="v2Phone">WhatsApp</label>
+        <div class="v2-phone-wrap">
+          <span class="v2-phone-prefix">+55</span>
+          <input class="v2-field-input v2-phone-input" id="v2Phone" type="tel"
+            placeholder="(11) 99999-0000"
+            inputmode="numeric" autocomplete="tel" maxlength="15"/>
+        </div>
+        <span class="v2-field-hint">Com DDD · para receber seu mapa no WhatsApp</span>
       </div>
       <div class="v2-err" id="v2Err"></div>
       <button class="v2-submit-btn" id="v2Submit" type="button">Calcular Meu Mapa</button>
@@ -4213,6 +4220,25 @@
     if(!/^\d$/.test(e.key))e.preventDefault();
   });
   document.getElementById('v2Name').addEventListener('keydown',function(e){if(e.key==='Enter')document.getElementById('v2Date').focus();});
+
+  /* Phone mask: (11) 99999-0000 */
+  document.getElementById('v2Phone').addEventListener('input',function(){
+    var d=this.value.replace(/\D/g,'').slice(0,11);
+    var v='';
+    if(d.length===0){v='';}
+    else if(d.length<=2){v='('+d;}
+    else if(d.length<=6){v='('+d.slice(0,2)+') '+d.slice(2);}
+    else if(d.length<=10){v='('+d.slice(0,2)+') '+d.slice(2,6)+'-'+d.slice(6);}
+    else{v='('+d.slice(0,2)+') '+d.slice(2,7)+'-'+d.slice(7);}
+    this.value=v;
+  });
+  document.getElementById('v2Phone').addEventListener('keydown',function(e){
+    var allowed=['Backspace','Delete','Tab','ArrowLeft','ArrowRight'];
+    if(allowed.indexOf(e.key)>=0||e.ctrlKey||e.metaKey)return;
+    if(!/^\d$/.test(e.key))e.preventDefault();
+    if(this.value.replace(/\D/g,'').length>=11&&/^\d$/.test(e.key))e.preventDefault();
+  });
+  document.getElementById('v2Email').addEventListener('keydown',function(e){if(e.key==='Enter')document.getElementById('v2Phone').focus();});
 
   /* Submit */
   document.getElementById('v2Submit').addEventListener('click',function(){
