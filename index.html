@@ -8,6 +8,15 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=Cinzel:wght@400;500;600;700&display=swap" rel="stylesheet">
+<!-- Meta Pixel -->
+<script>
+var META_PIXEL_ID='1335107355260306';
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init',META_PIXEL_ID);
+fbq('track','PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1335107355260306&ev=PageView&noscript=1"/></noscript>
+<!-- End Meta Pixel -->
   <style>
     :root{
       /* ─ Backgrounds ─ */
@@ -4288,6 +4297,7 @@
     var dateObj=parseDateBR(clean);
     var cv=dateObj?calcCaminhoVida(dateObj):null;
     if(window._saveLead)window._saveLead(nome,email,clean,cv,phone);
+    if(window.fbq)fbq('track','Lead',{content_name:'Mapa Numerológico',currency:'BRL',value:0});
     runLoading();
   });
 
@@ -4604,6 +4614,7 @@
       '<div class="v2-taste-blur"></div>';
 
     /* Mostra tela e dispara sequência */
+    if(window.fbq)fbq('track','ViewContent',{content_name:'Resultado Numerológico',content_type:'product',currency:'BRL',value:0});
     showScreen('v2Teaser');
     hudUpdate(0);
     /* ── Scroll-reveal IntersectionObserver ── */
@@ -4624,6 +4635,7 @@
     /* Buttons */
     var buyBtn=document.getElementById('v2BuyBtn');
     if(buyBtn)buyBtn.onclick=function(){
+      if(window.fbq)fbq('track','InitiateCheckout',{content_name:'Mapa Numerológico Completo',currency:'BRL',value:47,num_items:1});
       var base='https://checkout.institutodespertamente.shop/VCCL1O8SD04H';
       var params=new URLSearchParams({name:_nome,email:_email});
       window.open(base+'?'+params.toString(),'_blank');
@@ -4635,6 +4647,7 @@
     /* Wire CTA bar */
     var resBtn=document.getElementById('v2ResCta');
     if(resBtn)resBtn.onclick=function(){
+      if(window.fbq)fbq('track','InitiateCheckout',{content_name:'Mapa Numerológico Completo',currency:'BRL',value:47,num_items:1});
       var base='https://checkout.institutodespertamente.shop/VCCL1O8SD04H';
       var params=new URLSearchParams({name:_nome,email:_email});
       window.open(base+'?'+params.toString(),'_blank');
