@@ -3347,18 +3347,21 @@ fbq('track','PageView');
   .lp-video-thumb{
     position:absolute;inset:0;
     background:
-      linear-gradient(180deg,rgba(13,6,22,.35) 0%,rgba(13,6,22,.5) 55%,rgba(13,6,22,.92) 100%),
+      radial-gradient(circle at 50% 32%,rgba(130,74,199,.4),transparent 62%),
+      linear-gradient(180deg,rgba(13,6,22,.72) 0%,rgba(13,6,22,.8) 45%,rgba(13,6,22,.97) 100%),
       url('https://img.youtube.com/vi/7OcYe5SYBaM/maxresdefault.jpg') center/cover no-repeat;
-    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;
     transition:opacity .3s;
   }
-  .lp-video-kicker{
-    position:absolute;top:16px;left:50%;transform:translateX(-50%);
-    background:rgba(13,6,22,.62);border:1px solid rgba(208,94,42,.4);
-    border-radius:999px;padding:6px 14px;
-    display:flex;align-items:center;gap:6px;
-    font-family:'Poppins',sans-serif;font-size:.7rem;font-weight:600;letter-spacing:.04em;
-    color:rgba(244,232,220,.9);backdrop-filter:blur(4px);white-space:nowrap;
+  .lp-video-cta-text{
+    font-family:'Poppins',sans-serif;font-weight:800;text-transform:uppercase;
+    font-size:clamp(1.5rem,8vw,2.1rem);line-height:1.15;letter-spacing:.01em;
+    color:#f4ede4;text-align:center;padding:0 20px;
+    text-shadow:0 4px 30px rgba(0,0,0,.7);
+  }
+  .lp-video-cta-text em{
+    font-style:italic;color:var(--gold);
+    text-shadow:0 0 34px rgba(208,94,42,.65);
   }
   .lp-video-play{
     width:72px;height:72px;border-radius:50%;background:var(--gold);
@@ -3521,11 +3524,11 @@ fbq('track','PageView');
           <line x1="200" y1="70" x2="200" y2="630" stroke="#D05E2A" stroke-width="0.5"/>
           <line x1="-80" y1="350" x2="480" y2="350" stroke="#D05E2A" stroke-width="0.5"/>
         </svg>
-        <div class="lp-video-kicker">🎥&nbsp; Rodrygo Murari explica em 2 minutos</div>
+        <div class="lp-video-cta-text">Clique para<br><em>assistir</em><br>o vídeo</div>
         <div class="lp-video-play" id="lpPlayBtn">
           <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
         </div>
-        <div class="lp-video-label">Assista antes de gerar seu mapa</div>
+        <div class="lp-video-label">Rodrygo Murari explica em 2 minutos</div>
       </div>
       <iframe id="lpVideo" src="" data-src="https://www.youtube.com/embed/7OcYe5SYBaM?autoplay=1&mute=0&rel=0&modestbranding=1&playsinline=1" allow="autoplay; fullscreen" allowfullscreen frameborder="0" style="position:absolute;inset:0;width:100%;height:100%;border:none;display:none"></iframe>
     </div>
