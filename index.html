@@ -1694,7 +1694,7 @@ fbq('track','PageView');
     @media(max-width:480px){
       .v2-nums-grid{grid-template-columns:1fr}
       .v2-desafio-grid{grid-template-columns:1fr}
-      .v2-hero-body{padding:56px 20px 60px}
+      .v2-hero-body{padding:56px 20px 20px}
     }
   /* ── HTML/CSS class aliases (bridge old names) ── */
   .v2-pain-card-text{font-size:.88rem;color:var(--text2);line-height:1.55;font-weight:400}
@@ -3401,6 +3401,9 @@ fbq('track','PageView');
     .lp-inline-form-section{padding:0 12px;}
     .lp-form-card{padding:24px 18px;}
     .lp-esferas-grid{grid-template-columns:repeat(3,1fr);}
+    .lp-tease-section,.lp-esferas-section,.lp-np-section{margin-top:40px;}
+    .lp-tease-h{margin-bottom:22px;}
+    .lp-section{padding:32px 20px;margin-top:32px!important;}
   }
 
   @media print{
@@ -3431,12 +3434,12 @@ fbq('track','PageView');
         <span>✦ 47.000+ mapas revelados</span>
         <span>✦ Sistema Pitagórico Autêntico · 2.500 anos de sabedoria</span>
         <span>✦ Leitura 100% personalizada · baseada no seu nome e data</span>
-        <span>✦ Revelação instantânea · gratuito · sem cadastro</span>
+        <span>✦ Análise inicial dos 3 pontos · grátis · sem cadastro</span>
         <span>✦ "Fez mais sentido do que anos de terapia" — Ana L., São Paulo</span>
         <span>✦ 47.000+ mapas revelados</span>
         <span>✦ Sistema Pitagórico Autêntico · 2.500 anos de sabedoria</span>
         <span>✦ Leitura 100% personalizada · baseada no seu nome e data</span>
-        <span>✦ Revelação instantânea · gratuito · sem cadastro</span>
+        <span>✦ Análise inicial dos 3 pontos · grátis · sem cadastro</span>
         <span>✦ "Fez mais sentido do que anos de terapia" — Ana L., São Paulo</span>
       </div>
     </div>
@@ -3446,7 +3449,7 @@ fbq('track','PageView');
   <div class="v2-hero-body">
     <div class="v2-eyebrow">
       <span class="v2-eyebrow-dot"></span>
-      Numerologia Pitagórica Sistêmica · NPS
+      Numerologia Pitagórica Aplicada · NPA
       <span class="v2-eyebrow-dot"></span>
     </div>
     <h1 class="v2-hero-h1">
@@ -3455,7 +3458,7 @@ fbq('track','PageView');
       Descubra qual é o seu.
     </h1>
     <p class="v2-hero-sub">
-      A numerologia pitagórica revela o que está por trás dos seus resultados, relacionamentos e desafios — gratuitamente, em 30 segundos.
+      A numerologia pitagórica revela o que está por trás dos seus resultados, relacionamentos e desafios. Comece agora com uma análise inicial gratuita dos 3 pontos mais importantes do seu mapa, em 30 segundos.
     </p>
     <p style="font-size:.72rem;color:var(--muted);font-family:'Poppins',sans-serif;margin-top:4px">🟢 <span id="liveCount">247</span> pessoas revelando o mapa agora</p>
   </div>
@@ -3482,17 +3485,17 @@ fbq('track','PageView');
     <!-- CTA abaixo do vídeo -->
     <div class="lp-video-cta">
       <button class="v2-hero-cta" id="v2HeroCta" type="button" onclick="document.getElementById('v2HeroFormSection').scrollIntoView({behavior:'smooth'});setTimeout(function(){document.getElementById('v2Name').focus()},500)">
-        Revelar Meu Mapa — Grátis
+        Revelar Meus 3 Pontos — Grátis
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M8 3l5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
-      <p class="v2-cta-sub">100% Gratuito · Resultado em 30 segundos · sem cadastro</p>
+      <p class="v2-cta-sub">Análise inicial 100% grátis · Resultado em 30 segundos · sem cadastro</p>
     </div>
   </div>
 
   <!-- FORMULÁRIO INLINE -->
   <div class="lp-inline-form-section" id="v2HeroFormSection">
-    <div class="lp-form-eyebrow">Gratuito · Resultado em 30 segundos</div>
-    <h2 class="lp-form-h">Gere seu Mapa Agora</h2>
+    <div class="lp-form-eyebrow">Análise inicial grátis · Resultado em 30 segundos</div>
+    <h2 class="lp-form-h">Descubra Seus 3 Primeiros Pontos</h2>
     <p class="lp-form-sub">Informe seus dados de nascimento — usamos apenas para calcular seu mapa numerológico.</p>
     <div class="lp-form-card">
       <div class="v2-field">
@@ -3526,7 +3529,7 @@ fbq('track','PageView');
         <span class="v2-field-hint">Com DDD · para receber seu mapa no WhatsApp</span>
       </div>
       <div class="v2-err" id="v2Err"></div>
-      <button class="v2-submit-btn" id="v2Submit" type="button">Calcular Meu Mapa Grátis →</button>
+      <button class="v2-submit-btn" id="v2Submit" type="button">Revelar Meus 3 Pontos Grátis →</button>
     </div>
     <div class="lp-form-security">🔒 Seus dados são usados apenas para gerar o mapa · não compartilhamos com ninguém</div>
   </div>
@@ -3576,7 +3579,7 @@ fbq('track','PageView');
     </div>
     <div style="margin-top:28px;text-align:center">
       <button class="v2-hero-cta" type="button" onclick="document.getElementById('v2HeroFormSection').scrollIntoView({behavior:'smooth'});setTimeout(function(){document.getElementById('v2Name').focus()},500)">
-        Gerar Meu Mapa Grátis →
+        Revelar Meus 3 Pontos Grátis →
       </button>
     </div>
   </section>
@@ -3590,10 +3593,10 @@ fbq('track','PageView');
     </p>
     <div class="lp-np-quote">
       "Não é misticismo. É um sistema preciso de autoconhecimento — que trabalha com quem você já é, revelando os padrões que regem toda a sua experiência."
-      <div class="lp-np-source">— Rodrygo Murari, criador do Método NPS</div>
+      <div class="lp-np-source">— Rodrygo Murari, criador do Método NPA</div>
     </div>
     <p style="font-family:'Poppins',sans-serif;font-size:.88rem;color:var(--text3);line-height:1.7">
-      O Sistema NPS (Numerologia Pitagórica Sistêmica) integra essa sabedoria ancestral com uma leitura profunda do comportamento humano — mapeando os Três Movimentos do Ser: o que você reage, o que você manifesta e o que você veio ser.
+      O Sistema NPA (Numerologia Pitagórica Aplicada) integra essa sabedoria ancestral com uma leitura profunda do comportamento humano — mapeando os Três Movimentos do Ser: o que você reage, o que você manifesta e o que você veio ser.
     </p>
   </section>
 
@@ -3604,8 +3607,8 @@ fbq('track','PageView');
       <div class="lp-founder-grid">
         <div>
           <h2 class="lp-founder-name">Rodrygo Murari</h2>
-          <div class="lp-founder-role">Criador do Método Pitagórico Sistêmico · NPS</div>
-          <p class="lp-founder-text">Numerólogo e pesquisador de autoconhecimento há mais de uma década, Rodrygo desenvolveu o método NPS — que integra a sabedoria de Pitágoras com uma leitura sistêmica dos padrões humanos. Mais de 47.000 mapas revelados.</p>
+          <div class="lp-founder-role">Criador do Método Pitagórico Aplicado · NPA</div>
+          <p class="lp-founder-text">Numerólogo e pesquisador de autoconhecimento há mais de uma década, Rodrygo desenvolveu o método NPA — que integra a sabedoria de Pitágoras com uma leitura sistêmica dos padrões humanos. Mais de 47.000 mapas revelados.</p>
         </div>
         <div></div>
       </div>
@@ -3618,7 +3621,7 @@ fbq('track','PageView');
       <div>
         <img src="assets/logo.png" alt="Seu Numerólogo" class="lp-footer-logo"/>
         <div class="lp-footer-brand-name">Seu Numerólogo</div>
-        <p class="lp-footer-brand-sub">Sistema Pitagórico Sistêmico<br>desenvolvido por Rodrygo Murari</p>
+        <p class="lp-footer-brand-sub">Sistema Pitagórico Aplicado<br>desenvolvido por Rodrygo Murari</p>
         <div class="lp-social-row">
           <a href="https://www.instagram.com/seunumerologo/" target="_blank" class="lp-social-btn" aria-label="Instagram">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".9" fill="currentColor" stroke="none"/></svg>
@@ -3801,7 +3804,7 @@ fbq('track','PageView');
         <div class="sp-price-anchor">
           <span class="sp-pa-label">O que está dentro do mapa — e o que custaria separado</span>
           <div class="sp-pa-row">
-            <span class="sp-pa-item">As 7 Esferas NPS — Alma, Expressão, Imagem, Destino, Psíquico, Talento Oculto e Ano Pessoal</span>
+            <span class="sp-pa-item">As 7 Esferas NPA — Alma, Expressão, Imagem, Destino, Psíquico, Talento Oculto e Ano Pessoal</span>
             <span class="sp-pa-val crossed">R$ 67</span>
           </div>
           <div class="sp-pa-row">
@@ -3832,13 +3835,21 @@ fbq('track','PageView');
             <span class="sp-pa-item" style="color:var(--amber)">✦ Bônus 2 — E-book Numerologia do Destino <span style="color:var(--text2);font-size:.8rem;display:block;font-weight:400">Rodrygo Murari · acesso imediato</span></span>
             <span class="sp-pa-val crossed">R$ 39</span>
           </div>
+          <div class="sp-pa-row">
+            <span class="sp-pa-item" style="color:var(--amber)">✦ Bônus 3 — Sessão de Mentoria em Grupo NPA ao Vivo <span style="color:var(--text2);font-size:.8rem;display:block;font-weight:400">Rodrygo Murari · vaga garantida</span></span>
+            <span class="sp-pa-val crossed">R$ 127</span>
+          </div>
           <div class="sp-pa-row sp-pa-total">
             <span class="sp-pa-item">Valor total separado</span>
-            <span class="sp-pa-val crossed">R$ 451</span>
+            <span class="sp-pa-val crossed">R$ 578</span>
+          </div>
+          <div class="sp-pa-row">
+            <span class="sp-pa-item">Preço normal do Mapa Completo</span>
+            <span class="sp-pa-val crossed">R$ 220</span>
           </div>
           <div class="sp-pa-row highlight">
             <span class="sp-pa-item">Tudo junto · Oferta de lançamento</span>
-            <span class="sp-pa-val">R$ 47</span>
+            <span class="sp-pa-val">R$ 47,60</span>
           </div>
         </div>
 
@@ -3865,7 +3876,7 @@ fbq('track','PageView');
         <!-- Urgência -->
         <div class="sp-urgency">
           <div class="sp-urgency-dot"></div>
-          <span><strong>Oferta de lançamento:</strong> preço de R$47 válido durante o período de lançamento. O valor sobe para R$97 em breve.</span>
+          <span><strong>Oferta de lançamento:</strong> preço de R$47,60 válido durante o período de lançamento. O valor sobe para R$220 em breve.</span>
         </div>
 
         <!-- Garantia -->
@@ -3883,8 +3894,8 @@ fbq('track','PageView');
           <h2 class="sp-offer-h">Seu Mapa Numerológico<br>Pitagórico Completo</h2>
           <p class="sp-offer-sub">12 análises personalizadas · PDF premium · Plano de Ação</p>
           <div class="sp-price-block">
-            <div class="sp-price-from">De R$ 97</div>
-            <div class="sp-price-main">R$ 47</div>
+            <div class="sp-price-from">De R$ 220</div>
+            <div class="sp-price-main">R$ 47,60</div>
             <div class="sp-price-note">pagamento único · acesso imediato</div>
           </div>
           <button class="sp-btn-buy" id="v2BuyBtn" type="button">
@@ -3965,7 +3976,7 @@ fbq('track','PageView');
   function reduzirSimples(n){n=Math.abs(+n||0);while(n>9){n=String(n).split('').reduce((a,b)=>a+Number(b),0);}return n}
   // Caminho de Vida: soma TODOS os dígitos do DD+MM+YYYY de uma vez, preserva mestres só no resultado final
   function calcCaminhoVida(date){return reduzir(somarDigitos(String(date.dia))+somarDigitos(String(date.mes))+somarDigitos(String(date.ano)))}
-  // Expressão: todas as letras → preserva 11 e 22 (números mestres, conforme material NPS)
+  // Expressão: todas as letras → preserva 11 e 22 (números mestres, conforme material NPA)
   function calcExpressao(nome){const s=limpar(nome).replace(/\s/g,'');return reduzir([...s].map(c=>TAB[c]||0).reduce((a,b)=>a+b,0))}
   // Alma: só vogais (A E I O U — Y é consoante) → reduz a 1-9, sem mestres
   function calcAlma(nome){const s=limpar(nome).replace(/\s/g,'');return reduzirSimples([...s].filter(c=>VOGAIS.has(c)).map(c=>TAB[c]||0).reduce((a,b)=>a+b,0))}
@@ -3980,7 +3991,7 @@ fbq('track','PageView');
     var anoRef=(hm>date.mes||(hm===date.mes&&hd>=date.dia))?ANO_ATUAL:ANO_ATUAL-1;
     return reduzirSimples(somarDigitos(String(date.dia))+somarDigitos(String(date.mes))+somarDigitos(String(anoRef)));
   }
-  // P1=dia+mes, P2=mes+ano, P3=P1+P2, P4=dia+ano (fórmula NPS verificada)
+  // P1=dia+mes, P2=mes+ano, P3=P1+P2, P4=dia+ano (fórmula NPA verificada)
   function calcPinaculos(date){const dia=reduzir(somarDigitos(String(date.dia)));const mes=reduzir(somarDigitos(String(date.mes)));const ano=reduzir(somarDigitos(String(date.ano)));const p1=reduzir(dia+mes);const p2=reduzir(mes+ano);const p3=reduzir(p1+p2);const p4=reduzir(dia+ano);return[p1,p2,p3,p4]}
   function calcPeriodosPinaculos(caminho,anoNasc){const durP1=36-(MESTRES.has(caminho)?reduzirSimples(caminho):caminho);const ini1=anoNasc,fim1=anoNasc+durP1-1;const ini2=fim1+1,fim2=ini2+8;const ini3=fim2+1,fim3=ini3+8;const ini4=fim3+1;return[{ini:ini1,fim:fim1,label:`${ini1}–${fim1}`},{ini:ini2,fim:fim2,label:`${ini2}–${fim2}`},{ini:ini3,fim:fim3,label:`${ini3}–${fim3}`},{ini:ini4,fim:null,label:`${ini4} em diante`}]}
   function calcDesafios(date){const dia=reduzirSimples(somarDigitos(String(date.dia)));const mes=reduzirSimples(somarDigitos(String(date.mes)));const ano=reduzirSimples(somarDigitos(String(date.ano)));const d1=Math.abs(dia-mes),d2=Math.abs(ano-dia);const d3=Math.abs(d2-d1),d4=Math.abs(ano-mes);return[d1,d2,d3,d4]}
@@ -3998,7 +4009,7 @@ fbq('track','PageView');
 
   /* ── TÍTULOS & ESSÊNCIAS ── */
   const TITULOS={1:'O Pioneiro',2:'A Ponte do Vínculo',3:'A Voz que Ilumina',4:'O Arquiteto do Real',5:'O Mensageiro Livre',6:'O Guardião do Amor',7:'O Eremita Sagrado',8:'A Autoridade da Matéria',9:'O Mestre da Entrega',11:'O Canal da Luz',22:'O Arquiteto da Grande Obra',33:'A Compaixão Mestra'};
-  /* Cores vibracionais NPS — uma cor por número */
+  /* Cores vibracionais NPA — uma cor por número */
   const CORES={1:'#FF3B30',2:'#FF9500',3:'#FFD60A',4:'#34C759',5:'#32ADE6',6:'#BF5AF2',7:'#5E5CE6',8:'#FF69B4',9:'#FFD426',11:'#E0E0E0',22:'#FFD700',33:'#0A84FF'};
   const ESSENCIAS={1:'Iniciação, autonomia, coragem criadora e o fogo do começo.',2:'Cooperação, sensibilidade, diplomacia e a arte de unir sem se dissolver.',3:'Expressão, criatividade, comunicação e a alegria como caminho espiritual.',4:'Construção, disciplina, ordem e a sabedoria das fundações sólidas.',5:'Liberdade, transformação, adaptação e a coragem de experienciar o novo.',6:'Amor, responsabilidade, harmonia e o cuidado como vocação.',7:'Introspecção, conhecimento, espiritualidade e a busca pelo que está além.',8:'Poder, abundância, autoridade e o desafio de exercer força com integridade.',9:'Completude, compaixão, serviço e a sabedoria de encerrar ciclos.',11:'Iluminação, intuição elevada, inspiração e a missão de ser canal de luz.',22:'Materialização em grande escala, visão e construção de legado coletivo.',33:'Amor incondicional, cura, ensino e a compaixão como força transformadora.'};
 
@@ -4635,7 +4646,7 @@ fbq('track','PageView');
     /* Buttons */
     var buyBtn=document.getElementById('v2BuyBtn');
     if(buyBtn)buyBtn.onclick=function(){
-      if(window.fbq)fbq('track','InitiateCheckout',{content_name:'Mapa Numerológico Completo',currency:'BRL',value:47,num_items:1});
+      if(window.fbq)fbq('track','InitiateCheckout',{content_name:'Mapa Numerológico Completo',currency:'BRL',value:47.60,num_items:1});
       var base='https://checkout.institutodespertamente.shop/VCCL1O8SD04H';
       var params=new URLSearchParams({name:_nome,email:_email});
       window.open(base+'?'+params.toString(),'_blank');
@@ -4647,7 +4658,7 @@ fbq('track','PageView');
     /* Wire CTA bar */
     var resBtn=document.getElementById('v2ResCta');
     if(resBtn)resBtn.onclick=function(){
-      if(window.fbq)fbq('track','InitiateCheckout',{content_name:'Mapa Numerológico Completo',currency:'BRL',value:47,num_items:1});
+      if(window.fbq)fbq('track','InitiateCheckout',{content_name:'Mapa Numerológico Completo',currency:'BRL',value:47.60,num_items:1});
       var base='https://checkout.institutodespertamente.shop/VCCL1O8SD04H';
       var params=new URLSearchParams({name:_nome,email:_email});
       window.open(base+'?'+params.toString(),'_blank');
@@ -4791,7 +4802,7 @@ fbq('track','PageView');
         pdf.setFontSize(7); pdf.setTextColor(G[0],G[1],G[2]); pdf.setFont('helvetica','normal');
         pdf.text('SEU NUMERÓLOGO',pageW/2,10,{align:'center'});
         pdf.setFontSize(5.5); pdf.setTextColor(100,80,40);
-        pdf.text('SISTEMA PITAGÓRICO SISTÊMICO · NPS',pageW/2,15,{align:'center'});
+        pdf.text('SISTEMA PITAGÓRICO APLICADO · NPA',pageW/2,15,{align:'center'});
 
         // Title block
         pdf.setFontSize(28); pdf.setTextColor(G[0],G[1],G[2]); pdf.setFont('helvetica','bold');
@@ -5410,7 +5421,7 @@ fbq('track','PageView');
     var talento=reduzir(alma+expressao);
 
     document.getElementById('v2MapName').textContent=nomeRaw.trim();
-    document.getElementById('v2MapMeta').textContent=dateRaw+' · Mapa Completo · 12 Análises NPS';
+    document.getElementById('v2MapMeta').textContent=dateRaw+' · Mapa Completo · 12 Análises NPA';
 
     var esferas=[
       {n:'1ª',esfera:'ESFERA DA ALMA',icon:'◐',num:alma,ctx:'alma',
