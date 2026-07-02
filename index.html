@@ -3346,9 +3346,19 @@ fbq('track','PageView');
   }
   .lp-video-thumb{
     position:absolute;inset:0;
-    background:linear-gradient(160deg,#1a0e30,#120818,#0d0616);
+    background:
+      linear-gradient(180deg,rgba(13,6,22,.35) 0%,rgba(13,6,22,.5) 55%,rgba(13,6,22,.92) 100%),
+      url('https://img.youtube.com/vi/7OcYe5SYBaM/maxresdefault.jpg') center/cover no-repeat;
     display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;
     transition:opacity .3s;
+  }
+  .lp-video-kicker{
+    position:absolute;top:16px;left:50%;transform:translateX(-50%);
+    background:rgba(13,6,22,.62);border:1px solid rgba(208,94,42,.4);
+    border-radius:999px;padding:6px 14px;
+    display:flex;align-items:center;gap:6px;
+    font-family:'Poppins',sans-serif;font-size:.7rem;font-weight:600;letter-spacing:.04em;
+    color:rgba(244,232,220,.9);backdrop-filter:blur(4px);white-space:nowrap;
   }
   .lp-video-play{
     width:72px;height:72px;border-radius:50%;background:var(--gold);
@@ -3511,6 +3521,7 @@ fbq('track','PageView');
           <line x1="200" y1="70" x2="200" y2="630" stroke="#D05E2A" stroke-width="0.5"/>
           <line x1="-80" y1="350" x2="480" y2="350" stroke="#D05E2A" stroke-width="0.5"/>
         </svg>
+        <div class="lp-video-kicker">🎥&nbsp; Rodrygo Murari explica em 2 minutos</div>
         <div class="lp-video-play" id="lpPlayBtn">
           <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
         </div>
