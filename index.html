@@ -3091,6 +3091,23 @@ fbq('track','PageView');
   }
   .sp-urgency strong{color:var(--gold);font-weight:700}
 
+  /* Timer real de contagem regressiva */
+  .sp-timer{
+    display:flex;align-items:center;justify-content:center;gap:10px;
+    background:rgba(208,94,42,.08);
+    border:1px solid rgba(208,94,42,.25);
+    border-radius:8px;
+    padding:12px 16px;
+    margin-bottom:18px;
+  }
+  .sp-timer-dot{
+    width:7px;height:7px;border-radius:50%;
+    background:var(--gold);flex-shrink:0;
+    animation:glowDot 1.2s ease-in-out infinite;
+  }
+  .sp-timer-text{font-size:.82rem;color:var(--text2);letter-spacing:.02em}
+  .sp-timer-text strong{color:var(--gold);font-variant-numeric:tabular-nums;font-weight:700;font-size:.92rem}
+
   /* Bloco de preço + CTA */
   .sp-offer-block{
     background:linear-gradient(160deg,rgba(208,94,42,.08),rgba(208,94,42,.03));
@@ -3172,6 +3189,25 @@ fbq('track','PageView');
     font-size:.82rem;font-weight:700;color:#f4ede4;margin-bottom:4px;
   }
   .sp-guarantee-text{font-size:.78rem;color:var(--text3);line-height:1.55}
+
+  /* Escassez de valor */
+  .sp-scarcity{
+    display:flex;align-items:flex-start;gap:14px;
+    background:rgba(208,94,42,.05);
+    border:1px dashed rgba(208,94,42,.3);
+    border-radius:8px;padding:16px 18px;
+    margin:8px 0 24px;
+  }
+  .sp-scarcity-icon{
+    width:36px;height:36px;border-radius:50%;
+    background:rgba(208,94,42,.1);border:1px solid rgba(208,94,42,.3);
+    display:flex;align-items:center;justify-content:center;
+    font-size:1rem;flex-shrink:0;
+  }
+  .sp-scarcity-h{
+    font-family:'Poppins',sans-serif;font-size:.86rem;font-weight:700;color:var(--gold);margin-bottom:4px;
+  }
+  .sp-scarcity-text{font-size:.8rem;color:var(--text2);line-height:1.6}
 
   /* Trust strip */
   .sp-trust{
@@ -3706,88 +3742,22 @@ fbq('track','PageView');
   <!-- Scroll único de resultados -->
   <div class="v2-results-scroll" id="v2SlidesWrap">
 
-    <!-- Bloco 0: Caminho de Vida -->
-    <div class="v2-res-block v2-res-hero">
-      <div class="v2-slide-inner center">
-        <div class="v2-reveal-kicker">Seu Caminho de Vida</div>
-        <div class="v2-reveal-big" id="v2TeaserNum">0</div>
-        <div class="v2-reveal-name" id="v2TeaserTitle"></div>
-        <div class="v2-reveal-hook" id="v2TeaserHook"></div>
-        <div class="v2-reveal-insight" id="v2TeaserInsight" style="opacity:0;transition:opacity .8s ease"></div>
-        <div class="v2-block-sep" id="v2TeaserSep" style="opacity:0;transition:opacity .5s ease"></div>
-        <div class="v2-scroll-cue" id="v2ScrollCue" style="opacity:0;transition:opacity .5s ease" onclick="document.querySelector('#v2Teaser .v2-res-block:not(.v2-res-hero)').scrollIntoView({behavior:'smooth'})">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
-          continuar lendo
-        </div>
-      </div>
-    </div>
-
-    <!-- Slide 1: Personalidade -->
-    <div class="v2-res-block">
-      <div class="v2-slide-inner">
-        <div class="v2-num-card" id="v2PersonaCard">
-          <div class="v2-gcard-badge free" style="margin-bottom:18px">✓ Gratuito · Revelado para você</div>
-          <div class="v2-num-card-type">Número da Personalidade</div>
-          <div class="v2-num-card-hero">
-            <div class="v2-num-big" id="v2PersonaNum">—</div>
-            <div class="v2-num-name" id="v2PersonaName"></div>
-          </div>
-          <div class="v2-num-card-body" id="v2PersonaBody"></div>
-          <div class="v2-num-obs" id="v2PersonaObs"></div>
-        </div>
-
-        <div class="v2-block-cue" onclick="this.closest('.v2-res-block').nextElementSibling&&this.closest('.v2-res-block').nextElementSibling.scrollIntoView({behavior:'smooth'})"><svg width="16" height="10" viewBox="0 0 24 14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 2l10 10L22 2"/></svg></div>
-      </div>
-    </div>
-
-    <!-- Slide 2: Alma -->
-    <div class="v2-res-block">
-      <div class="v2-slide-inner">
-        <div class="v2-num-card" id="v2AlmaCard">
-          <div class="v2-gcard-badge amber" style="margin-bottom:18px">✦ Gratuito · Revelado para você</div>
-          <div class="v2-num-card-type">Número da Alma</div>
-          <div class="v2-num-card-hero">
-            <div class="v2-num-big" id="v2AlmaNum">—</div>
-            <div class="v2-num-name" id="v2AlmaName"></div>
-          </div>
-          <div class="v2-num-card-body" id="v2AlmaBody"></div>
-          <div class="v2-num-obs" id="v2AlmaObs"></div>
-        </div>
-
-        <div class="v2-block-cue" onclick="this.closest('.v2-res-block').nextElementSibling&&this.closest('.v2-res-block').nextElementSibling.scrollIntoView({behavior:'smooth'})"><svg width="16" height="10" viewBox="0 0 24 14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 2l10 10L22 2"/></svg></div>
-      </div>
-    </div>
-
-    <!-- Slide 3: Ano Pessoal -->
-    <div class="v2-res-block">
-      <div class="v2-slide-inner">
-        <div class="v2-num-card" id="v2AnoCard">
-          <div class="v2-gcard-badge" style="margin-bottom:18px;background:rgba(159,122,234,.12);border:1px solid rgba(159,122,234,.25);color:#b794f4">☽ Seu Momento Atual</div>
-          <div class="v2-num-card-type">Ano Pessoal</div>
-          <div class="v2-num-card-hero">
-            <div class="v2-num-big" id="v2AnoNum">—</div>
-            <div class="v2-num-name" id="v2AnoName"></div>
-          </div>
-          <div class="v2-num-card-body" id="v2AnoBody"></div>
-          <div class="v2-num-obs" id="v2AnoObs"></div>
-        </div>
-
-        <div class="v2-block-cue" onclick="this.closest('.v2-res-block').nextElementSibling&&this.closest('.v2-res-block').nextElementSibling.scrollIntoView({behavior:'smooth'})"><svg width="16" height="10" viewBox="0 0 24 14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 2l10 10L22 2"/></svg></div>
-      </div>
-    </div>
-
-
-    <!-- Slide 4: Sales Page -->
-    <!-- Slide 5:<!-- Slide 5: Sales Page 2026 -->
+    <!-- Bloco 0: Oferta (primeiro) -->
     <div class="v2-res-block">
       <div class="v2-slide-inner">
 
-        <!-- Ponte emocional -->
+        <!-- Intro -->
         <div class="sp-bridge">
           <p class="sp-bridge-text">
-            Você acabou de ver três padrões reais sobre você.<br>
-            <em>O mapa completo mostra por que eles persistem — e como interrompê-los.</em>
+            Seu Mapa Numerológico Pitagórico já foi calculado.<br>
+            <em>Veja exatamente o que vem dentro dele — e o que você libera agora.</em>
           </p>
+        </div>
+
+        <!-- Timer real -->
+        <div class="sp-timer">
+          <div class="sp-timer-dot"></div>
+          <div class="sp-timer-text">Esta condição de lançamento expira em <strong id="v2OfferTimer">20:00</strong></div>
         </div>
 
         <!-- Prova social específica -->
@@ -3795,7 +3765,7 @@ fbq('track','PageView');
           <div class="sp-proof-avatar">M</div>
           <div class="sp-proof-body">
             <div class="sp-proof-stars">★★★★★</div>
-            <div class="sp-proof-quote">"Vi o padrão de sabotagem no slide 3 e fiquei em choque. Comprei o mapa completo e a leitura do Número de Alma explicou tudo que eu nunca tinha conseguido nomear."</div>
+            <div class="sp-proof-quote">"Vi o padrão de sabotagem no meu mapa e fiquei em choque. A leitura do Número de Alma explicou tudo que eu nunca tinha conseguido nomear."</div>
             <div class="sp-proof-meta">Mariana S. · Caminho de Vida 3 · São Paulo</div>
           </div>
         </div>
@@ -3898,7 +3868,112 @@ fbq('track','PageView');
             <div class="sp-price-main">R$ 47,60</div>
             <div class="sp-price-note">pagamento único · acesso imediato</div>
           </div>
-          <button class="sp-btn-buy" id="v2BuyBtn" type="button">
+          <button class="sp-btn-buy" type="button">
+            Quero Meu Mapa Completo Agora
+          </button>
+          <div class="sp-trust">
+            <span class="sp-trust-item">🔒 Pagamento seguro</span>
+            <span class="sp-trust-item">⚡ Acesso imediato</span>
+            <span class="sp-trust-item">🛡️ 7 dias de garantia</span>
+          </div>
+        </div>
+
+        <div class="v2-block-cue" onclick="this.closest('.v2-res-block').nextElementSibling&&this.closest('.v2-res-block').nextElementSibling.scrollIntoView({behavior:'smooth'})"><svg width="16" height="10" viewBox="0 0 24 14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 2l10 10L22 2"/></svg></div>
+      </div>
+    </div>
+
+    <!-- Bloco 1: Caminho de Vida -->
+    <div class="v2-res-block v2-res-hero">
+      <div class="v2-slide-inner center">
+        <div class="v2-reveal-kicker">Uma prévia real do seu mapa · Seu Caminho de Vida</div>
+        <div class="v2-reveal-big" id="v2TeaserNum">0</div>
+        <div class="v2-reveal-name" id="v2TeaserTitle"></div>
+        <div class="v2-reveal-hook" id="v2TeaserHook"></div>
+        <div class="v2-reveal-insight" id="v2TeaserInsight" style="opacity:0;transition:opacity .8s ease"></div>
+        <div class="v2-block-sep" id="v2TeaserSep" style="opacity:0;transition:opacity .5s ease"></div>
+        <div class="v2-scroll-cue" id="v2ScrollCue" style="opacity:0;transition:opacity .5s ease" onclick="this.closest('.v2-res-block').nextElementSibling&&this.closest('.v2-res-block').nextElementSibling.scrollIntoView({behavior:'smooth'})">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+          continuar lendo
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 1: Personalidade -->
+    <div class="v2-res-block">
+      <div class="v2-slide-inner">
+        <div class="v2-num-card" id="v2PersonaCard">
+          <div class="v2-gcard-badge free" style="margin-bottom:18px">✓ Gratuito · Revelado para você</div>
+          <div class="v2-num-card-type">Número da Personalidade</div>
+          <div class="v2-num-card-hero">
+            <div class="v2-num-big" id="v2PersonaNum">—</div>
+            <div class="v2-num-name" id="v2PersonaName"></div>
+          </div>
+          <div class="v2-num-card-body" id="v2PersonaBody"></div>
+          <div class="v2-num-obs" id="v2PersonaObs"></div>
+        </div>
+
+        <div class="v2-block-cue" onclick="this.closest('.v2-res-block').nextElementSibling&&this.closest('.v2-res-block').nextElementSibling.scrollIntoView({behavior:'smooth'})"><svg width="16" height="10" viewBox="0 0 24 14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 2l10 10L22 2"/></svg></div>
+      </div>
+    </div>
+
+    <!-- Slide 2: Alma -->
+    <div class="v2-res-block">
+      <div class="v2-slide-inner">
+        <div class="v2-num-card" id="v2AlmaCard">
+          <div class="v2-gcard-badge amber" style="margin-bottom:18px">✦ Gratuito · Revelado para você</div>
+          <div class="v2-num-card-type">Número da Alma</div>
+          <div class="v2-num-card-hero">
+            <div class="v2-num-big" id="v2AlmaNum">—</div>
+            <div class="v2-num-name" id="v2AlmaName"></div>
+          </div>
+          <div class="v2-num-card-body" id="v2AlmaBody"></div>
+          <div class="v2-num-obs" id="v2AlmaObs"></div>
+        </div>
+
+        <div class="v2-block-cue" onclick="this.closest('.v2-res-block').nextElementSibling&&this.closest('.v2-res-block').nextElementSibling.scrollIntoView({behavior:'smooth'})"><svg width="16" height="10" viewBox="0 0 24 14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 2l10 10L22 2"/></svg></div>
+      </div>
+    </div>
+
+    <!-- Slide 3: Ano Pessoal -->
+    <div class="v2-res-block">
+      <div class="v2-slide-inner">
+        <div class="v2-num-card" id="v2AnoCard">
+          <div class="v2-gcard-badge" style="margin-bottom:18px;background:rgba(159,122,234,.12);border:1px solid rgba(159,122,234,.25);color:#b794f4">☽ Seu Momento Atual</div>
+          <div class="v2-num-card-type">Ano Pessoal</div>
+          <div class="v2-num-card-hero">
+            <div class="v2-num-big" id="v2AnoNum">—</div>
+            <div class="v2-num-name" id="v2AnoName"></div>
+          </div>
+          <div class="v2-num-card-body" id="v2AnoBody"></div>
+          <div class="v2-num-obs" id="v2AnoObs"></div>
+        </div>
+
+        <div class="v2-block-cue" onclick="this.closest('.v2-res-block').nextElementSibling&&this.closest('.v2-res-block').nextElementSibling.scrollIntoView({behavior:'smooth'})"><svg width="16" height="10" viewBox="0 0 24 14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 2l10 10L22 2"/></svg></div>
+      </div>
+    </div>
+
+    <!-- Bloco final: Escassez + CTA + FAQ -->
+    <div class="v2-res-block">
+      <div class="v2-slide-inner">
+
+        <!-- Aviso de escassez de valor -->
+        <div class="sp-scarcity">
+          <div class="sp-scarcity-icon">🧊</div>
+          <div>
+            <div class="sp-scarcity-h">Isso é só a ponta do iceberg</div>
+            <div class="sp-scarcity-text">Caminho de Vida, Personalidade, Alma e Ano Pessoal são só 4 das 12 análises do Mapa Completo — e nenhum dos 3 bônus que você viu acima. Os 4 Pináculos, seus Desafios de Vida, Lições Kármicas, Direcionamento de Carreira e o Plano de Ação real só existem na versão completa.</div>
+          </div>
+        </div>
+
+        <!-- Oferta + CTA final -->
+        <div class="sp-offer-block">
+          <div class="sp-offer-badge">✦ Acesso Completo · Instantâneo</div>
+          <div class="sp-price-block">
+            <div class="sp-price-from">De R$ 220</div>
+            <div class="sp-price-main">R$ 47,60</div>
+            <div class="sp-price-note">pagamento único · acesso imediato</div>
+          </div>
+          <button class="sp-btn-buy" type="button">
             Quero Meu Mapa Completo Agora
           </button>
           <div class="sp-trust">
@@ -3924,8 +3999,6 @@ fbq('track','PageView');
             <div class="sp-faq-a">Após o pagamento, seu Mapa Numerológico completo é enviado para o seu e-mail em PDF. Guarda para sempre e pode acessar quando quiser.</div>
           </div>
         </div>
-
-
 
       </div>
     </div>
@@ -4644,14 +4717,16 @@ fbq('track','PageView');
     if(teaserEl)teaserEl.scrollTop=0;
 
     /* Buttons */
-    var buyBtn=document.getElementById('v2BuyBtn');
-    if(buyBtn)buyBtn.onclick=function(){
-      if(window.fbq)fbq('track','InitiateCheckout',{content_name:'Mapa Numerológico Completo',currency:'BRL',value:47.60,num_items:1});
-      var base='https://checkout.institutodespertamente.shop/VCCL1O8SD04H';
-      var params=new URLSearchParams({name:_nome,email:_email});
-      window.open(base+'?'+params.toString(),'_blank');
-      if(window._markComprou)window._markComprou();
-    };
+    var buyBtns=document.querySelectorAll('.sp-btn-buy');
+    buyBtns.forEach(function(buyBtn){
+      buyBtn.onclick=function(){
+        if(window.fbq)fbq('track','InitiateCheckout',{content_name:'Mapa Numerológico Completo',currency:'BRL',value:47.60,num_items:1});
+        var base='https://checkout.institutodespertamente.shop/VCCL1O8SD04H';
+        var params=new URLSearchParams({name:_nome,email:_email});
+        window.open(base+'?'+params.toString(),'_blank');
+        if(window._markComprou)window._markComprou();
+      };
+    });
     var freeBtn=document.getElementById('v2FreeBtn');
     if(freeBtn)freeBtn.onclick=function(){showScreen('v2Hero');};
 
@@ -4664,6 +4739,24 @@ fbq('track','PageView');
       window.open(base+'?'+params.toString(),'_blank');
       if(window._markComprou)window._markComprou();
     };
+    /* Timer real da oferta */
+    (function(){
+      var display=document.getElementById('v2OfferTimer');
+      if(!display)return;
+      var totalSec=20*60;
+      var stored=sessionStorage.getItem('sn_offer_timer_end');
+      var endTime=stored?parseInt(stored,10):(Date.now()+totalSec*1000);
+      if(!stored)sessionStorage.setItem('sn_offer_timer_end',endTime);
+      function tick(){
+        var remaining=Math.max(0,Math.round((endTime-Date.now())/1000));
+        var m=Math.floor(remaining/60),s=remaining%60;
+        display.textContent=m+':'+(s<10?'0':'')+s;
+        if(remaining<=0)clearInterval(iv);
+      }
+      tick();
+      var iv=setInterval(tick,1000);
+    })();
+
     /* Anima Caminho de Vida */
     var numEl=document.getElementById('v2TeaserNum');
     var titleEl=document.getElementById('v2TeaserTitle');
