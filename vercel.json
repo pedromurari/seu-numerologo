@@ -1,6 +1,8 @@
 {
   "rewrites": [
     { "source": "/obrigado", "destination": "/obrigado.html" },
-    { "source": "/obrigado/", "destination": "/obrigado.html" }
+    { "source": "/obrigado/", "destination": "/obrigado.html" },
+    { "source": "/mapa-7-esferas", "destination": "/mapa-7-esferas.html" },
+    { "source": "/mapa-7-esferas/", "destination": "/mapa-7-esferas.html" }
   ]
 }
