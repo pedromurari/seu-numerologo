@@ -305,7 +305,7 @@
     /* ══════════════════════════════════════════════
        TELA 3 — LOADING / PROCESSANDO
     ══════════════════════════════════════════════ */
-    #v2Load{
+    #v2Load,#mScreenLoad{
       z-index:8;background:#000;
       display:flex;align-items:center;justify-content:center;
     }
@@ -970,8 +970,8 @@
   .v2-ticker-inner span{display:inline-block;padding:0 32px;font-size:.72rem;font-weight:500;color:var(--text2);letter-spacing:.04em}
   /* hero screen flex */
   #v2Hero{display:flex;flex-direction:column}
-  #v2Load{display:flex;align-items:center;justify-content:center}
-  #v2Load.v2-hidden{display:none!important}
+  #v2Load,#mScreenLoad{display:flex;align-items:center;justify-content:center}
+  #v2Load.v2-hidden,#mScreenLoad.v2-hidden{display:none!important}
   /* amberLine / amberBg vars fallback */
   :root{--amberLine:rgba(208,94,42,.22);--amberBg:rgba(208,94,42,.06)}
   /* Ticker positioning fix — ticker agora está dentro do nav */
