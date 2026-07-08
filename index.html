@@ -8,6 +8,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=Cinzel:wght@400;500;600;700&display=swap" rel="stylesheet">
+<!-- i18n (pt/en/es) — carrega cedo pra resolver antes do usuário interagir -->
+<script src="/assets/i18n.js"></script>
 <!-- Meta Pixel -->
 <script>
 var META_PIXEL_ID='1335107355260306';
@@ -884,6 +886,19 @@ fbq('track','PageView');
     @media(max-width:640px){
       .v2-nav-logo,.v2-nav-logo img{height:40px;width:40px}
     }
+    /* Seletor manual de idioma */
+    .sn-lang-switch{
+      display:flex;align-items:center;gap:2px;flex-shrink:0;
+      padding:0 8px;position:relative;z-index:2;
+    }
+    .sn-lang-switch button{
+      background:none;border:1px solid transparent;color:var(--muted,#8a8070);
+      font-family:'Poppins',sans-serif;font-size:.65rem;font-weight:700;letter-spacing:.04em;
+      padding:4px 6px;border-radius:5px;cursor:pointer;transition:color .2s,border-color .2s;
+    }
+    .sn-lang-switch button:hover{color:#fff}
+    .sn-lang-switch button.active{color:var(--gold,#D4B06A);border-color:rgba(212,176,106,.35)}
+    @media(max-width:480px){.sn-lang-switch{padding:0 4px}.sn-lang-switch button{padding:3px 4px;font-size:.6rem}}
     /* Ticker embutido no nav */
     .v2-nav-ticker{
       flex:1;min-width:0;overflow:hidden;
@@ -3478,18 +3493,23 @@ fbq('track','PageView');
 <div id="v2Hero" class="v2-screen">
   <nav class="v2-nav">
     <a class="v2-nav-logo" href="#" aria-label="Seu Numerólogo"><img src="assets/logo.png" alt="Seu Numerólogo"/></a>
+    <div class="sn-lang-switch" id="snLangSwitch" aria-label="Idioma">
+      <button type="button" data-lang="pt">PT</button>
+      <button type="button" data-lang="en">EN</button>
+      <button type="button" data-lang="es">ES</button>
+    </div>
     <div class="v2-nav-ticker" aria-hidden="true">
       <div class="v2-ticker-inner">
-        <span>✦ 47.000+ mapas revelados</span>
-        <span>✦ Sistema Pitagórico Autêntico · 2.500 anos de sabedoria</span>
-        <span>✦ Leitura 100% personalizada · baseada no seu nome e data</span>
-        <span>✦ Análise inicial dos 3 pontos · 30 segundos · sem cadastro</span>
-        <span>✦ "Fez mais sentido do que anos de terapia" — Ana L., São Paulo</span>
-        <span>✦ 47.000+ mapas revelados</span>
-        <span>✦ Sistema Pitagórico Autêntico · 2.500 anos de sabedoria</span>
-        <span>✦ Leitura 100% personalizada · baseada no seu nome e data</span>
-        <span>✦ Análise inicial dos 3 pontos · 30 segundos · sem cadastro</span>
-        <span>✦ "Fez mais sentido do que anos de terapia" — Ana L., São Paulo</span>
+        <span data-i18n="ui.index.ticker.mapas">✦ 47.000+ mapas revelados</span>
+        <span data-i18n="ui.index.ticker.sistema">✦ Sistema Pitagórico Autêntico · 2.500 anos de sabedoria</span>
+        <span data-i18n="ui.index.ticker.leitura">✦ Leitura 100% personalizada · baseada no seu nome e data</span>
+        <span data-i18n="ui.index.ticker.analise">✦ Análise inicial dos 3 pontos · 30 segundos · sem cadastro</span>
+        <span data-i18n="ui.index.ticker.depoimento">✦ "Fez mais sentido do que anos de terapia" — Ana L., São Paulo</span>
+        <span data-i18n="ui.index.ticker.mapas">✦ 47.000+ mapas revelados</span>
+        <span data-i18n="ui.index.ticker.sistema">✦ Sistema Pitagórico Autêntico · 2.500 anos de sabedoria</span>
+        <span data-i18n="ui.index.ticker.leitura">✦ Leitura 100% personalizada · baseada no seu nome e data</span>
+        <span data-i18n="ui.index.ticker.analise">✦ Análise inicial dos 3 pontos · 30 segundos · sem cadastro</span>
+        <span data-i18n="ui.index.ticker.depoimento">✦ "Fez mais sentido do que anos de terapia" — Ana L., São Paulo</span>
       </div>
     </div>
   </nav>
@@ -3498,18 +3518,18 @@ fbq('track','PageView');
   <div class="v2-hero-body">
     <div class="v2-eyebrow">
       <span class="v2-eyebrow-dot"></span>
-      Numerologia Pitagórica Aplicada · NPA
+      <span data-i18n="ui.index.hero.eyebrow">Numerologia Pitagórica Aplicada · NPA</span>
       <span class="v2-eyebrow-dot"></span>
     </div>
     <h1 class="v2-hero-h1">
-      Existe um padrão invisível<br>
-      <span class="v2-hero-accent">influenciando suas escolhas.</span><br>
-      Descubra qual é o seu.
+      <span data-i18n="ui.index.hero.h1a">Existe um padrão invisível</span><br>
+      <span class="v2-hero-accent" data-i18n="ui.index.hero.h1b">influenciando suas escolhas.</span><br>
+      <span data-i18n="ui.index.hero.h1c">Descubra qual é o seu.</span>
     </h1>
-    <p class="v2-hero-sub">
+    <p class="v2-hero-sub" data-i18n="ui.index.hero.sub">
       A numerologia pitagórica revela o que está por trás dos seus resultados, relacionamentos e desafios. Comece agora com uma análise inicial dos 3 pontos mais importantes do seu mapa, em 30 segundos.
     </p>
-    <p style="font-size:.72rem;color:var(--muted);font-family:'Poppins',sans-serif;margin-top:4px">🟢 <span id="liveCount">247</span> pessoas revelando o mapa agora</p>
+    <p style="font-size:.72rem;color:var(--muted);font-family:'Poppins',sans-serif;margin-top:4px">🟢 <span id="liveCount">247</span> <span data-i18n="ui.index.hero.liveCount">pessoas revelando o mapa agora</span></p>
   </div>
 
   <!-- VIDEO EM PÉ -->
@@ -3544,70 +3564,70 @@ fbq('track','PageView');
 
   <!-- FORMULÁRIO INLINE -->
   <div class="lp-inline-form-section" id="v2HeroFormSection">
-    <div class="lp-form-eyebrow">Análise inicial · Resultado em 30 segundos</div>
-    <h2 class="lp-form-h">Descubra Seus 3 Primeiros Pontos</h2>
-    <p class="lp-form-sub">Informe seus dados de nascimento — usamos apenas para calcular seu mapa numerológico.</p>
+    <div class="lp-form-eyebrow" data-i18n="ui.index.form.eyebrow">Análise inicial · Resultado em 30 segundos</div>
+    <h2 class="lp-form-h" data-i18n="ui.index.form.h2">Descubra Seus 3 Primeiros Pontos</h2>
+    <p class="lp-form-sub" data-i18n="ui.index.form.sub">Informe seus dados de nascimento — usamos apenas para calcular seu mapa numerológico.</p>
     <div class="lp-form-card">
       <div class="v2-field">
-        <label class="v2-field-label" for="v2Name">Nome completo de nascimento</label>
+        <label class="v2-field-label" for="v2Name" data-i18n="ui.index.form.nameLabel">Nome completo de nascimento</label>
         <input class="v2-field-input" id="v2Name" type="text"
-          placeholder="Como consta na certidão"
+          placeholder="Como consta na certidão" data-i18n-attr="placeholder" data-i18n="ui.index.form.namePlaceholder"
           autocomplete="off" spellcheck="false"/>
-        <span class="v2-field-hint">Use o nome exato — sem apelidos</span>
+        <span class="v2-field-hint" data-i18n="ui.index.form.nameHint">Use o nome exato — sem apelidos</span>
       </div>
       <div class="v2-field">
-        <label class="v2-field-label" for="v2Date">Data de nascimento</label>
+        <label class="v2-field-label" for="v2Date" data-i18n="ui.index.form.dateLabel">Data de nascimento</label>
         <input class="v2-field-input" id="v2Date" type="tel"
           placeholder="DD / MM / AAAA"
           inputmode="numeric" maxlength="14" autocomplete="off"/>
-        <span class="v2-field-hint">Dia, mês e ano exatos</span>
+        <span class="v2-field-hint" data-i18n="ui.index.form.dateHint">Dia, mês e ano exatos</span>
       </div>
       <div class="v2-field">
-        <label class="v2-field-label" for="v2Email">E-mail</label>
+        <label class="v2-field-label" for="v2Email" data-i18n="ui.index.form.emailLabel">E-mail</label>
         <input class="v2-field-input" id="v2Email" type="email"
           placeholder="email@exemplo.com"
           autocomplete="email" spellcheck="false"/>
       </div>
       <div class="v2-field">
-        <label class="v2-field-label" for="v2Phone">WhatsApp</label>
+        <label class="v2-field-label" for="v2Phone" data-i18n="ui.index.form.phoneLabel">WhatsApp</label>
         <div class="v2-phone-wrap">
           <span class="v2-phone-prefix">+55</span>
           <input class="v2-field-input v2-phone-input" id="v2Phone" type="tel"
             placeholder="(11) 99999-0000"
             inputmode="numeric" autocomplete="tel" maxlength="15"/>
         </div>
-        <span class="v2-field-hint">Com DDD · para receber seu mapa no WhatsApp</span>
+        <span class="v2-field-hint" data-i18n="ui.index.form.phoneHint">Com DDD · para receber seu mapa no WhatsApp</span>
       </div>
       <div class="v2-err" id="v2Err"></div>
-      <button class="v2-submit-btn" id="v2Submit" type="button">Revelar Meus 3 Pontos →</button>
+      <button class="v2-submit-btn" id="v2Submit" type="button" data-i18n="ui.index.form.submit">Revelar Meus 3 Pontos →</button>
     </div>
-    <div class="lp-form-security">🔒 Seus dados são usados apenas para gerar o mapa · não compartilhamos com ninguém</div>
+    <div class="lp-form-security" data-i18n="ui.index.form.security">🔒 Seus dados são usados apenas para gerar o mapa · não compartilhamos com ninguém</div>
   </div>
 
   <!-- 3 PONTOS ISCA -->
   <section class="lp-tease-section">
-    <div class="lp-tease-kicker">O que seu mapa revela</div>
-    <h2 class="lp-tease-h">Três verdades sobre você<br>que os números sabem</h2>
+    <div class="lp-tease-kicker" data-i18n="ui.index.tease.kicker">O que seu mapa revela</div>
+    <h2 class="lp-tease-h" data-i18n-html="true" data-i18n="ui.index.tease.h2">Três verdades sobre você<br>que os números sabem</h2>
     <div class="lp-tease-grid">
       <div class="lp-tease-card">
         <div class="lp-tease-icon">🔁</div>
         <div>
-          <div class="lp-tease-card-h">Por que você repete os mesmos padrões</div>
-          <p class="lp-tease-card-p">Não é fraqueza, não é azar. Existe um mecanismo codificado no seu Caminho de Vida que sustenta os ciclos que você tenta quebrar — e ele tem nome.</p>
+          <div class="lp-tease-card-h" data-i18n="ui.index.tease.card1.h">Por que você repete os mesmos padrões</div>
+          <p class="lp-tease-card-p" data-i18n="ui.index.tease.card1.p">Não é fraqueza, não é azar. Existe um mecanismo codificado no seu Caminho de Vida que sustenta os ciclos que você tenta quebrar — e ele tem nome.</p>
         </div>
       </div>
       <div class="lp-tease-card">
         <div class="lp-tease-icon">🔒</div>
         <div>
-          <div class="lp-tease-card-h">Onde está seu maior bloqueio — e por que ele volta</div>
-          <p class="lp-tease-card-p">O bloqueio que você sente em dinheiro, relacionamentos ou propósito não é aleatório. Ele está no ponto exato de tensão entre sua Personalidade, sua Alma e seu momento de vida.</p>
+          <div class="lp-tease-card-h" data-i18n="ui.index.tease.card2.h">Onde está seu maior bloqueio — e por que ele volta</div>
+          <p class="lp-tease-card-p" data-i18n="ui.index.tease.card2.p">O bloqueio que você sente em dinheiro, relacionamentos ou propósito não é aleatório. Ele está no ponto exato de tensão entre sua Personalidade, sua Alma e seu momento de vida.</p>
         </div>
       </div>
       <div class="lp-tease-card">
         <div class="lp-tease-icon">✦</div>
         <div>
-          <div class="lp-tease-card-h">O que este período da sua vida está pedindo de você</div>
-          <p class="lp-tease-card-p">Cada ciclo tem uma vibração diferente. O que funcionava antes pode estar sabotando você agora — e o que parece difícil pode ser exatamente o que este momento pede.</p>
+          <div class="lp-tease-card-h" data-i18n="ui.index.tease.card3.h">O que este período da sua vida está pedindo de você</div>
+          <p class="lp-tease-card-p" data-i18n="ui.index.tease.card3.p">Cada ciclo tem uma vibração diferente. O que funcionava antes pode estar sabotando você agora — e o que parece difícil pode ser exatamente o que este momento pede.</p>
         </div>
       </div>
     </div>
@@ -3615,20 +3635,20 @@ fbq('track','PageView');
 
   <!-- MAPA 7 ESFERAS -->
   <section class="lp-esferas-section">
-    <div class="lp-tease-kicker">O Método</div>
-    <h2 class="lp-tease-h" style="text-align:center;margin-bottom:10px">O Mapa das 7 Esferas</h2>
-    <p style="text-align:center;font-family:'Poppins',sans-serif;font-size:.9rem;color:var(--text3);max-width:480px;margin:0 auto 20px;line-height:1.7">Cada esfera revela uma camada de quem você é — como você age, o que te move por dentro e o que você veio ser.</p>
+    <div class="lp-tease-kicker" data-i18n="ui.index.esferas.kicker">O Método</div>
+    <h2 class="lp-tease-h" style="text-align:center;margin-bottom:10px" data-i18n="ui.index.esferas.h2">O Mapa das 7 Esferas</h2>
+    <p style="text-align:center;font-family:'Poppins',sans-serif;font-size:.9rem;color:var(--text3);max-width:480px;margin:0 auto 20px;line-height:1.7" data-i18n="ui.index.esferas.sub">Cada esfera revela uma camada de quem você é — como você age, o que te move por dentro e o que você veio ser.</p>
     <div class="lp-esferas-grid">
-      <div class="lp-esfera-item"><div class="lp-esfera-num">I</div><div class="lp-esfera-name">Caminho de Vida</div></div>
-      <div class="lp-esfera-item"><div class="lp-esfera-num">II</div><div class="lp-esfera-name">Expressão</div></div>
-      <div class="lp-esfera-item"><div class="lp-esfera-num">III</div><div class="lp-esfera-name">Alma</div></div>
-      <div class="lp-esfera-item"><div class="lp-esfera-num">IV</div><div class="lp-esfera-name">Personalidade</div></div>
-      <div class="lp-esfera-item"><div class="lp-esfera-num">V</div><div class="lp-esfera-name">Imagem</div></div>
-      <div class="lp-esfera-item"><div class="lp-esfera-num">VI</div><div class="lp-esfera-name">Destino</div></div>
-      <div class="lp-esfera-item"><div class="lp-esfera-num">VII</div><div class="lp-esfera-name">Ano Pessoal</div></div>
+      <div class="lp-esfera-item"><div class="lp-esfera-num">I</div><div class="lp-esfera-name" data-i18n="ui.index.esferas.n1">Caminho de Vida</div></div>
+      <div class="lp-esfera-item"><div class="lp-esfera-num">II</div><div class="lp-esfera-name" data-i18n="ui.index.esferas.n2">Expressão</div></div>
+      <div class="lp-esfera-item"><div class="lp-esfera-num">III</div><div class="lp-esfera-name" data-i18n="ui.index.esferas.n3">Alma</div></div>
+      <div class="lp-esfera-item"><div class="lp-esfera-num">IV</div><div class="lp-esfera-name" data-i18n="ui.index.esferas.n4">Personalidade</div></div>
+      <div class="lp-esfera-item"><div class="lp-esfera-num">V</div><div class="lp-esfera-name" data-i18n="ui.index.esferas.n5">Imagem</div></div>
+      <div class="lp-esfera-item"><div class="lp-esfera-num">VI</div><div class="lp-esfera-name" data-i18n="ui.index.esferas.n6">Destino</div></div>
+      <div class="lp-esfera-item"><div class="lp-esfera-num">VII</div><div class="lp-esfera-name" data-i18n="ui.index.esferas.n7">Ano Pessoal</div></div>
     </div>
     <div style="margin-top:28px;text-align:center">
-      <button class="v2-hero-cta" type="button" onclick="document.getElementById('v2HeroFormSection').scrollIntoView({behavior:'smooth'});setTimeout(function(){document.getElementById('v2Name').focus()},500)">
+      <button class="v2-hero-cta" type="button" onclick="document.getElementById('v2HeroFormSection').scrollIntoView({behavior:'smooth'});setTimeout(function(){document.getElementById('v2Name').focus()},500)" data-i18n="ui.index.esferas.cta">
         Revelar Meus 3 Pontos →
       </button>
     </div>
@@ -3636,16 +3656,16 @@ fbq('track','PageView');
 
   <!-- NUMEROLOGIA PITAGÓRICA -->
   <section class="lp-np-section">
-    <div class="lp-tease-kicker">A Origem</div>
-    <h2 class="lp-tease-h" style="margin-bottom:14px">Numerologia Pitagórica</h2>
-    <p style="font-family:'Poppins',sans-serif;font-size:.9rem;color:var(--text3);line-height:1.75;margin-bottom:16px">
+    <div class="lp-tease-kicker" data-i18n="ui.index.origem.kicker">A Origem</div>
+    <h2 class="lp-tease-h" style="margin-bottom:14px" data-i18n="ui.index.origem.h2">Numerologia Pitagórica</h2>
+    <p style="font-family:'Poppins',sans-serif;font-size:.9rem;color:var(--text3);line-height:1.75;margin-bottom:16px" data-i18n="ui.index.origem.p1">
       Há mais de 2.500 anos, Pitágoras descobriu que os números não são apenas quantidades — são a estrutura da realidade. Cada número carrega uma frequência vibracional única que se manifesta na personalidade, nos padrões e no propósito de cada ser humano.
     </p>
     <div class="lp-np-quote">
-      "Não é misticismo. É um sistema preciso de autoconhecimento — que trabalha com quem você já é, revelando os padrões que regem toda a sua experiência."
-      <div class="lp-np-source">— Rodrygo Murari, criador do Método NPA</div>
+      <span data-i18n="ui.index.origem.quote">"Não é misticismo. É um sistema preciso de autoconhecimento — que trabalha com quem você já é, revelando os padrões que regem toda a sua experiência."</span>
+      <div class="lp-np-source" data-i18n="ui.index.origem.quoteSource">— Rodrygo Murari, criador do Método NPA</div>
     </div>
-    <p style="font-family:'Poppins',sans-serif;font-size:.88rem;color:var(--text3);line-height:1.7">
+    <p style="font-family:'Poppins',sans-serif;font-size:.88rem;color:var(--text3);line-height:1.7" data-i18n="ui.index.origem.p2">
       O Sistema NPA (Numerologia Pitagórica Aplicada) integra essa sabedoria ancestral com uma leitura profunda do comportamento humano — mapeando os Três Movimentos do Ser: o que você reage, o que você manifesta e o que você veio ser.
     </p>
   </section>
@@ -3653,12 +3673,12 @@ fbq('track','PageView');
   <!-- RODRYGO -->
   <section class="lp-section" style="margin-top:56px">
     <div class="lp-inner">
-      <div class="lp-label">O Idealizador</div>
+      <div class="lp-label" data-i18n="ui.index.founder.label">O Idealizador</div>
       <div class="lp-founder-grid">
         <div>
           <h2 class="lp-founder-name">Rodrygo Murari</h2>
-          <div class="lp-founder-role">Criador do Método Pitagórico Aplicado · NPA</div>
-          <p class="lp-founder-text">Numerólogo e pesquisador de autoconhecimento há mais de uma década, Rodrygo desenvolveu o método NPA — que integra a sabedoria de Pitágoras com uma leitura sistêmica dos padrões humanos. Mais de 47.000 mapas revelados.</p>
+          <div class="lp-founder-role" data-i18n="ui.index.founder.role">Criador do Método Pitagórico Aplicado · NPA</div>
+          <p class="lp-founder-text" data-i18n="ui.index.founder.bio">Numerólogo e pesquisador de autoconhecimento há mais de uma década, Rodrygo desenvolveu o método NPA — que integra a sabedoria de Pitágoras com uma leitura sistêmica dos padrões humanos. Mais de 47.000 mapas revelados.</p>
         </div>
         <div></div>
       </div>
@@ -3671,7 +3691,7 @@ fbq('track','PageView');
       <div>
         <img src="assets/logo.png" alt="Seu Numerólogo" class="lp-footer-logo"/>
         <div class="lp-footer-brand-name">Seu Numerólogo</div>
-        <p class="lp-footer-brand-sub">Sistema Pitagórico Aplicado<br>desenvolvido por Rodrygo Murari</p>
+        <p class="lp-footer-brand-sub" data-i18n-html="true" data-i18n="ui.index.footer.brandSub">Sistema Pitagórico Aplicado<br>desenvolvido por Rodrygo Murari</p>
         <div class="lp-social-row">
           <a href="https://www.instagram.com/seunumerologo/" target="_blank" class="lp-social-btn" aria-label="Instagram">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".9" fill="currentColor" stroke="none"/></svg>
@@ -3682,19 +3702,19 @@ fbq('track','PageView');
         </div>
       </div>
       <div>
-        <div class="lp-footer-col-title">Acesso rápido</div>
-        <a class="lp-footer-link" id="v2FooterCta" href="#">Fazer meu mapa</a>
-        <a href="#" class="lp-footer-link">O método</a>
+        <div class="lp-footer-col-title" data-i18n="ui.index.footer.quickTitle">Acesso rápido</div>
+        <a class="lp-footer-link" id="v2FooterCta" href="#" data-i18n="ui.index.footer.linkMapa">Fazer meu mapa</a>
+        <a href="#" class="lp-footer-link" data-i18n="ui.index.footer.linkMetodo">O método</a>
       </div>
       <div>
-        <div class="lp-footer-col-title">Legal</div>
-        <a href="#" class="lp-footer-link">Política de privacidade</a>
-        <a href="#" class="lp-footer-link">Termos de uso</a>
+        <div class="lp-footer-col-title" data-i18n="ui.index.footer.legalTitle">Legal</div>
+        <a href="#" class="lp-footer-link" data-i18n="ui.index.footer.linkPrivacidade">Política de privacidade</a>
+        <a href="#" class="lp-footer-link" data-i18n="ui.index.footer.linkTermos">Termos de uso</a>
       </div>
     </div>
     <div class="lp-footer-bottom">
-      <span class="lp-footer-copy">© 2026 Seu Numerólogo · Todos os direitos reservados</span>
-      <span class="lp-footer-copy">Desenvolvido por 11 Digital</span>
+      <span class="lp-footer-copy" data-i18n="ui.index.footer.copy">© 2026 Seu Numerólogo · Todos os direitos reservados</span>
+      <span class="lp-footer-copy" data-i18n="ui.index.footer.dev">Desenvolvido por 11 Digital</span>
     </div>
   </footer>
 
@@ -3762,7 +3782,7 @@ fbq('track','PageView');
 
         <!-- Intro -->
         <div class="sp-bridge">
-          <p class="sp-bridge-text">
+          <p class="sp-bridge-text" data-i18n-html="true" data-i18n="ui.index.offer.bridge">
             Seu Mapa Numerológico Pitagórico já foi calculado.<br>
             <em>Veja exatamente o que vem dentro dele — e o que você libera agora.</em>
           </p>
@@ -3771,7 +3791,7 @@ fbq('track','PageView');
         <!-- Timer real -->
         <div class="sp-timer">
           <div class="sp-timer-dot"></div>
-          <div class="sp-timer-text">Esta condição de lançamento expira em <strong id="v2OfferTimer">20:00</strong></div>
+          <div class="sp-timer-text"><span data-i18n="ui.index.offer.timerLabel">Esta condição de lançamento expira em</span> <strong id="v2OfferTimer">20:00</strong></div>
         </div>
 
         <!-- Prova social específica -->
@@ -3779,60 +3799,60 @@ fbq('track','PageView');
           <div class="sp-proof-avatar">M</div>
           <div class="sp-proof-body">
             <div class="sp-proof-stars">★★★★★</div>
-            <div class="sp-proof-quote">"Vi o padrão de sabotagem no meu mapa e fiquei em choque. A leitura do Número de Alma explicou tudo que eu nunca tinha conseguido nomear."</div>
-            <div class="sp-proof-meta">Mariana S. · Caminho de Vida 3 · São Paulo</div>
+            <div class="sp-proof-quote" data-i18n="ui.index.offer.proofQuote">"Vi o padrão de sabotagem no meu mapa e fiquei em choque. A leitura do Número de Alma explicou tudo que eu nunca tinha conseguido nomear."</div>
+            <div class="sp-proof-meta" data-i18n="ui.index.offer.proofMeta">Mariana S. · Caminho de Vida 3 · São Paulo</div>
           </div>
         </div>
 
         <!-- Âncora de preço -->
         <div class="sp-price-anchor">
-          <span class="sp-pa-label">O que está dentro do mapa — e o que custaria separado</span>
+          <span class="sp-pa-label" data-i18n="ui.index.offer.anchorLabel">O que está dentro do mapa — e o que custaria separado</span>
           <div class="sp-pa-row">
-            <span class="sp-pa-item">As 7 Esferas NPA — Alma, Expressão, Imagem, Destino, Psíquico, Talento Oculto e Ano Pessoal</span>
+            <span class="sp-pa-item" data-i18n="ui.index.offer.item1">As 7 Esferas NPA — Alma, Expressão, Imagem, Destino, Psíquico, Talento Oculto e Ano Pessoal</span>
             <span class="sp-pa-val crossed">R$ 67</span>
           </div>
           <div class="sp-pa-row">
-            <span class="sp-pa-item">Síntese do Mapa + Pirâmide Pitagórica</span>
+            <span class="sp-pa-item" data-i18n="ui.index.offer.item2">Síntese do Mapa + Pirâmide Pitagórica</span>
             <span class="sp-pa-val crossed">R$ 27</span>
           </div>
           <div class="sp-pa-row">
-            <span class="sp-pa-item">Interpretação Sistêmica + Padrões de Autossabotagem</span>
+            <span class="sp-pa-item" data-i18n="ui.index.offer.item3">Interpretação Sistêmica + Padrões de Autossabotagem</span>
             <span class="sp-pa-val crossed">R$ 37</span>
           </div>
           <div class="sp-pa-row">
-            <span class="sp-pa-item">Os 4 Pináculos com datas exatas e o que cada fase pede</span>
+            <span class="sp-pa-item" data-i18n="ui.index.offer.item4">Os 4 Pináculos com datas exatas e o que cada fase pede</span>
             <span class="sp-pa-val crossed">R$ 47</span>
           </div>
           <div class="sp-pa-row">
-            <span class="sp-pa-item">Desafios de Vida + Lições Kármicas + Maturidade e Equilíbrio</span>
+            <span class="sp-pa-item" data-i18n="ui.index.offer.item5">Desafios de Vida + Lições Kármicas + Maturidade e Equilíbrio</span>
             <span class="sp-pa-val crossed">R$ 37</span>
           </div>
           <div class="sp-pa-row">
-            <span class="sp-pa-item">Direcionamento de Carreira + Plano de Ação Real</span>
+            <span class="sp-pa-item" data-i18n="ui.index.offer.item6">Direcionamento de Carreira + Plano de Ação Real</span>
             <span class="sp-pa-val crossed">R$ 47</span>
           </div>
           <div class="sp-pa-row" style="border-top:1px solid rgba(200,169,110,.2);margin-top:6px;padding-top:10px">
-            <span class="sp-pa-item" style="color:var(--amber)">✦ Bônus 1 — Workshop Cicatrizes que Curam <span style="color:var(--text2);font-size:.8rem;display:block;font-weight:400">Jocimarah Anjos · acesso imediato</span></span>
+            <span class="sp-pa-item" style="color:var(--amber)" data-i18n-html="true" data-i18n="ui.index.offer.bonus1">✦ Bônus 1 — Workshop Cicatrizes que Curam <span style="color:var(--text2);font-size:.8rem;display:block;font-weight:400">Jocimarah Anjos · acesso imediato</span></span>
             <span class="sp-pa-val crossed">R$ 150</span>
           </div>
           <div class="sp-pa-row">
-            <span class="sp-pa-item" style="color:var(--amber)">✦ Bônus 2 — E-book Numerologia do Destino <span style="color:var(--text2);font-size:.8rem;display:block;font-weight:400">Rodrygo Murari · acesso imediato</span></span>
+            <span class="sp-pa-item" style="color:var(--amber)" data-i18n-html="true" data-i18n="ui.index.offer.bonus2">✦ Bônus 2 — E-book Numerologia do Destino <span style="color:var(--text2);font-size:.8rem;display:block;font-weight:400">Rodrygo Murari · acesso imediato</span></span>
             <span class="sp-pa-val crossed">R$ 39</span>
           </div>
           <div class="sp-pa-row">
-            <span class="sp-pa-item" style="color:var(--amber)">✦ Bônus 3 — Sessão de Mentoria em Grupo NPA ao Vivo <span style="color:var(--text2);font-size:.8rem;display:block;font-weight:400">Rodrygo Murari · vaga garantida</span></span>
+            <span class="sp-pa-item" style="color:var(--amber)" data-i18n-html="true" data-i18n="ui.index.offer.bonus3">✦ Bônus 3 — Sessão de Mentoria em Grupo NPA ao Vivo <span style="color:var(--text2);font-size:.8rem;display:block;font-weight:400">Rodrygo Murari · vaga garantida</span></span>
             <span class="sp-pa-val crossed">R$ 127</span>
           </div>
           <div class="sp-pa-row sp-pa-total">
-            <span class="sp-pa-item">Valor total separado</span>
+            <span class="sp-pa-item" data-i18n="ui.index.offer.totalLabel">Valor total separado</span>
             <span class="sp-pa-val crossed">R$ 578</span>
           </div>
           <div class="sp-pa-row">
-            <span class="sp-pa-item">Preço normal do Mapa Completo</span>
+            <span class="sp-pa-item" data-i18n="ui.index.offer.normalLabel">Preço normal do Mapa Completo</span>
             <span class="sp-pa-val crossed">R$ 220</span>
           </div>
           <div class="sp-pa-row highlight">
-            <span class="sp-pa-item">Tudo junto · Oferta de lançamento</span>
+            <span class="sp-pa-item" data-i18n="ui.index.offer.launchLabel">Tudo junto · Oferta de lançamento</span>
             <span class="sp-pa-val">R$ 47,60</span>
           </div>
         </div>
@@ -3841,54 +3861,54 @@ fbq('track','PageView');
         <div class="sp-transforms">
           <div class="sp-transform-item">
             <span class="sp-transform-icon">→</span>
-            <span class="sp-transform-text"><strong>Você vai entender por que repete o mesmo padrão</strong> — e o nome exato do mecanismo que o sustenta no seu número.</span>
+            <span class="sp-transform-text" data-i18n-html="true" data-i18n="ui.index.offer.transform1"><strong>Você vai entender por que repete o mesmo padrão</strong> — e o nome exato do mecanismo que o sustenta no seu número.</span>
           </div>
           <div class="sp-transform-item">
             <span class="sp-transform-icon">→</span>
-            <span class="sp-transform-text"><strong>Você vai saber o que o período atual está pedindo de você</strong> — os 4 Pináculos com datas exatas e o que cada fase significa.</span>
+            <span class="sp-transform-text" data-i18n-html="true" data-i18n="ui.index.offer.transform2"><strong>Você vai saber o que o período atual está pedindo de você</strong> — os 4 Pináculos com datas exatas e o que cada fase significa.</span>
           </div>
           <div class="sp-transform-item">
             <span class="sp-transform-icon">→</span>
-            <span class="sp-transform-text"><strong>Você vai ter um Plano de Ação real</strong> — o que parar, o que começar e o que manter, específico para o seu Caminho de Vida.</span>
+            <span class="sp-transform-text" data-i18n-html="true" data-i18n="ui.index.offer.transform3"><strong>Você vai ter um Plano de Ação real</strong> — o que parar, o que começar e o que manter, específico para o seu Caminho de Vida.</span>
           </div>
           <div class="sp-transform-item">
             <span class="sp-transform-icon">→</span>
-            <span class="sp-transform-text"><strong>Você vai entender sua Expressão, Alma e Personalidade</strong> — por que você age de uma forma mas sente outra coisa por dentro.</span>
+            <span class="sp-transform-text" data-i18n-html="true" data-i18n="ui.index.offer.transform4"><strong>Você vai entender sua Expressão, Alma e Personalidade</strong> — por que você age de uma forma mas sente outra coisa por dentro.</span>
           </div>
         </div>
 
         <!-- Urgência -->
         <div class="sp-urgency">
           <div class="sp-urgency-dot"></div>
-          <span><strong>Oferta de lançamento:</strong> preço de R$47,60 válido durante o período de lançamento. O valor sobe para R$220 em breve.</span>
+          <span data-i18n-html="true" data-i18n="ui.index.offer.urgency"><strong>Oferta de lançamento:</strong> preço de R$47,60 válido durante o período de lançamento. O valor sobe para R$220 em breve.</span>
         </div>
 
         <!-- Garantia -->
         <div class="sp-guarantee">
           <div class="sp-guarantee-icon">🛡️</div>
           <div>
-            <div class="sp-guarantee-h">Garantia de 7 dias — sem perguntas</div>
-            <div class="sp-guarantee-text">Se em 7 dias você não sentir que o mapa trouxe clareza real sobre quem você é e como você funciona, devolvemos 100% do seu investimento. Sem burocracia, sem formulário.</div>
+            <div class="sp-guarantee-h" data-i18n="ui.index.offer.guaranteeH">Garantia de 7 dias — sem perguntas</div>
+            <div class="sp-guarantee-text" data-i18n="ui.index.offer.guaranteeText">Se em 7 dias você não sentir que o mapa trouxe clareza real sobre quem você é e como você funciona, devolvemos 100% do seu investimento. Sem burocracia, sem formulário.</div>
           </div>
         </div>
 
         <!-- Oferta + CTA -->
         <div class="sp-offer-block" id="v2OfferBlock">
-          <div class="sp-offer-badge">✦ Acesso Completo · Instantâneo</div>
-          <h2 class="sp-offer-h">Seu Mapa Numerológico<br>Pitagórico Completo</h2>
-          <p class="sp-offer-sub">12 análises personalizadas · PDF premium · Plano de Ação</p>
+          <div class="sp-offer-badge" data-i18n="ui.index.offer.badge">✦ Acesso Completo · Instantâneo</div>
+          <h2 class="sp-offer-h" data-i18n-html="true" data-i18n="ui.index.offer.h2">Seu Mapa Numerológico<br>Pitagórico Completo</h2>
+          <p class="sp-offer-sub" data-i18n="ui.index.offer.sub">12 análises personalizadas · PDF premium · Plano de Ação</p>
           <div class="sp-price-block">
             <div class="sp-price-from">De R$ 220</div>
             <div class="sp-price-main">R$ 47,60</div>
-            <div class="sp-price-note">pagamento único · acesso imediato</div>
+            <div class="sp-price-note" data-i18n="ui.index.offer.priceNote">pagamento único · acesso imediato</div>
           </div>
-          <button class="sp-btn-buy" type="button">
+          <button class="sp-btn-buy" type="button" data-i18n="ui.index.offer.buyBtn">
             Quero Meu Mapa Completo Agora
           </button>
           <div class="sp-trust">
-            <span class="sp-trust-item">🔒 Pagamento seguro</span>
-            <span class="sp-trust-item">⚡ Acesso imediato</span>
-            <span class="sp-trust-item">🛡️ 7 dias de garantia</span>
+            <span class="sp-trust-item" data-i18n="ui.index.offer.trust1">🔒 Pagamento seguro</span>
+            <span class="sp-trust-item" data-i18n="ui.index.offer.trust2">⚡ Acesso imediato</span>
+            <span class="sp-trust-item" data-i18n="ui.index.offer.trust3">🛡️ 7 dias de garantia</span>
           </div>
         </div>
 
@@ -3899,7 +3919,7 @@ fbq('track','PageView');
     <!-- Bloco 1: Caminho de Vida -->
     <div class="v2-res-block v2-res-hero">
       <div class="v2-slide-inner center">
-        <div class="v2-reveal-kicker">Uma prévia real do seu mapa · Seu Caminho de Vida</div>
+        <div class="v2-reveal-kicker" data-i18n="ui.index.results.caminhoKicker">Uma prévia real do seu mapa · Seu Caminho de Vida</div>
         <div class="v2-reveal-big" id="v2TeaserNum">0</div>
         <div class="v2-reveal-name" id="v2TeaserTitle"></div>
         <div class="v2-reveal-hook" id="v2TeaserHook"></div>
@@ -3916,8 +3936,8 @@ fbq('track','PageView');
     <div class="v2-res-block">
       <div class="v2-slide-inner">
         <div class="v2-num-card" id="v2PersonaCard">
-          <div class="v2-gcard-badge free" style="margin-bottom:18px">✓ Revelado para você</div>
-          <div class="v2-num-card-type">Número da Personalidade</div>
+          <div class="v2-gcard-badge free" style="margin-bottom:18px" data-i18n="ui.index.results.revealed">✓ Revelado para você</div>
+          <div class="v2-num-card-type" data-i18n="ui.index.results.personalidadeType">Número da Personalidade</div>
           <div class="v2-num-card-hero">
             <div class="v2-num-big" id="v2PersonaNum">—</div>
             <div class="v2-num-name" id="v2PersonaName"></div>
@@ -3934,8 +3954,8 @@ fbq('track','PageView');
     <div class="v2-res-block">
       <div class="v2-slide-inner">
         <div class="v2-num-card" id="v2AlmaCard">
-          <div class="v2-gcard-badge amber" style="margin-bottom:18px">✦ Revelado para você</div>
-          <div class="v2-num-card-type">Número da Alma</div>
+          <div class="v2-gcard-badge amber" style="margin-bottom:18px" data-i18n="ui.index.results.revealedAmber">✦ Revelado para você</div>
+          <div class="v2-num-card-type" data-i18n="ui.index.results.almaType">Número da Alma</div>
           <div class="v2-num-card-hero">
             <div class="v2-num-big" id="v2AlmaNum">—</div>
             <div class="v2-num-name" id="v2AlmaName"></div>
@@ -3952,8 +3972,8 @@ fbq('track','PageView');
     <div class="v2-res-block">
       <div class="v2-slide-inner">
         <div class="v2-num-card" id="v2AnoCard">
-          <div class="v2-gcard-badge" style="margin-bottom:18px;background:rgba(159,122,234,.12);border:1px solid rgba(159,122,234,.25);color:#b794f4">☽ Seu Momento Atual</div>
-          <div class="v2-num-card-type">Ano Pessoal</div>
+          <div class="v2-gcard-badge" style="margin-bottom:18px;background:rgba(159,122,234,.12);border:1px solid rgba(159,122,234,.25);color:#b794f4" data-i18n="ui.index.results.momentoAtual">☽ Seu Momento Atual</div>
+          <div class="v2-num-card-type" data-i18n="ui.index.results.anoType">Ano Pessoal</div>
           <div class="v2-num-card-hero">
             <div class="v2-num-big" id="v2AnoNum">—</div>
             <div class="v2-num-name" id="v2AnoName"></div>
@@ -3974,43 +3994,43 @@ fbq('track','PageView');
         <div class="sp-scarcity">
           <div class="sp-scarcity-icon">🧊</div>
           <div>
-            <div class="sp-scarcity-h">Isso é só a ponta do iceberg</div>
-            <div class="sp-scarcity-text">Caminho de Vida, Personalidade, Alma e Ano Pessoal são só 4 das 12 análises do Mapa Completo — e nenhum dos 3 bônus que você viu acima. Os 4 Pináculos, seus Desafios de Vida, Lições Kármicas, Direcionamento de Carreira e o Plano de Ação real só existem na versão completa.</div>
+            <div class="sp-scarcity-h" data-i18n="ui.index.scarcity.h">Isso é só a ponta do iceberg</div>
+            <div class="sp-scarcity-text" data-i18n="ui.index.scarcity.text">Caminho de Vida, Personalidade, Alma e Ano Pessoal são só 4 das 12 análises do Mapa Completo — e nenhum dos 3 bônus que você viu acima. Os 4 Pináculos, seus Desafios de Vida, Lições Kármicas, Direcionamento de Carreira e o Plano de Ação real só existem na versão completa.</div>
           </div>
         </div>
 
         <!-- Oferta + CTA final -->
         <div class="sp-offer-block">
-          <div class="sp-offer-badge">✦ Acesso Completo · Instantâneo</div>
+          <div class="sp-offer-badge" data-i18n="ui.index.offer.badge">✦ Acesso Completo · Instantâneo</div>
           <div class="sp-price-block">
             <div class="sp-price-from">De R$ 220</div>
             <div class="sp-price-main">R$ 47,60</div>
-            <div class="sp-price-note">pagamento único · acesso imediato</div>
+            <div class="sp-price-note" data-i18n="ui.index.offer.priceNote">pagamento único · acesso imediato</div>
           </div>
-          <button class="sp-btn-buy" type="button">
+          <button class="sp-btn-buy" type="button" data-i18n="ui.index.offer.buyBtn">
             Quero Meu Mapa Completo Agora
           </button>
           <div class="sp-trust">
-            <span class="sp-trust-item">🔒 Pagamento seguro</span>
-            <span class="sp-trust-item">⚡ Acesso imediato</span>
-            <span class="sp-trust-item">🛡️ 7 dias de garantia</span>
+            <span class="sp-trust-item" data-i18n="ui.index.offer.trust1">🔒 Pagamento seguro</span>
+            <span class="sp-trust-item" data-i18n="ui.index.offer.trust2">⚡ Acesso imediato</span>
+            <span class="sp-trust-item" data-i18n="ui.index.offer.trust3">🛡️ 7 dias de garantia</span>
           </div>
         </div>
 
         <!-- FAQ — objeções -->
         <div class="sp-faq">
-          <div class="sp-faq-title">Perguntas frequentes</div>
+          <div class="sp-faq-title" data-i18n="ui.index.faq.title">Perguntas frequentes</div>
           <div class="sp-faq-item">
-            <div class="sp-faq-q">Isso é para mim?</div>
-            <div class="sp-faq-a">Se você se reconheceu em algum dos 3 pontos revelados — o padrão, a sabotagem ou a frequência — então sim. O mapa completo vai muito além do que você viu aqui.</div>
+            <div class="sp-faq-q" data-i18n="ui.index.faq.q1">Isso é para mim?</div>
+            <div class="sp-faq-a" data-i18n="ui.index.faq.a1">Se você se reconheceu em algum dos 3 pontos revelados — o padrão, a sabotagem ou a frequência — então sim. O mapa completo vai muito além do que você viu aqui.</div>
           </div>
           <div class="sp-faq-item">
-            <div class="sp-faq-q">É diferente de horóscopo?</div>
-            <div class="sp-faq-a">Completamente. Numerologia pitagórica usa matemática — seu nome e data de nascimento geram números únicos para você. Não há generalização por signo. Cada mapa é individual.</div>
+            <div class="sp-faq-q" data-i18n="ui.index.faq.q2">É diferente de horóscopo?</div>
+            <div class="sp-faq-a" data-i18n="ui.index.faq.a2">Completamente. Numerologia pitagórica usa matemática — seu nome e data de nascimento geram números únicos para você. Não há generalização por signo. Cada mapa é individual.</div>
           </div>
           <div class="sp-faq-item">
-            <div class="sp-faq-q">Como recebo o mapa?</div>
-            <div class="sp-faq-a">Após o pagamento, seu Mapa Numerológico completo é enviado para o seu e-mail em PDF. Guarda para sempre e pode acessar quando quiser.</div>
+            <div class="sp-faq-q" data-i18n="ui.index.faq.q3">Como recebo o mapa?</div>
+            <div class="sp-faq-a" data-i18n="ui.index.faq.a3">Após o pagamento, seu Mapa Numerológico completo é enviado para o seu e-mail em PDF. Guarda para sempre e pode acessar quando quiser.</div>
           </div>
         </div>
 
@@ -4056,6 +4076,7 @@ fbq('track','PageView');
   const VOGAIS = new Set(['A','E','I','O','U']);
   const MESTRES = new Set([11,22,33]);
 
+  function errMsg(key,fallback){try{return (window.I18N&&window.I18N.ui.index.form.errors[key])||fallback;}catch(e){return fallback;}}
   function limpar(nome){return nome.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toUpperCase().replace(/[^A-Z\s]/g,' ').trim()}
   function reduzir(n){n=Math.abs(+n||0);while(n>9&&!MESTRES.has(n)){n=String(n).split('').reduce((a,b)=>a+Number(b),0);}return n}
   function somarDigitos(str){return str.replace(/\D/g,'').split('').reduce((a,b)=>a+Number(b),0)}
@@ -4095,13 +4116,13 @@ fbq('track','PageView');
   function renderPiramide(nome){const resultado=calcPiramide(nome);if(!resultado)return '<p style="color:var(--muted)">Nome insuficiente para calcular a pirâmide.</p>';const{linhas,letras}=resultado;const seqCells=new Set();linhas.forEach((linha,li)=>{let i=0;while(i<linha.length){let j=i;while(j<linha.length&&linha[j]===linha[i])j++;if(j-i>=3){for(let k=i;k<j;k++)seqCells.add(`${li}-${k}`);}i=j;}});const numLinhas=linhas.length;let html='<div class="pyramidWrap"><div class="pyramidFlex">';html+='<div class="pyrRow letterRow">';letras.forEach(l=>{html+=`<div class="pyrCell pyrLetter">${l}</div>`;});html+='</div>';linhas.forEach((linha,li)=>{html+='<div class="pyrRow">';linha.forEach((n,ci)=>{const isApex=li===numLinhas-1&&ci===0;const isSeq=seqCells.has(`${li}-${ci}`);let cls='pyrCell';if(isApex)cls+=' apex';else if(isSeq)cls+=' seq';html+=`<div class="${cls}">${n}</div>`;});html+='</div>';});html+='</div></div>';html+=`<p class="pyrCaption">Pirâmide pitagórica · ${letras.length} letras · ${numLinhas} níveis · Ápice: ${linhas[numLinhas-1][0]}</p>`;const sequencias=detectarSequencias(linhas);if(sequencias.length){const msgs=sequencias.map(s=>`<div class="seqItem"><span class="seqNum">${String(s.num).repeat(s.tamanho)}</span> <span class="seqDesc">${interpretarSequencia(s.num,s.tamanho)}</span></div>`).join('');html+=`<div class="seqAlert"><div class="seqAlertTitle">⚠ Sequências de energia detectadas</div><p class="seqAlertSub">Repetição de três ou mais números idênticos consecutivos indica energia em alta concentração — um padrão que amplifica tanto os dons quanto as sombras daquele número.</p>${msgs}</div>`;}return html}
 
   /* ── TÍTULOS & ESSÊNCIAS ── */
-  const TITULOS={1:'O Pioneiro',2:'A Ponte do Vínculo',3:'A Voz que Ilumina',4:'O Arquiteto do Real',5:'O Mensageiro Livre',6:'O Guardião do Amor',7:'O Eremita Sagrado',8:'A Autoridade da Matéria',9:'O Mestre da Entrega',11:'O Canal da Luz',22:'O Arquiteto da Grande Obra',33:'A Compaixão Mestra'};
+  var TITULOS={1:'O Pioneiro',2:'A Ponte do Vínculo',3:'A Voz que Ilumina',4:'O Arquiteto do Real',5:'O Mensageiro Livre',6:'O Guardião do Amor',7:'O Eremita Sagrado',8:'A Autoridade da Matéria',9:'O Mestre da Entrega',11:'O Canal da Luz',22:'O Arquiteto da Grande Obra',33:'A Compaixão Mestra'};
   /* Cores vibracionais NPA — uma cor por número */
-  const CORES={1:'#FF3B30',2:'#FF9500',3:'#FFD60A',4:'#34C759',5:'#32ADE6',6:'#BF5AF2',7:'#5E5CE6',8:'#FF69B4',9:'#FFD426',11:'#E0E0E0',22:'#FFD700',33:'#0A84FF'};
-  const ESSENCIAS={1:'Iniciação, autonomia, coragem criadora e o fogo do começo.',2:'Cooperação, sensibilidade, diplomacia e a arte de unir sem se dissolver.',3:'Expressão, criatividade, comunicação e a alegria como caminho espiritual.',4:'Construção, disciplina, ordem e a sabedoria das fundações sólidas.',5:'Liberdade, transformação, adaptação e a coragem de experienciar o novo.',6:'Amor, responsabilidade, harmonia e o cuidado como vocação.',7:'Introspecção, conhecimento, espiritualidade e a busca pelo que está além.',8:'Poder, abundância, autoridade e o desafio de exercer força com integridade.',9:'Completude, compaixão, serviço e a sabedoria de encerrar ciclos.',11:'Iluminação, intuição elevada, inspiração e a missão de ser canal de luz.',22:'Materialização em grande escala, visão e construção de legado coletivo.',33:'Amor incondicional, cura, ensino e a compaixão como força transformadora.'};
+  var CORES={1:'#FF3B30',2:'#FF9500',3:'#FFD60A',4:'#34C759',5:'#32ADE6',6:'#BF5AF2',7:'#5E5CE6',8:'#FF69B4',9:'#FFD426',11:'#E0E0E0',22:'#FFD700',33:'#0A84FF'};
+  var ESSENCIAS={1:'Iniciação, autonomia, coragem criadora e o fogo do começo.',2:'Cooperação, sensibilidade, diplomacia e a arte de unir sem se dissolver.',3:'Expressão, criatividade, comunicação e a alegria como caminho espiritual.',4:'Construção, disciplina, ordem e a sabedoria das fundações sólidas.',5:'Liberdade, transformação, adaptação e a coragem de experienciar o novo.',6:'Amor, responsabilidade, harmonia e o cuidado como vocação.',7:'Introspecção, conhecimento, espiritualidade e a busca pelo que está além.',8:'Poder, abundância, autoridade e o desafio de exercer força com integridade.',9:'Completude, compaixão, serviço e a sabedoria de encerrar ciclos.',11:'Iluminação, intuição elevada, inspiração e a missão de ser canal de luz.',22:'Materialização em grande escala, visão e construção de legado coletivo.',33:'Amor incondicional, cura, ensino e a compaixão como força transformadora.'};
 
   /* ── LEITURAS COMPLETAS ── */
-  const LEITURAS={
+  var LEITURAS={
     1:{
       caminho:`<div class="reading-statement">O Destino 1 carrega a missão da autoliderança, inovação e coragem. Para destravar essa energia, pratique as seguintes ações:</div><div class="reading-section"><div class="reading-tag "><span class="tag-dot"></span>O Que Seu Destino Revela Sobre Você</div><div class="reading-body"><p>O Destino 1 carrega a missão da autoliderança, inovação e coragem. Para destravar essa energia, pratique as seguintes ações:</p><p>1. Exercite sua iniciativa e originalidade diariamente</p><p>O número 1 é a força primordial da criação. Nada acontece sem ação, e grandes mudanças começam com pequenos passos.</p><p>O que estou adiando por medo ou insegurança?</p><p>Estou seguindo minha autenticidade ou apenas reproduzindo padrões alheios?</p><p>Deixo minha marca no que faço ou apenas sigo a multidão?</p><p>2. Avance, mesmo diante dos desafios</p><p>O caminho do Destino 1 exige resiliência e ação contínua. Quem tem essa vibração precisa se manter em movimento, independentemente das dificuldades.</p></div></div><div class="reading-section"><div class="reading-tag tag-sombra"><span class="tag-dot"></span>O Que Você Veio Superar e Transformar</div><div class="reading-body"><p>O que me impede de avançar?</p><p>Estou realmente comprometido com meu propósito?</p><p>Como posso dar um passo a mais hoje?</p><p>3. Fortaleça sua liderança</p><p>O número 1 veio para guiar, não para ser guiado. Ser líder não é apenas comandar, mas ter autoresponsabilidade e coragem para decidir.</p><p>Quem realmente está no controle da minha vida?</p><p>Estou agindo como líder ou como espectador das minhas próprias escolhas?</p><p>Como posso fortalecer minha postura de liderança?</p></div></div><div class="reading-section"><div class="reading-tag tag-luz"><span class="tag-dot"></span>3 Ações que Destravam Seu Número de Destino</div><div class="reading-body"><p>• Faça algo novo todos os dias, mesmo que pequeno.✅ Identifique áreas onde sua vida está estagnada e tome decisões para movimentá-las.✅ Pergunte-se:</p><p>• Todos os dias, escolha algo para avançar, por menor que seja.✅ Se sentir medo ou dúvida, respire fundo e diga: "Eu avanço porque eu posso."✅ Questione-se:</p><p>• Assuma a liderança da sua própria vida.✅ Tome decisões sem depender da aprovação dos outros.✅ Pergunte-se:</p></div></div><div class="reading-section"><div class="reading-tag tag-insight"><span class="tag-dot"></span>Lembrança do Caminho</div><div class="reading-body"><p>Lembre-se: Tudo que nasce começa pequeno. O importante é dar o primeiro passo.</p><p>A chave é resistir e continuar. A vitória pertence a quem persiste.</p><p>Ser líder não é uma opção para o Destino 1, é uma missão.</p><p>Missão para os próximos 30 dias: Seja original, aja com coragem e assuma as rédeas da sua vida.</p><p>Seu Destino não é um peso — é uma missão. Quanto mais conscientemente você o vive, mais o campo conspira a seu favor.</p></div></div>`,
       expressao:`<div class="reading-statement">Seu propósito na vida é liderar. Essa é sua tarefa e que só virá por seus próprios esforços e por meio de sua iniciativa e independência. Em todas as suas atividades, você deve fazer de tudo para ser original e criativo, já que um dos aspectos da vibração 1 é o pioneirismo.</div><div class="reading-section"><div class="reading-tag "><span class="tag-dot"></span>Sua Tarefa Essencial — A Missão do Seu Nome</div><div class="reading-body"><p>Seu propósito na vida é liderar. Essa é sua tarefa e que só virá por seus próprios esforços e por meio de sua iniciativa e independência. Em todas as suas atividades, você deve fazer de tudo para ser original e criativo, já que um dos aspectos da vibração 1 é o pioneirismo.</p><p>A individualidade é outro fator marcante em sua vida. Não tenha medo da solidão, ela faz parte de sua evolução espiritual. Modere seu egoísmo e evite inimizades.</p><p>A expressão 1 é extremamente original, criativa, inventiva e independente. Consegue trabalhar melhor sozinho e progride pela sua própria capacidade. A coragem e a ousadia estão na sua veia.</p></div></div><div class="reading-section"><div class="reading-tag tag-luz"><span class="tag-dot"></span>Talentos, Vocações e Dons Naturais</div><div class="reading-body"><p>Uma tarefa para você é aprender a controlar o egoísmo e não se deixar vencer pela preguiça, já que uma das forças negativas do 1 em desequilíbrio é começar e não terminar. As profissões mais adequadas para a expressão 1 são aquelas que possam usar a imaginação e a liberdade de atuar, como advocacia, arquiteto, publicitário, empreendedor, estilista, escritor, editor, inventor, programador de computador etc.</p><p>O algarismo 1, por ser o primeiro entre os Números de Expressão, é aquele que comanda, com todas as características necessárias para crescer e servir de modelo para um grande grupo, guiando-os para o sucesso.</p><p>O senso de liberdade é um valor pessoal inegociável para uma expressão 1, isso porque ele precisa de espaço para explorar sua criatividade, alimentar seu ego e decidir rapidamente sobre ideias, projetos, família, campo amoroso, espiritualidade, enfim, decidir a vida. Sua tomada de decisão é eficaz e por motivo muitas pessoas têm dificuldades de acompanhar a expressão 1.</p></div></div><div class="reading-section"><div class="reading-tag tag-sombra"><span class="tag-dot"></span>O Ponto de Superação e Crescimento</div><div class="reading-body"><p>Uma de suas vocações é a persuasão, sua capacidade de argumentação e convencimento é mais elevada que os demais números, dando-lhe a vantagem necessária para ganhar debates e competições no âmbito político ou em interações sociais e empresariais. Se esse é o seu sonho, saiba que o sucesso te espera.</p><p>Em equilíbrio, sua situação financeira pode ser bem favorável. Mesmo que as coisas não estejam indo bem agora, saiba que é a sua tarefa alcançar o topo através de muito esforço e do bom uso de suas habilidades naturais. Muito cuidado para não ser um ambicioso descontrolado, porque a queda pode ser grande. Ao conquistar o topo, saiba parar e aproveitar os frutos da sua determinação.</p><p>O Número de Expressão 1 é grandioso e memorável. Após a sua partida deste plano, saiba que seu nome será lembrado por muitos como um exemplo a ser seguido, lá no fundo é o que todo mundo almeja, deixar um legado.</p></div></div><div class="reading-section"><div class="reading-tag tag-insight"><span class="tag-dot"></span>Expressão em Plena Potência</div><div class="reading-body"><p>Quando você honra a missão do seu nome, o campo se organiza para apoiar sua jornada. Sua expressão não é só personalidade — é o canal pelo qual você entrega ao mundo o que veio trazer. Cada letra do seu nome de batismo carrega uma frequência que convida ao crescimento.</p></div></div>`,
@@ -4203,17 +4224,17 @@ fbq('track','PageView');
   function getLeitura(num,ctx){const entry=LEITURAS[num];if(!entry)return`<p style="color:var(--muted);font-style:italic">Leitura para o número ${num} em elaboração.</p>`;return entry[ctx]||entry.caminho||'<p>Em breve.</p>'}
 
   /* ── DADOS MÓDULOS ── */
-  const PINACULOS_LEITURAS={1:'Período regido pela iniciativa e pela afirmação da identidade. O universo favorece quem age com coragem e assume novos começos sem precisar de permissão externa.',2:'Período de parcerias, cooperação e aprendizado emocional profundo. As grandes lições chegam através das relações — especialmente as que exigem paciência.',3:'Período de expressão criativa, expansão social e comunicação. Sua voz tem mais alcance agora — use-a com intenção.',4:'Período de construção sólida, trabalho disciplinado e estabelecimento de fundações. O que é construído aqui dura além deste ciclo.',5:'Período de transformações, mudanças necessárias e libertação de padrões. A resistência a mudanças custa mais do que a mudança em si.',6:'Período de responsabilidades afetivas, cuidado com o lar e aprendizado sobre amor maduro e com limites.',7:'Período de introspecção, aprofundamento espiritual e busca pelo conhecimento genuíno. Retiro e silêncio são aliados nesta fase.',8:'Período de poder, realizações materiais e liderança. A ambição alinhada com integridade produz resultados extraordinários.',9:'Período de conclusões, serviço ao coletivo e encerramento de ciclos que já cumpriram seu papel. Desapego é a chave.',11:'Período de missão espiritual intensa, inspiração elevada e intuição amplificada. Confie no que percebe.',22:'Período de construção monumental e legado coletivo. Oportunidades de impacto em escala raramente se repetem.',33:'Período de amor incondicional, ensino e serviço que transforma através da presença genuína.'};
+  var PINACULOS_LEITURAS={1:'Período regido pela iniciativa e pela afirmação da identidade. O universo favorece quem age com coragem e assume novos começos sem precisar de permissão externa.',2:'Período de parcerias, cooperação e aprendizado emocional profundo. As grandes lições chegam através das relações — especialmente as que exigem paciência.',3:'Período de expressão criativa, expansão social e comunicação. Sua voz tem mais alcance agora — use-a com intenção.',4:'Período de construção sólida, trabalho disciplinado e estabelecimento de fundações. O que é construído aqui dura além deste ciclo.',5:'Período de transformações, mudanças necessárias e libertação de padrões. A resistência a mudanças custa mais do que a mudança em si.',6:'Período de responsabilidades afetivas, cuidado com o lar e aprendizado sobre amor maduro e com limites.',7:'Período de introspecção, aprofundamento espiritual e busca pelo conhecimento genuíno. Retiro e silêncio são aliados nesta fase.',8:'Período de poder, realizações materiais e liderança. A ambição alinhada com integridade produz resultados extraordinários.',9:'Período de conclusões, serviço ao coletivo e encerramento de ciclos que já cumpriram seu papel. Desapego é a chave.',11:'Período de missão espiritual intensa, inspiração elevada e intuição amplificada. Confie no que percebe.',22:'Período de construção monumental e legado coletivo. Oportunidades de impacto em escala raramente se repetem.',33:'Período de amor incondicional, ensino e serviço que transforma através da presença genuína.'};
 
-  const DESAFIOS_LEITURAS={0:'O desafio 0 é o mais abrangente: todos os desafios potenciais estão presentes simultaneamente. Você veio aprender em amplitude total — a liberdade é máxima, mas a responsabilidade pelo uso dessa liberdade é igualmente total. O desafio zero exige autoconhecimento profundo, pois não há um padrão único a trabalhar — são todos.',1:'O desafio 1 aponta para a construção da autoconfiança genuína — não a arrogante, mas a que se afirma sem precisar diminuir ninguém. O padrão frequente é alternância entre excesso de confiança e déficit. A aprendizagem é ocupar o próprio espaço com exatidão: nem mais, nem menos.',2:'O desafio 2 revela dificuldade nas relações interpessoais — especialmente na capacidade de cooperar sem se apagar e de criar paz sem falsidade. O padrão frequente inclui hipersensibilidade a críticas e dificuldade de tomar posição em conflitos. A aprendizagem é sentir sem ser controlado pelo que sente.',3:'O desafio 3 aponta para dificuldades de expressão — seja por medo de julgamento, por autoestima baixa ou por uma criatividade que não encontrou canal adequado. A aprendizagem é confiar na sua própria expressão.',4:'O desafio 4 revela tensão entre necessidade de ordem e resistência às estruturas necessárias. A aprendizagem é encontrar liberdade dentro das estruturas — não apesar delas.',5:'O desafio 5 aponta para dificuldades com comprometimento e foco sustentado. A aprendizagem é descobrir que a liberdade mais sofisticada não está na ausência de compromisso — está na escolha consciente do que merece profundidade.',6:'O desafio 6 revela padrões de sobrecarga de responsabilidade e dificuldade de receber. Você pode assumir a dor dos outros como missão pessoal. A aprendizagem é amar com limites — e deixar que o outro cresça com os próprios desafios.',7:'O desafio 7 aponta para uma dificuldade profunda com fé — tanto no sentido espiritual quanto no sentido de confiança nas próprias percepções. A aprendizagem é agir mesmo sem certeza absoluta.',8:'O desafio 8 revela uma relação desequilibrada com poder e abundância. A aprendizagem é desenvolver uma relação madura e equilibrada com o mundo material: nem rejeitar, nem idolatrar.',9:'O desafio 9 aponta para dificuldades com desapego e com a capacidade de encerrar ciclos. A aprendizagem é encerrar com gratidão — reconhecendo que deixar ir é também uma forma de amor.'};
+  var DESAFIOS_LEITURAS={0:'O desafio 0 é o mais abrangente: todos os desafios potenciais estão presentes simultaneamente. Você veio aprender em amplitude total — a liberdade é máxima, mas a responsabilidade pelo uso dessa liberdade é igualmente total. O desafio zero exige autoconhecimento profundo, pois não há um padrão único a trabalhar — são todos.',1:'O desafio 1 aponta para a construção da autoconfiança genuína — não a arrogante, mas a que se afirma sem precisar diminuir ninguém. O padrão frequente é alternância entre excesso de confiança e déficit. A aprendizagem é ocupar o próprio espaço com exatidão: nem mais, nem menos.',2:'O desafio 2 revela dificuldade nas relações interpessoais — especialmente na capacidade de cooperar sem se apagar e de criar paz sem falsidade. O padrão frequente inclui hipersensibilidade a críticas e dificuldade de tomar posição em conflitos. A aprendizagem é sentir sem ser controlado pelo que sente.',3:'O desafio 3 aponta para dificuldades de expressão — seja por medo de julgamento, por autoestima baixa ou por uma criatividade que não encontrou canal adequado. A aprendizagem é confiar na sua própria expressão.',4:'O desafio 4 revela tensão entre necessidade de ordem e resistência às estruturas necessárias. A aprendizagem é encontrar liberdade dentro das estruturas — não apesar delas.',5:'O desafio 5 aponta para dificuldades com comprometimento e foco sustentado. A aprendizagem é descobrir que a liberdade mais sofisticada não está na ausência de compromisso — está na escolha consciente do que merece profundidade.',6:'O desafio 6 revela padrões de sobrecarga de responsabilidade e dificuldade de receber. Você pode assumir a dor dos outros como missão pessoal. A aprendizagem é amar com limites — e deixar que o outro cresça com os próprios desafios.',7:'O desafio 7 aponta para uma dificuldade profunda com fé — tanto no sentido espiritual quanto no sentido de confiança nas próprias percepções. A aprendizagem é agir mesmo sem certeza absoluta.',8:'O desafio 8 revela uma relação desequilibrada com poder e abundância. A aprendizagem é desenvolver uma relação madura e equilibrada com o mundo material: nem rejeitar, nem idolatrar.',9:'O desafio 9 aponta para dificuldades com desapego e com a capacidade de encerrar ciclos. A aprendizagem é encerrar com gratidão — reconhecendo que deixar ir é também uma forma de amor.'};
 
-  const LICOES_LEITURAS={1:'A energia da iniciativa, liderança e autoafirmação precisa ser cultivada conscientemente nesta encarnação. Você veio aprender a ocupar o espaço que é seu sem pedir licença — e a confiar em suas próprias decisões sem precisar que todos concordem.',2:'A cooperação, a diplomacia e a sensibilidade às necessidades alheias são aprendizados centrais desta vida. A ausência do 2 pode indicar uma tendência ao individualismo extremo ou uma impaciência com a lentidão necessária para construir relações de qualidade.',3:'A expressão criativa, a comunicação e a alegria de viver pedem desenvolvimento consciente. A ausência do 3 pode indicar dificuldade de se expressar com autenticidade ou uma seriedade que impede o contato com a leveza que também é parte da vida.',4:'Disciplina, organização e consistência são aprendizados kármicos desta encarnação. A ausência do 4 pode indicar uma resistência às estruturas necessárias para que projetos se completem. A lição é descobrir que estrutura é liberdade, não prisão.',5:'Flexibilidade, adaptação e abertura ao novo são temas centrais desta vida. A ausência do 5 pode indicar rigidez, medo de mudança ou um apego excessivo ao familiar que impede o crescimento.',6:'Amor incondicional, responsabilidade afetiva e harmonia nas relações são aprendizados kármicos. A ausência do 6 pode indicar dificuldade em criar vínculos profundos ou uma relação difícil com o conceito de lar e família.',7:'Fé, introspecção e a busca pelo conhecimento profundo são caminhos a serem trilhados com muito mais consciência nesta encarnação. A ausência do 7 pode indicar uma vida muito orientada para o externo, com pouco tempo para reflexão.',8:'Maestria sobre o mundo material — dinheiro, poder, influência — é uma lição kármica importante. A ausência do 8 pode indicar padrões de escassez crônica ou uma tendência de autossabotagem quando a prosperidade está próxima.',9:'Desapego, compaixão universal e capacidade de encerrar ciclos são habilidades que a alma veio desenvolver. A ausência do 9 pode indicar dificuldade de ver além da perspectiva individual ou apego ao passado que impede o movimento natural da vida.'};
+  var LICOES_LEITURAS={1:'A energia da iniciativa, liderança e autoafirmação precisa ser cultivada conscientemente nesta encarnação. Você veio aprender a ocupar o espaço que é seu sem pedir licença — e a confiar em suas próprias decisões sem precisar que todos concordem.',2:'A cooperação, a diplomacia e a sensibilidade às necessidades alheias são aprendizados centrais desta vida. A ausência do 2 pode indicar uma tendência ao individualismo extremo ou uma impaciência com a lentidão necessária para construir relações de qualidade.',3:'A expressão criativa, a comunicação e a alegria de viver pedem desenvolvimento consciente. A ausência do 3 pode indicar dificuldade de se expressar com autenticidade ou uma seriedade que impede o contato com a leveza que também é parte da vida.',4:'Disciplina, organização e consistência são aprendizados kármicos desta encarnação. A ausência do 4 pode indicar uma resistência às estruturas necessárias para que projetos se completem. A lição é descobrir que estrutura é liberdade, não prisão.',5:'Flexibilidade, adaptação e abertura ao novo são temas centrais desta vida. A ausência do 5 pode indicar rigidez, medo de mudança ou um apego excessivo ao familiar que impede o crescimento.',6:'Amor incondicional, responsabilidade afetiva e harmonia nas relações são aprendizados kármicos. A ausência do 6 pode indicar dificuldade em criar vínculos profundos ou uma relação difícil com o conceito de lar e família.',7:'Fé, introspecção e a busca pelo conhecimento profundo são caminhos a serem trilhados com muito mais consciência nesta encarnação. A ausência do 7 pode indicar uma vida muito orientada para o externo, com pouco tempo para reflexão.',8:'Maestria sobre o mundo material — dinheiro, poder, influência — é uma lição kármica importante. A ausência do 8 pode indicar padrões de escassez crônica ou uma tendência de autossabotagem quando a prosperidade está próxima.',9:'Desapego, compaixão universal e capacidade de encerrar ciclos são habilidades que a alma veio desenvolver. A ausência do 9 pode indicar dificuldade de ver além da perspectiva individual ou apego ao passado que impede o movimento natural da vida.'};
 
-  const MATURIDADE_LEITURAS={1:'A maturidade revela um ser de liderança genuína — não a que grita, mas a que inspira pelo exemplo silencioso. Após os 45, você naturalmente consolida uma independência sábia e começa a exercer influência de formas que não dependem mais de título ou estrutura.',2:'A maturidade traz uma sensibilidade refinada e uma capacidade de conexão que vai além das palavras. Na segunda metade da vida, você se torna naturalmente o ponto de convergência — o mediador que outros buscam.',3:'A maturidade amplifica e aprofunda sua expressão criativa. Se nos primeiros ciclos você usou o brilho para encantar, na segunda metade da vida você usa a profundidade para transformar.',4:'A maturidade consolida um ser de estrutura e sabedoria prática que outros buscam como referência. Após os 45, o que você construiu ao longo da vida começa a revelar sua solidez.',5:'A maturidade liberta de formas que a juventude não conseguia imaginar. A segunda metade da vida traz uma liberdade mais consciente e genuinamente rica em significado.',6:'A maturidade aprofunda e equilibra sua capacidade de amar. O cuidado que você oferece na segunda metade da vida é mais sábio, mais nutrido e menos sacrificial.',7:'A maturidade revela o filósofo que sempre existiu em você. Seus anos mais velhos tendem a ser os de maior clareza espiritual e de uma paz que não depende de circunstâncias externas.',8:'A maturidade traz maestria genuína: você aprende a exercer poder sem precisar de poder, a ter abundância sem ser controlado por ela.',9:'A maturidade transforma toda a sua experiência acumulada em sabedoria coletiva. Você se torna um repositório vivo de humanidade.',11:'A maturidade aguça sua intuição a níveis que surpreendem até você. A segunda metade da vida tende a ser profundamente espiritual.',22:'A maturidade revela o grande construtor em plenitude. Seus projetos de maior escala, impacto e legado tendem a surgir ou amadurecer após os 45.',33:'A maturidade consagra o mestre do amor compassivo. Você se torna um farol de cura e sabedoria para os que estão ao redor.'};
+  var MATURIDADE_LEITURAS={1:'A maturidade revela um ser de liderança genuína — não a que grita, mas a que inspira pelo exemplo silencioso. Após os 45, você naturalmente consolida uma independência sábia e começa a exercer influência de formas que não dependem mais de título ou estrutura.',2:'A maturidade traz uma sensibilidade refinada e uma capacidade de conexão que vai além das palavras. Na segunda metade da vida, você se torna naturalmente o ponto de convergência — o mediador que outros buscam.',3:'A maturidade amplifica e aprofunda sua expressão criativa. Se nos primeiros ciclos você usou o brilho para encantar, na segunda metade da vida você usa a profundidade para transformar.',4:'A maturidade consolida um ser de estrutura e sabedoria prática que outros buscam como referência. Após os 45, o que você construiu ao longo da vida começa a revelar sua solidez.',5:'A maturidade liberta de formas que a juventude não conseguia imaginar. A segunda metade da vida traz uma liberdade mais consciente e genuinamente rica em significado.',6:'A maturidade aprofunda e equilibra sua capacidade de amar. O cuidado que você oferece na segunda metade da vida é mais sábio, mais nutrido e menos sacrificial.',7:'A maturidade revela o filósofo que sempre existiu em você. Seus anos mais velhos tendem a ser os de maior clareza espiritual e de uma paz que não depende de circunstâncias externas.',8:'A maturidade traz maestria genuína: você aprende a exercer poder sem precisar de poder, a ter abundância sem ser controlado por ela.',9:'A maturidade transforma toda a sua experiência acumulada em sabedoria coletiva. Você se torna um repositório vivo de humanidade.',11:'A maturidade aguça sua intuição a níveis que surpreendem até você. A segunda metade da vida tende a ser profundamente espiritual.',22:'A maturidade revela o grande construtor em plenitude. Seus projetos de maior escala, impacto e legado tendem a surgir ou amadurecer após os 45.',33:'A maturidade consagra o mestre do amor compassivo. Você se torna um farol de cura e sabedoria para os que estão ao redor.'};
 
-  const EQUILIBRIO_LEITURAS={1:'Em momentos de crise, seu recurso mais profundo é a força interior e a capacidade de agir autonomamente. Você se ancora através da ação direta — não da análise, não da espera, mas do movimento em direção ao que precisa ser feito.',2:'Em crise, você se reequilibra através da harmonia e do diálogo autêntico. Parcerias confiáveis e a capacidade de ouvir e ser ouvido restauram seu senso de segurança de formas que a ação solitária nunca consegue.',3:'Em crise, você se ancora na expressão criativa. Criar, comunicar e se conectar através da arte, da escrita ou da conversa profunda restauram sua clareza.',4:'Em crise, você busca ordem e estrutura como âncora. Rotinas, listas, planejamento concreto e foco em tarefas mensuráveis restauram sua sensação de controle e segurança.',5:'Em crise, você precisa de movimento e mudança de perspectiva. Ficar parado no mesmo ambiente, na mesma rotina e na mesma narrativa não funciona — você se reequilibra quando muda algo, mesmo que pequeno.',6:'Em crise, o amor e o cuidado são sua âncora fundamental. Cuidar de alguém — ou permitir ser cuidado — restaura seu senso de propósito e pertencimento.',7:'Em crise, você se ancora no silêncio, no estudo e na contemplação. Introspecção profunda, meditação, leitura ou qualquer prática que te leve para dentro restaura sua clareza.',8:'Em crise, você busca retomar o senso de agência através de ações concretas e resultados mensuráveis. Focar em um objetivo claro e trabalhar em direção a ele com método restaura sua sensação de poder.',9:'Em crise, você se reequilibra através do serviço e da perspectiva ampla. Ajudar alguém que precisa mais do que você, ou simplesmente ampliar o campo de visão para além do problema imediato, restaura seu senso de lugar no mundo.',11:'Em crise, você se ancora na espiritualidade e na intuição. Meditação, práticas contemplativas, conexão com o invisível e confiança nas percepções internas restauram seu equilíbrio.',22:'Em crise, você se ancora em grandes propósitos. Reconectar-se com a visão maior — o que você está construindo, para quem, por quê — reequilibra o que o caos imediato desorientou.',33:'Em crise, você encontra equilíbrio no amor incondicional — primeiro por si mesmo, depois pelo mundo. Permitir-se ser amado sem precisar merecer esse amor é frequentemente o ato de cura mais transformador.'};
+  var EQUILIBRIO_LEITURAS={1:'Em momentos de crise, seu recurso mais profundo é a força interior e a capacidade de agir autonomamente. Você se ancora através da ação direta — não da análise, não da espera, mas do movimento em direção ao que precisa ser feito.',2:'Em crise, você se reequilibra através da harmonia e do diálogo autêntico. Parcerias confiáveis e a capacidade de ouvir e ser ouvido restauram seu senso de segurança de formas que a ação solitária nunca consegue.',3:'Em crise, você se ancora na expressão criativa. Criar, comunicar e se conectar através da arte, da escrita ou da conversa profunda restauram sua clareza.',4:'Em crise, você busca ordem e estrutura como âncora. Rotinas, listas, planejamento concreto e foco em tarefas mensuráveis restauram sua sensação de controle e segurança.',5:'Em crise, você precisa de movimento e mudança de perspectiva. Ficar parado no mesmo ambiente, na mesma rotina e na mesma narrativa não funciona — você se reequilibra quando muda algo, mesmo que pequeno.',6:'Em crise, o amor e o cuidado são sua âncora fundamental. Cuidar de alguém — ou permitir ser cuidado — restaura seu senso de propósito e pertencimento.',7:'Em crise, você se ancora no silêncio, no estudo e na contemplação. Introspecção profunda, meditação, leitura ou qualquer prática que te leve para dentro restaura sua clareza.',8:'Em crise, você busca retomar o senso de agência através de ações concretas e resultados mensuráveis. Focar em um objetivo claro e trabalhar em direção a ele com método restaura sua sensação de poder.',9:'Em crise, você se reequilibra através do serviço e da perspectiva ampla. Ajudar alguém que precisa mais do que você, ou simplesmente ampliar o campo de visão para além do problema imediato, restaura seu senso de lugar no mundo.',11:'Em crise, você se ancora na espiritualidade e na intuição. Meditação, práticas contemplativas, conexão com o invisível e confiança nas percepções internas restauram seu equilíbrio.',22:'Em crise, você se ancora em grandes propósitos. Reconectar-se com a visão maior — o que você está construindo, para quem, por quê — reequilibra o que o caos imediato desorientou.',33:'Em crise, você encontra equilíbrio no amor incondicional — primeiro por si mesmo, depois pelo mundo. Permitir-se ser amado sem precisar merecer esse amor é frequentemente o ato de cura mais transformador.'};
 
-  const CICLOS_LEITURAS={
+  var CICLOS_LEITURAS={
     formativo:{1:'O ciclo formativo sob a regência do 1 molda uma personalidade com forte senso de si mesmo desde cedo. Os primeiros anos pedem o desenvolvimento da identidade própria — o que frequentemente gera confrontos com figuras de autoridade que não compreendem a necessidade de autonomia.',2:'O ciclo formativo sob o 2 cria uma sensibilidade emocional profunda que define muito da sua estrutura relacional. Os primeiros anos ensinam o valor e o custo da cooperação — e estabelecem padrões de relacionamento que levam décadas para ser conscientizados.',3:'O ciclo formativo sob o 3 confere uma qualidade criativa e comunicativa que emerge cedo. Você provavelmente foi a criança expressiva, curiosa e de fácil trato — mas também a que precisava de estímulo constante para não dispersar.',4:'O ciclo formativo sob o 4 cria uma estrutura de seriedade e responsabilidade precoce. Os primeiros anos ensinam o valor do esforço e da consistência — às vezes através de circunstâncias que exigem mais maturidade do que a idade permitiria.',5:'O ciclo formativo sob o 5 gera uma infância marcada por movimento, mudança e adaptação. Isso cria uma flexibilidade estrutural que é um ativo — mas também pode criar uma dificuldade de criar raízes.',6:'O ciclo formativo sob o 6 centra os primeiros anos em temas de família, responsabilidade afetiva e harmonia. O ambiente doméstico é determinante para a estrutura emocional que você carrega.',7:'O ciclo formativo sob o 7 cria uma infância introspectiva, às vezes solitária. Você foi provavelmente a criança mais séria, mais questionadora e mais difícil de satisfazer com respostas simples.',8:'O ciclo formativo sob o 8 coloca cedo diante de questões de poder e recursos. Isso molda uma relação com o mundo material que dura décadas.',9:'O ciclo formativo sob o 9 cria uma infância marcada pela sensibilidade ao coletivo. Você provavelmente carregava, desde pequeno, o peso emocional ao redor.',11:'O ciclo formativo sob o 11 cria uma infância de hipersensibilidade. Você provavelmente sentiu coisas que os adultos ao redor não percebiam e não tinham ferramentas para acolher.',22:'O ciclo formativo sob o 22 cria desde cedo um senso de missão e peso de propósito. Você provavelmente sentiu que estava aqui para algo específico.',33:'O ciclo formativo sob o 33 cria uma infância de amor profundo e sensibilidade expandida. Você foi a criança que cuidava — dos irmãos, dos amigos, dos sentimentos dos outros.'},
     produtivo:{1:'O ciclo produtivo sob o 1 é de liderança, iniciativas pioneiras e consolidação da identidade adulta com coragem.',2:'O ciclo produtivo sob o 2 centra a fase adulta nas relações e parcerias. As grandes decisões desta fase são profundamente moldadas pelas conexões que você constrói.',3:'O ciclo produtivo sob o 3 é criativo e comunicativo. Este é o período de maior expressão, expansão social e potencial de impacto através da sua voz.',4:'O ciclo produtivo sob o 4 é de construção concreta e trabalho metódico. Resultados tangíveis e disciplina executiva definem este período.',5:'O ciclo produtivo sob o 5 é de mudanças, aventuras e transformações necessárias. A fase adulta é dinamicamente diferente do que você antecipava.',6:'O ciclo produtivo sob o 6 centra a vida adulta nas responsabilidades afetivas e profissionais. O cuidado com o outro é tema central.',7:'O ciclo produtivo sob o 7 é de aprofundamento e especialização. A vida adulta é onde você desenvolve seu conhecimento mais profundo.',8:'O ciclo produtivo sob o 8 é de poder e realizações de escala. Ambição e execução definem este período.',9:'O ciclo produtivo sob o 9 é de serviço crescente e sabedoria que se expande.',11:'O ciclo produtivo sob o 11 é de missão e inspiração. Seu maior impacto no mundo se manifesta nesta fase.',22:'O ciclo produtivo sob o 22 é de grandes construções. Os projetos de maior escala e legado tomam forma aqui.',33:'O ciclo produtivo sob o 33 é de amor maduro e ensino pelo exemplo.'},
     colheita:{1:'O ciclo da colheita sob o 1 revela um ser que se tornou genuinamente seu — independente, claro e sem mais necessidade de provar nada.',2:'O ciclo da colheita sob o 2 revela relações profundas e uma sabedoria interpessoal que só a vida longa pode dar.',3:'O ciclo da colheita sob o 3 tende a ser o de maior profundidade na expressão criativa.',4:'O ciclo da colheita sob o 4 é de solidez e legado concreto. O que você construiu permanece.',5:'O ciclo da colheita sob o 5 traz uma liberdade conquistada — mais leve, mais consciente e mais rica em significado.',6:'O ciclo da colheita sob o 6 é de amor colhido. Você termina cercado de vínculos profundos que cultivou com cuidado.',7:'O ciclo da colheita sob o 7 é de paz filosófica e clareza espiritual.',8:'O ciclo da colheita sob o 8 é de maestria e equilíbrio entre conquista e sabedoria.',9:'O ciclo da colheita sob o 9 revela você como repositório vivo de humanidade.',11:'O ciclo da colheita sob o 11 é o de maior clareza espiritual e intuição.',22:'O ciclo da colheita sob o 22 revela o legado que transcende a própria existência.',33:'O ciclo da colheita sob o 33 consagra o mestre do amor.'},
@@ -4281,7 +4302,7 @@ fbq('track','PageView');
   ════════════════════════════════════════════ */
 
   const PAIN_MAP={"1":["Você começa com força mas raramente chega até o fim — o medo do fracasso sabota o momentum no meio do caminho","A independência que você valoriza frequentemente vira isolamento que você não escolheu","O que parece determinação por fora é frequentemente rigidez por dentro — dificuldade real de mudar de rota quando necessário"],"2":["Você diz que está bem quando não está — e acumula ressentimento silencioso esperando que percebam","O medo de conflito faz você ceder onde não deveria, e você ressente quem não percebeu que cedeu","Sua sensibilidade aguçada é um dom — mas também transforma críticas normais em feridas profundas"],"3":["Você começa projetos com entusiasmo genuíno e os abandona antes de colher — sempre com uma justificativa criativa","A dispersão não é falta de foco: é medo do julgamento que vem quando algo está pronto e pode ser avaliado","Sua expressividade brilhante frequentemente cobre angústias que você raramente nomeia em voz alta"],"4":["Você perfecciona tanto antes de lançar que frequentemente não lança — o perfeito se torna inimigo do real","A necessidade de controle é tão intensa que quando algo foge do plano, você trava em vez de adaptar","Seu ritmo metódico é uma força — mas quando vira rigidez, fecha portas que apenas a flexibilidade abriria"],"5":["Quando uma situação começa a pedir profundidade, você cria inconscientemente um motivo para sair","A liberdade que você defende frequentemente é fuga do comprometimento que poderia trazer o que você mais quer","Você toca muitas coisas com brilhantismo — mas raramente fica tempo suficiente para colher os frutos"],"6":["Você faz mais do que deveria, não pede o que precisa — e ressente quem não percebeu que estava sobrecarregado","O cuidado que você oferece sem limite acaba por deixá-lo vazio — e você culpa o mundo por não ter percebido","Sua responsabilidade com os outros é tão intensa que raramente você se coloca em primeiro lugar sem culpa"],"7":["Antes de ser mal compreendido, você se afasta — e cria a solidão que depois lamenta","A análise profunda que é seu maior dom frequentemente substitui a ação que o momento pede","Você raramente pede ajuda — e carrega sozinho pesos que não precisariam ser seus"],"8":["Quando o resultado está próximo — quando tudo está funcionando — você inconscientemente cria um problema que o impede de chegar lá","Você confunde o que você vale com o que você tem, alcança ou controla — e isso torna o descanso impossível","A intensidade do seu foco nos resultados frequentemente sacrifica as relações que dão sentido aos resultados"],"9":["Você mantém vivas relações e situações que já cumpriram seu papel — não por necessidade, mas por medo do vazio do depois","Você absorve o sofrimento do mundo como se fosse seu — e isso te esgota de uma forma que raramente consegue nomear","O altruísmo genuíno que você carrega frequentemente esconde uma dificuldade real de receber cuidado"],"11":["A percepção intuitiva que é seu maior dom frequentemente é descartada pela sua própria mente — você não confia no que sente","A oscilação entre clareza intensa e dúvida profunda é seu padrão mais característico — e mais custoso","Sua sensibilidade ao ambiente e às pessoas é tão aguçada que ambientes comuns te esgotam mais do que te alimentam"],"22":["A visão é tão grande que o primeiro passo parece insuficiente — e você continua planejando quando devia estar construindo","Você assume mais responsabilidade do que pode sustentar — e raramente pede ajuda por sentir que deveria dar conta","O projeto de vida que você veio construir existe apenas na sua cabeça porque começar imperfeito parece inaceitável"],"33":["Você oferece amor e cuidado até o esgotamento — e raramente percebe o momento exato em que plenitude virou obrigação","A expectativa de que o outro vai perceber quanto você deu é o gatilho de decepções que se repetem","Sua presença cura — mas raramente alguém percebe o quanto isso te custa, porque você nunca mostra"]};
-  const TEASER_TITULO={"1":"O Pioneiro","2":"O Mediador","3":"O Comunicador","4":"O Construtor","5":"O Libertador","6":"O Cuidador","7":"O Analista","8":"O Realizador","9":"O Sábio","11":"O Visionário","22":"O Mestre Construtor","33":"O Mestre do Amor"};
+  var TEASER_TITULO={"1":"O Pioneiro","2":"O Mediador","3":"O Comunicador","4":"O Construtor","5":"O Libertador","6":"O Cuidador","7":"O Analista","8":"O Realizador","9":"O Sábio","11":"O Visionário","22":"O Mestre Construtor","33":"O Mestre do Amor"};
   const TEASER_ESSENCIA={"1":"Você veio para liderar, criar e inaugurar o que ainda não existe.","2":"Você veio para construir pontes e criar harmonia onde há separação.","3":"Você veio para inspirar, expressar e iluminar com sua criatividade.","4":"Você veio para criar estruturas sólidas e entregar o que promete.","5":"Você veio para transformar, adaptar e abrir caminhos para o novo.","6":"Você veio para criar harmonia, beleza e amor nos ambientes que habita.","7":"Você veio para aprofundar, pesquisar e revelar o que está oculto.","8":"Você veio para construir em escala e transformar visão em resultado.","9":"Você veio para integrar, servir e elevar com a sabedoria do que viveu.","11":"Você veio para inspirar e elevar a consciência através da sua percepção.","22":"Você veio para transformar grandes visões em realidades concretas.","33":"Você veio para curar e elevar através da qualidade da sua presença."};
 
   /* Render nova pirâmide v2 */
@@ -4383,11 +4404,11 @@ fbq('track','PageView');
     var email=document.getElementById('v2Email').value.trim();
     var phone=document.getElementById('v2Phone').value.replace(/\D/g,'');
     var err=document.getElementById('v2Err');
-    if(!nome){err.textContent='Por favor, informe o nome completo.';return;}
+    if(!nome){err.textContent=errMsg('nameRequired','Por favor, informe o nome completo.');return;}
     var clean=dataRaw.replace(/\s/g,'').replace(/\/+/g,'/');
-    if(!parseDateBR(clean)){err.textContent='Data inválida. Use o formato DD/MM/AAAA.';return;}
-    if(!email||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){err.textContent='Por favor, informe um e-mail válido.';return;}
-    if(!phone||phone.length<10){err.textContent='Por favor, informe um WhatsApp válido com DDD.';return;}
+    if(!parseDateBR(clean)){err.textContent=errMsg('dateInvalid','Data inválida. Use o formato DD/MM/AAAA.');return;}
+    if(!email||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){err.textContent=errMsg('emailInvalid','Por favor, informe um e-mail válido.');return;}
+    if(!phone||phone.length<10){err.textContent=errMsg('phoneInvalid','Por favor, informe um WhatsApp válido com DDD.');return;}
     err.textContent='';
     _nome=nome;_date=clean;_email=email;
     window._nome=nome;window._email=email;window._phone=phone;
@@ -4447,6 +4468,29 @@ fbq('track','PageView');
     33:{hook:'Você tem uma presença que cura — e raramente percebe o quanto isso te custa.',insight:'<p>O <strong>Caminho de Vida 33</strong> é o número mestre do amor e do serviço. Você não finge cuidar — você genuinamente cuida, e isso transforma os ambientes que você habita.</p><p>O desafio mais específico do 33 é a confusão entre amor e autossacrifício. Você oferece de um lugar de plenitude — e não percebe o momento exato em que a plenitude se transforma em obrigação e o cuidado genuíno se torna martírio.</p>',pattern:'<strong>Dar até o esgotamento sem pedir reposição.</strong> Você não percebe que está vazio até não ter mais nada para oferecer. E aí vem a culpa — por estar vazio, por ter esgotado, por precisar.',sabotage:'Confundir amor com autossacrifício. O amor que você oferece ao mundo começa no amor que você oferece a si mesmo — e esse é o trabalho mais difícil do 33.',taste:'Seu número de Alma revela o que você mais precisa receber — não apenas dar. Essa leitura muda como você entende suas relações mais próximas...'}
   };
 
+  /* ── Repopula dicionários por número a partir do idioma carregado (i18n) ──
+     Os literais acima são o fallback pt (sincrônico). Se o visitante estiver
+     em en/es, o JSON já carregado por assets/i18n.js reatribui essas variáveis
+     antes do usuário terminar de preencher o formulário. ── */
+  if (window.I18N_READY) {
+    window.I18N_READY.then(function(data){
+      if (!data || !data.numbers) return;
+      var n = data.numbers;
+      if (n.titulos) TITULOS = n.titulos;
+      if (n.cores) CORES = n.cores;
+      if (n.essencias) ESSENCIAS = n.essencias;
+      if (n.leituras) LEITURAS = n.leituras;
+      if (n.pinaculos) PINACULOS_LEITURAS = n.pinaculos;
+      if (n.desafios) DESAFIOS_LEITURAS = n.desafios;
+      if (n.licoes) LICOES_LEITURAS = n.licoes;
+      if (n.maturidade) MATURIDADE_LEITURAS = n.maturidade;
+      if (n.equilibrio) EQUILIBRIO_LEITURAS = n.equilibrio;
+      if (n.ciclos) CICLOS_LEITURAS = n.ciclos;
+      if (n.teaserTitulo) TEASER_TITULO = n.teaserTitulo;
+      if (n.aidaHook) AIDA_HOOK = n.aidaHook;
+    });
+  }
+
   /* ── Helpers gamificação ── */
   function countUp(el,target,ms){
     var start=Date.now(),from=0;
@@ -4492,11 +4536,11 @@ fbq('track','PageView');
     var titulo=TEASER_TITULO[caminho]||('Número '+caminho);
 
     /* ── Colonometria Pitagórica ── */
-    var NUM_COLOR_HEX={1:'#e05252',2:'#ed8936',3:'#ecc94b',4:'#48bb78',5:'#38b2ac',6:'#5a67d8',7:'#9f7aea',8:'#ed64a6',9:'#c8a96e',11:'#a0aec0',22:'#c8a96e',33:'#d6a4a4'};
-    var NUM_COLOR_NAME={1:'Vermelho',2:'Laranja',3:'Amarelo',4:'Verde',5:'Turquesa',6:'Índigo',7:'Violeta',8:'Rosa',9:'Dourado',11:'Prata',22:'Dourado Profundo',33:'Rosa-Dourado'};
+    var NUM_COLOR_HEX=(window.I18N&&window.I18N.numbers.colorHex)||{1:'#e05252',2:'#ed8936',3:'#ecc94b',4:'#48bb78',5:'#38b2ac',6:'#5a67d8',7:'#9f7aea',8:'#ed64a6',9:'#c8a96e',11:'#a0aec0',22:'#c8a96e',33:'#d6a4a4'};
+    var NUM_COLOR_NAME=(window.I18N&&window.I18N.numbers.colorName)||{1:'Vermelho',2:'Laranja',3:'Amarelo',4:'Verde',5:'Turquesa',6:'Índigo',7:'Violeta',8:'Rosa',9:'Dourado',11:'Prata',22:'Dourado Profundo',33:'Rosa-Dourado'};
 
     /* ── Textos de Personalidade ── */
-    var PERSONA_TEXT={
+    var PERSONA_TEXT=(window.I18N&&window.I18N.numbers.persona)||{
       1:'<p>Você projeta uma presença forte, direta e pioneira. As pessoas te percebem como alguém decidido — com posicionamento claro, às vezes antes mesmo de você falar.</p><p>O paradoxo: esse campo de autoridade cria expectativas que nem sempre batem com o que você sente por dentro. Quando a vida pede que você siga — e não que lidere — há resistência.</p><p><strong>O que o mundo não enxerga:</strong> o esforço constante que você faz para sustentar essa imagem de força, mesmo nos dias em que você mesmo não acredita nela.</p>',
       2:'<p>Você projeta sensibilidade, receptividade e uma presença gentil que as pessoas sentem como acolhedora. A impressão que causas é de alguém equilibrado, confiável, bom de ouvir.</p><p>O paradoxo: por parecer sempre disponível, raramente te perguntam como você está de verdade. Você é o porto seguro de todos — mas quem é o seu porto seguro?</p><p><strong>O que o mundo não enxerga:</strong> que você também acumula, também adoece, também precisa ser recebido — e raramente pede isso.</p>',
       3:'<p>Você projeta leveza, criatividade e carisma natural. As pessoas sentem sua presença como animadora — você é o que faz o clima mudar quando entra numa sala.</p><p>O paradoxo: quando você está pesado por dentro, sente que não pode mostrar isso. A Personalidade 3 cria a expectativa social de estar bem — e quando você não está, há conflito entre o que o mundo espera e o que você sente.</p><p><strong>O que o mundo não enxerga:</strong> a profundidade emocional que existe por baixo da leveza — e o quanto você quer poder mostrar isso sem ter que animar ninguém.</p>',
@@ -4512,7 +4556,7 @@ fbq('track','PageView');
     };
 
     /* ── Textos de Alma ── */
-    var ALMA_TEXT={
+    var ALMA_TEXT=(window.I18N&&window.I18N.numbers.alma)||{
       1:'<p>O que move você por dentro, no nível mais profundo, é o desejo de ser o primeiro — de inaugurar, de não depender, de não precisar ser validado para agir.</p><p>A dor invisível: quando as circunstâncias te colocam numa posição de esperar, seguir ou depender, algo por dentro resiste. Às vezes de forma agressiva que surpreende até você.</p><p><strong>Você não quer que te deem liberdade. Você quer não precisar pedir.</strong> Esse é o núcleo do que te move — e o ponto exato onde a maioria dos bloqueios acontece.</p>',
       2:'<p>O que move você por dentro é o desejo de harmonia, conexão e pertencimento real. Não de qualquer relação — de uma que te faça sentir completamente recebido, sem precisar se explicar.</p><p>A dor invisível: quando essa conexão não chega, você se fecha, se anula, ou faz mais do que deveria para manter o vínculo — e depois se ressente de ter feito isso.</p><p><strong>O ciclo que a Alma 2 repete:</strong> se doa para ser aceita, depois se perde no outro, depois se ressente de ter perdido a si mesma. Esse ciclo tem nome — e tem saída.</p>',
       3:'<p>O que move você por dentro é o desejo de se expressar e ser reconhecido pelo que você é — não pelo que você entrega, não pelo que você produz, mas pelo que você é em essência.</p><p>A dor invisível: quando esse reconhecimento não chega, você tende a performar versões de si mesmo para agradar — e nesse processo perde contato com o que realmente quer expressar.</p><p><strong>O que a Alma 3 mais carrega:</strong> a sensação de que, por baixo de toda a leveza e criatividade, há uma profundidade que ninguém nunca realmente quis ver.</p>',
@@ -4528,7 +4572,7 @@ fbq('track','PageView');
     };
 
     /* ── Textos de Ano Pessoal ── */
-    var ANO_TEXT={
+    var ANO_TEXT=(window.I18N&&window.I18N.numbers.ano)||{
       1:{nome:'Ano de Inauguração',luz:'Começos reais. Autonomia. A vida te convida a dar o primeiro passo — mesmo sem certeza de onde o segundo vai pousar.',sombra:'Impulsividade e isolamento por excesso de "eu faço sozinho". A urgência de começar pode fazer você pular etapas que vão cobrar preço depois.'},
       2:{nome:'Ano de Conexão',luz:'Paciência e receptividade. O que você plantou está germinando abaixo da terra. Este é o ano de cuidar, não de colher.',sombra:'Indecisão paralisante e hipersensibilidade. A impaciência com o processo pode fazer você abandonar algo que precisava de mais tempo.'},
       3:{nome:'Ano de Expressão',luz:'Criatividade, fluxo e reconhecimento. O que você é começa a aparecer. Portas sociais abertas, projetos decolam.',sombra:'Dispersão por excesso de oportunidades. Muitos começos, poucas conclusões. O risco de focar em brilhar e esquecer de construir.'},
@@ -4675,7 +4719,7 @@ fbq('track','PageView');
     }).join('');
 
     /* ── Taste box — personalizado com todos os números ── */
-    var tasteLines={
+    var tasteLines=(window.I18N&&window.I18N.numbers.tasteLines)||{
       1:'Parar de pedir permissão para ser quem você é. Começar a inaugurar sem esperar o cenário perfeito. Manter a liderança mesmo quando ninguém está validando — especialmente quando ninguém está validando.',
       2:'Parar de dizer "tudo bem" quando não está. Começar a verbalizar o que precisa antes de acumular ressentimento. Manter a sensibilidade sem deixar que ela se torne um ponto de colapso.',
       3:'Parar de abandonar antes da colheita. Começar a tolerar a fase de execução sem inventar uma razão criativa para sair. Manter o brilho mesmo quando o projeto exige o que parece repetição.',

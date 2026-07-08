@@ -6,6 +6,7 @@
 <title>Oferta Especial · Seu Numerólogo</title>
 <link rel="icon" type="image/png" href="/assets/logo.png"/>
 <link rel="apple-touch-icon" href="/assets/logo.png"/>
+<script src="/assets/i18n.js"></script>
 <style>
 :root{
   --bg:#04040C;--bg2:#09091A;--bg3:#0F0F20;
@@ -271,27 +272,33 @@ fbq('track','ViewContent',{content_name:'Sessão de Interpretação · Seu Numer
 </head>
 <body>
 <div class="bg-glow"></div>
+<style>.sn-lang-switch button.active{color:#D4B06A!important;border-color:rgba(212,176,106,.35)!important}.sn-lang-switch button:hover{color:#fff!important}</style>
+<div class="sn-lang-switch" id="snLangSwitch" aria-label="Idioma" style="position:fixed;top:10px;right:12px;z-index:200;display:flex;gap:2px;background:rgba(0,0,0,.6);backdrop-filter:blur(10px);border-radius:8px;padding:4px 6px">
+  <button type="button" data-lang="pt" style="background:none;border:1px solid transparent;color:#8a8070;font-size:.65rem;font-weight:700;letter-spacing:.04em;padding:4px 6px;border-radius:5px;cursor:pointer">PT</button>
+  <button type="button" data-lang="en" style="background:none;border:1px solid transparent;color:#8a8070;font-size:.65rem;font-weight:700;letter-spacing:.04em;padding:4px 6px;border-radius:5px;cursor:pointer">EN</button>
+  <button type="button" data-lang="es" style="background:none;border:1px solid transparent;color:#8a8070;font-size:.65rem;font-weight:700;letter-spacing:.04em;padding:4px 6px;border-radius:5px;cursor:pointer">ES</button>
+</div>
 <div class="wrap">
 
-  <div class="topbar"><div class="topbar-logo">Seu Numerólogo · Sistema Pitagórico Aplicado</div></div>
+  <div class="topbar"><div class="topbar-logo" data-i18n="ui.upsell.topbar">Seu Numerólogo · Sistema Pitagórico Aplicado</div></div>
 
   <!-- Urgency -->
   <div class="urgency-banner fade-in">
-    <span>⏳ Oferta disponível por</span>
+    <span data-i18n="ui.upsell.urgency1">⏳ Oferta disponível por</span>
     <span class="urgency-count" id="timerDisplay">15:00</span>
-    <span>· exclusiva para quem acabou de adquirir o mapa</span>
+    <span data-i18n="ui.upsell.urgency2">· exclusiva para quem acabou de adquirir o mapa</span>
   </div>
 
   <!-- Hero -->
   <div class="hero fade-in">
-    <div class="hero-eyebrow">Parabéns — seu mapa está sendo preparado</div>
-    <h1 class="hero-h1">Antes de acessá-lo,<br><em>assista esse vídeo de 3 minutos</em></h1>
-    <p class="hero-sub">Descobrimos algo no seu mapa que vai muito além do que você comprou. Assista antes de sair desta página.</p>
+    <div class="hero-eyebrow" data-i18n="ui.upsell.heroEyebrow">Parabéns — seu mapa está sendo preparado</div>
+    <h1 class="hero-h1" data-i18n-html="true" data-i18n="ui.upsell.heroH1">Antes de acessá-lo,<br><em>assista esse vídeo de 3 minutos</em></h1>
+    <p class="hero-sub" data-i18n="ui.upsell.heroSub">Descobrimos algo no seu mapa que vai muito além do que você comprou. Assista antes de sair desta página.</p>
   </div>
 
   <!-- VSL Player -->
   <div class="vsl-wrap fade-in">
-    <div class="vsl-label">▶ Assista antes de gerar seu mapa</div>
+    <div class="vsl-label" data-i18n="ui.upsell.vslLabel">▶ Assista antes de gerar seu mapa</div>
     <div class="vsl-container" id="vslContainer">
 
       <!-- YouTube player target (preenchido pelo IFrame API) -->
@@ -307,45 +314,45 @@ fbq('track','ViewContent',{content_name:'Sessão de Interpretação · Seu Numer
         </div>
         <button class="vsl-sound-btn" type="button">
           <span class="vsl-sound-icon">🔇</span>
-          <span class="vsl-sound-label-btn">Ativar som</span>
+          <span class="vsl-sound-label-btn" data-i18n="ui.upsell.ativarSom">Ativar som</span>
         </button>
-        <span class="vsl-sound-text">Clique para ativar o som</span>
+        <span class="vsl-sound-text" data-i18n="ui.upsell.cliqueAtivarSom">Clique para ativar o som</span>
       </div>
 
     </div>
-    <div class="vsl-hint">🔊 Vídeo curto e direto — não pule</div>
+    <div class="vsl-hint" data-i18n="ui.upsell.vslHint">🔊 Vídeo curto e direto — não pule</div>
   </div>
 
   <!-- Social proof -->
   <div class="proof-strip">
-    <div class="proof-item"><div class="proof-num">+830</div><div class="proof-label">consultas realizadas</div></div>
-    <div class="proof-item"><div class="proof-num">4.9★</div><div class="proof-label">avaliação média</div></div>
-    <div class="proof-item"><div class="proof-num">97%</div><div class="proof-label">recomendam</div></div>
-    <div class="proof-item"><div class="proof-num">7 dias</div><div class="proof-label">garantia total</div></div>
+    <div class="proof-item"><div class="proof-num">+830</div><div class="proof-label" data-i18n="ui.upsell.proofConsultas">consultas realizadas</div></div>
+    <div class="proof-item"><div class="proof-num">4.9★</div><div class="proof-label" data-i18n="ui.upsell.proofAvaliacao">avaliação média</div></div>
+    <div class="proof-item"><div class="proof-num">97%</div><div class="proof-label" data-i18n="ui.upsell.proofRecomendam">recomendam</div></div>
+    <div class="proof-item"><div class="proof-num">7 dias</div><div class="proof-label" data-i18n="ui.upsell.proofGarantia">garantia total</div></div>
   </div>
 
   <!-- Offer -->
   <div class="offer-section">
     <div class="offer-divider">
       <div class="offer-divider-line"></div>
-      <div class="offer-divider-txt">O que estou oferecendo</div>
+      <div class="offer-divider-txt" data-i18n="ui.upsell.offerDivider">O que estou oferecendo</div>
       <div class="offer-divider-line"></div>
     </div>
 
     <div class="offer-card">
       <div class="offer-head">
-        <div class="offer-tag">Upgrade exclusivo · só nesta página</div>
+        <div class="offer-tag" data-i18n="ui.upsell.offerTag">Upgrade exclusivo · só nesta página</div>
         <!-- ✏️ EDITE: nome e descrição da oferta -->
-        <div class="offer-name">Consulta ao Vivo · 60 minutos</div>
-        <div class="offer-desc">Uma sessão individual onde leio seu mapa junto com você — aprofundo os pontos mais críticos e respondo tudo que surgir, sem limite de perguntas.</div>
+        <div class="offer-name" data-i18n="ui.upsell.offerName">Consulta ao Vivo · 60 minutos</div>
+        <div class="offer-desc" data-i18n="ui.upsell.offerDesc">Uma sessão individual onde leio seu mapa junto com você — aprofundo os pontos mais críticos e respondo tudo que surgir, sem limite de perguntas.</div>
       </div>
       <div class="offer-items">
         <!-- ✏️ EDITE: itens da oferta -->
-        <div class="offer-item"><span class="offer-check">✦</span><div><strong>Leitura ao vivo do seu mapa completo</strong> — interpretação personalizada com foco no seu momento</div></div>
-        <div class="offer-item"><span class="offer-check">✦</span><div><strong>60 min sem limite de perguntas</strong> — todos os tópicos que você quiser explorar</div></div>
-        <div class="offer-item"><span class="offer-check">✦</span><div><strong>Plano de ação verbal</strong> — o que parar, começar e manter nos próximos 90 dias</div></div>
-        <div class="offer-item"><span class="offer-check">✦</span><div><strong>Gravação completa da sessão</strong> — acesso ao vídeo para rever quando precisar</div></div>
-        <div class="offer-item"><span class="offer-check">✦</span><div><strong>Agendamento prioritário</strong> — vagas com antecedência de até 7 dias</div></div>
+        <div class="offer-item"><span class="offer-check">✦</span><div data-i18n-html="true" data-i18n="ui.upsell.item1"><strong>Leitura ao vivo do seu mapa completo</strong> — interpretação personalizada com foco no seu momento</div></div>
+        <div class="offer-item"><span class="offer-check">✦</span><div data-i18n-html="true" data-i18n="ui.upsell.item2"><strong>60 min sem limite de perguntas</strong> — todos os tópicos que você quiser explorar</div></div>
+        <div class="offer-item"><span class="offer-check">✦</span><div data-i18n-html="true" data-i18n="ui.upsell.item3"><strong>Plano de ação verbal</strong> — o que parar, começar e manter nos próximos 90 dias</div></div>
+        <div class="offer-item"><span class="offer-check">✦</span><div data-i18n-html="true" data-i18n="ui.upsell.item4"><strong>Gravação completa da sessão</strong> — acesso ao vídeo para rever quando precisar</div></div>
+        <div class="offer-item"><span class="offer-check">✦</span><div data-i18n-html="true" data-i18n="ui.upsell.item5"><strong>Agendamento prioritário</strong> — vagas com antecedência de até 7 dias</div></div>
       </div>
       <div class="offer-price">
         <div>
@@ -353,7 +360,7 @@ fbq('track','ViewContent',{content_name:'Sessão de Interpretação · Seu Numer
           <div class="price-old">De R$ 297</div>
           <div class="price-new">R$ 97</div>
         </div>
-        <div class="price-note">valor único · sem recorrência<br>exclusivo nesta tela</div>
+        <div class="price-note" data-i18n-html="true" data-i18n="ui.upsell.priceNote">valor único · sem recorrência<br>exclusivo nesta tela</div>
       </div>
     </div>
   </div>
@@ -362,17 +369,17 @@ fbq('track','ViewContent',{content_name:'Sessão de Interpretação · Seu Numer
   <div class="testi-grid">
     <!-- ✏️ EDITE: depoimentos reais -->
     <div class="testi">
-      <div class="testi-text">"A consulta ao vivo foi outro nível. Coisas que eu não tinha entendido ficaram claras na hora. As orientações práticas mudaram minha rotina — e o mais impressionante é a precisão das análises."</div>
+      <div class="testi-text" data-i18n="ui.upsell.testi1Text">"A consulta ao vivo foi outro nível. Coisas que eu não tinha entendido ficaram claras na hora. As orientações práticas mudaram minha rotina — e o mais impressionante é a precisão das análises."</div>
       <div class="testi-footer">
         <div class="testi-av">MA</div>
-        <div><div class="testi-name">Mariana A.</div><div class="testi-meta">São Paulo · cliente verificada</div><div class="testi-stars">★★★★★</div></div>
+        <div><div class="testi-name">Mariana A.</div><div class="testi-meta" data-i18n="ui.upsell.testi1Meta">São Paulo · cliente verificada</div><div class="testi-stars">★★★★★</div></div>
       </div>
     </div>
     <div class="testi">
-      <div class="testi-text">"Comprei o mapa e já ia sair quando vi essa oferta. Decidi arriscar. Foi a melhor decisão — a sessão me ajudou a entender padrões que eu repetia há anos sem perceber."</div>
+      <div class="testi-text" data-i18n="ui.upsell.testi2Text">"Comprei o mapa e já ia sair quando vi essa oferta. Decidi arriscar. Foi a melhor decisão — a sessão me ajudou a entender padrões que eu repetia há anos sem perceber."</div>
       <div class="testi-footer">
         <div class="testi-av">RF</div>
-        <div><div class="testi-name">Ricardo F.</div><div class="testi-meta">Curitiba · cliente verificado</div><div class="testi-stars">★★★★★</div></div>
+        <div><div class="testi-name">Ricardo F.</div><div class="testi-meta" data-i18n="ui.upsell.testi2Meta">Curitiba · cliente verificado</div><div class="testi-stars">★★★★★</div></div>
       </div>
     </div>
   </div>
@@ -380,21 +387,21 @@ fbq('track','ViewContent',{content_name:'Sessão de Interpretação · Seu Numer
   <!-- CTA -->
   <div class="cta-block">
     <!-- ✏️ EDITE: href com o link de pagamento do upsell -->
-    <a class="cta-yes" id="btnYes" href="#" onclick="handleAccept(event)">
+    <a class="cta-yes" id="btnYes" href="#" onclick="handleAccept(event)" data-i18n="ui.upsell.ctaYes">
       ✦ Sim, quero a consulta ao vivo por R$ 97
     </a>
-    <button class="cta-no" onclick="handleDecline()">Não, obrigado — vou acessar só o mapa</button>
+    <button class="cta-no" onclick="handleDecline()" data-i18n="ui.upsell.ctaNo">Não, obrigado — vou acessar só o mapa</button>
     <div class="cta-trust">
-      <span>🔒 Pagamento seguro</span>
-      <span>⚡ Agendamento imediato</span>
-      <span>🛡️ Garantia de 7 dias</span>
+      <span data-i18n="ui.upsell.trust1">🔒 Pagamento seguro</span>
+      <span data-i18n="ui.upsell.trust2">⚡ Agendamento imediato</span>
+      <span data-i18n="ui.upsell.trust3">🛡️ Garantia de 7 dias</span>
     </div>
   </div>
 
   <!-- Guarantee -->
   <div class="guarantee">
     <div class="guarantee-icon">🛡️</div>
-    <div class="guarantee-text">
+    <div class="guarantee-text" data-i18n-html="true" data-i18n="ui.upsell.guaranteeText">
       <strong>Garantia incondicional de 7 dias</strong>
       Se por qualquer motivo a consulta não atender suas expectativas, devolvemos 100% — sem burocracia, sem perguntas.
     </div>
@@ -402,8 +409,8 @@ fbq('track','ViewContent',{content_name:'Sessão de Interpretação · Seu Numer
 
   <!-- Footer -->
   <div class="footer">
-    <div class="footer-logo">Seu Numerólogo · Sistema Pitagórico Aplicado</div>
-    <div class="footer-safe">🔒 Compra segura · Dados protegidos</div>
+    <div class="footer-logo" data-i18n="ui.upsell.footerLogo">Seu Numerólogo · Sistema Pitagórico Aplicado</div>
+    <div class="footer-safe" data-i18n="ui.upsell.footerSafe">🔒 Compra segura · Dados protegidos</div>
   </div>
 
 </div>

@@ -9,6 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+<script src="/assets/i18n.js"></script>
 
 <script>
 /* ════════════════════════════════════
@@ -650,23 +651,30 @@ try{localStorage.removeItem('sn_eid');localStorage.removeItem('sn_em');}catch(e)
 
 <div class="page">
 
+  <style>.sn-lang-switch button.active{color:#D4B06A!important;border-color:rgba(212,176,106,.35)!important}.sn-lang-switch button:hover{color:#fff!important}</style>
+  <div class="sn-lang-switch" id="snLangSwitch" aria-label="Idioma" style="position:fixed;top:10px;right:12px;z-index:200;display:flex;gap:2px;background:rgba(0,0,0,.6);backdrop-filter:blur(10px);border-radius:8px;padding:4px 6px">
+    <button type="button" data-lang="pt" style="background:none;border:1px solid transparent;color:#8a8070;font-family:'Poppins',sans-serif;font-size:.65rem;font-weight:700;letter-spacing:.04em;padding:4px 6px;border-radius:5px;cursor:pointer">PT</button>
+    <button type="button" data-lang="en" style="background:none;border:1px solid transparent;color:#8a8070;font-family:'Poppins',sans-serif;font-size:.65rem;font-weight:700;letter-spacing:.04em;padding:4px 6px;border-radius:5px;cursor:pointer">EN</button>
+    <button type="button" data-lang="es" style="background:none;border:1px solid transparent;color:#8a8070;font-family:'Poppins',sans-serif;font-size:.65rem;font-weight:700;letter-spacing:.04em;padding:4px 6px;border-radius:5px;cursor:pointer">ES</button>
+  </div>
+
   <!-- Confirmation bar -->
   <div class="confirm-bar">
-    Compra confirmada
-    <span>· O PDF chegará no seu e-mail em instantes</span>
+    <span data-i18n="ui.obrigado.confirmBar1">Compra confirmada</span>
+    <span data-i18n="ui.obrigado.confirmBar2">· O PDF chegará no seu e-mail em instantes</span>
   </div>
 
   <!-- Hero confirm -->
   <div class="hero-confirm reveal">
     <div class="wrap">
-      <div class="eyebrow">Seu Numerólogo</div>
-      <h1>Seu Mapa está<br><em>a caminho</em></h1>
-      <p class="sub">
+      <div class="eyebrow" data-i18n="ui.obrigado.eyebrow">Seu Numerólogo</div>
+      <h1 data-i18n-html="true" data-i18n="ui.obrigado.h1">Seu Mapa está<br><em>a caminho</em></h1>
+      <p class="sub" data-i18n-html="true" data-i18n="ui.obrigado.sub">
         Obrigado, <strong id="nomeUsuario">você</strong>. O seu Mapa Numerológico Pitagórico Aplicado foi gerado e está sendo enviado para o seu e-mail com todas as 12 análises em PDF.
       </p>
       <div class="email-badge">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><rect x="2" y="4" width="20" height="16" rx="2" stroke="#D4B06A" stroke-width="1.8"/><path d="M2 8l10 7 10-7" stroke="#D4B06A" stroke-width="1.8" stroke-linecap="round"/></svg>
-        Verifique sua caixa de entrada
+        <span data-i18n="ui.obrigado.checkInbox">Verifique sua caixa de entrada</span>
       </div>
     </div>
   </div>
@@ -674,14 +682,14 @@ try{localStorage.removeItem('sn_eid');localStorage.removeItem('sn_em');}catch(e)
   <!-- Divider -->
   <div class="divider reveal" style="transition-delay:.1s">
     <div class="divider-line"></div>
-    <div class="divider-ornament">✦ &nbsp; Antes de ir &nbsp; ✦</div>
+    <div class="divider-ornament" data-i18n="ui.obrigado.dividerText">✦ &nbsp; Antes de ir &nbsp; ✦</div>
     <div class="divider-line"></div>
   </div>
 
   <!-- Bridge -->
   <div class="bridge reveal" style="transition-delay:.15s">
-    <h2>Ter o mapa é o primeiro passo.<br>Saber <em>o que fazer com ele</em> é o que transforma.</h2>
-    <p>
+    <h2 data-i18n-html="true" data-i18n="ui.obrigado.bridgeH2">Ter o mapa é o primeiro passo.<br>Saber <em>o que fazer com ele</em> é o que transforma.</h2>
+    <p data-i18n="ui.obrigado.bridgeP">
       A maioria das pessoas lê o mapa, reconhece os padrões — e não sabe por onde começar a mudar.
       Rodrygo faz exatamente isso: pega o seu mapa e te mostra, ao vivo, o que é urgente, o que é ruído, e qual o próximo passo real.
     </p>
@@ -693,9 +701,9 @@ try{localStorage.removeItem('sn_eid');localStorage.removeItem('sn_em');}catch(e)
       <div class="rodrygo-inner">
         <div class="rodrygo-photo" id="rodrygoPic">R</div>
         <div class="rodrygo-info">
-          <div class="rodrygo-label">Quem vai ler seu mapa</div>
+          <div class="rodrygo-label" data-i18n="ui.obrigado.rodrygoLabel">Quem vai ler seu mapa</div>
           <div class="rodrygo-name">Rodrygo</div>
-          <div class="rodrygo-bio">
+          <div class="rodrygo-bio" data-i18n="ui.obrigado.rodrygoBio">
             Numerólogo especialista em NPA. Formado pela metodologia Pitagórica Aplicada, Rodrygo une profundidade sistêmica e clareza prática em cada leitura — sem esoterismo vago, sem respostas genéricas. Cada sessão é construída em cima do mapa real da pessoa.
           </div>
         </div>
@@ -703,15 +711,15 @@ try{localStorage.removeItem('sn_eid');localStorage.removeItem('sn_em');}catch(e)
       <div class="rodrygo-stats">
         <div class="rodrygo-stat">
           <span class="stat-num">830+</span>
-          <span class="stat-label">Sessões realizadas</span>
+          <span class="stat-label" data-i18n="ui.obrigado.statSessoes">Sessões realizadas</span>
         </div>
         <div class="rodrygo-stat">
           <span class="stat-num">97%</span>
-          <span class="stat-label">Satisfação</span>
+          <span class="stat-label" data-i18n="ui.obrigado.statSatisfacao">Satisfação</span>
         </div>
         <div class="rodrygo-stat">
           <span class="stat-num">4.9</span>
-          <span class="stat-label">Avaliação média</span>
+          <span class="stat-label" data-i18n="ui.obrigado.statAvaliacao">Avaliação média</span>
         </div>
       </div>
     </div>
@@ -721,59 +729,59 @@ try{localStorage.removeItem('sn_eid');localStorage.removeItem('sn_em');}catch(e)
   <div class="timer-bar reveal" style="transition-delay:.25s">
     <div class="timer-inner">
       <div class="timer-dot"></div>
-      <div class="timer-text">Esta oferta expira em <strong id="timerDisplay">15:00</strong></div>
+      <div class="timer-text"><span data-i18n="ui.obrigado.timerLabel">Esta oferta expira em</span> <strong id="timerDisplay">15:00</strong></div>
     </div>
   </div>
 
   <!-- Offer Card -->
   <div class="offer-section reveal" style="transition-delay:.3s">
     <div class="offer-card">
-      <div class="offer-tag">Oferta exclusiva</div>
+      <div class="offer-tag" data-i18n="ui.obrigado.offerTag">Oferta exclusiva</div>
       <div class="offer-head">
-        <div class="offer-kicker">Sessão Individual · 60 minutos</div>
-        <div class="offer-title">Interpretação ao Vivo do Seu Mapa com Rodrygo</div>
-        <div class="offer-sub">
+        <div class="offer-kicker" data-i18n="ui.obrigado.offerKicker">Sessão Individual · 60 minutos</div>
+        <div class="offer-title" data-i18n="ui.obrigado.offerTitle">Interpretação ao Vivo do Seu Mapa com Rodrygo</div>
+        <div class="offer-sub" data-i18n="ui.obrigado.offerSub">
           Uma sessão onde Rodrygo lê o seu mapa junto com você — aprofunda o que importa, revela os padrões que bloqueiam e constrói um direcionamento claro para os próximos ciclos.
         </div>
       </div>
       <div class="offer-includes">
-        <div class="offer-includes-title">O que está incluso</div>
+        <div class="offer-includes-title" data-i18n="ui.obrigado.includesTitle">O que está incluso</div>
         <div class="include-list">
           <div class="include-item">
             <div class="include-icon">✦</div>
-            <span>Leitura completa e personalizada do seu mapa ao vivo</span>
+            <span data-i18n="ui.obrigado.include1">Leitura completa e personalizada do seu mapa ao vivo</span>
           </div>
           <div class="include-item">
             <div class="include-icon">✦</div>
-            <span>Aprofundamento dos pontos críticos do seu momento atual</span>
+            <span data-i18n="ui.obrigado.include2">Aprofundamento dos pontos críticos do seu momento atual</span>
           </div>
           <div class="include-item">
             <div class="include-icon">✦</div>
-            <span>Plano de ação verbal — o que fazer nos próximos 90 dias</span>
+            <span data-i18n="ui.obrigado.include3">Plano de ação verbal — o que fazer nos próximos 90 dias</span>
           </div>
           <div class="include-item">
             <div class="include-icon">✦</div>
-            <span>Espaço aberto para perguntas — sem limite de temas</span>
+            <span data-i18n="ui.obrigado.include4">Espaço aberto para perguntas — sem limite de temas</span>
           </div>
           <div class="include-item">
             <div class="include-icon">✦</div>
-            <span>Gravação da sessão para rever quando quiser</span>
+            <span data-i18n="ui.obrigado.include5">Gravação da sessão para rever quando quiser</span>
           </div>
         </div>
       </div>
       <div class="offer-pricing">
         <div class="price-stack">
-          <span class="price-original">De R$ 250</span>
-          <span class="price-mid">Por R$ 150</span>
+          <span class="price-original" data-i18n="ui.obrigado.priceOriginal">De R$ 250</span>
+          <span class="price-mid" data-i18n="ui.obrigado.priceMid">Por R$ 150</span>
           <div class="price-final-wrap">
             <span class="price-currency">R$</span>
             <span class="price-value">100</span>
           </div>
         </div>
-        <div class="price-note">
+        <div class="price-note" data-i18n-html="true" data-i18n="ui.obrigado.priceNote">
           pagamento único<br>agendamento por WhatsApp
         </div>
-        <div class="price-reason">
+        <div class="price-reason" data-i18n-html="true" data-i18n="ui.obrigado.priceReason">
           Como você já tem o mapa em mãos, <span>a sessão vai direto ao ponto — sem tempo perdido.</span><br>
           Por isso o valor é este.
         </div>
@@ -785,10 +793,10 @@ try{localStorage.removeItem('sn_eid');localStorage.removeItem('sn_em');}catch(e)
   <div class="offer-section reveal" style="transition-delay:.35s">
     <div class="cta-section">
       <a href="#" id="btnUpsell" class="btn-upsell">
-        <span class="btn-upsell-title">Sim — quero a sessão com Rodrygo por R$ 100</span>
-        <span class="btn-upsell-sub">Clique para garantir sua vaga · oferta por tempo limitado</span>
+        <span class="btn-upsell-title" data-i18n="ui.obrigado.ctaTitle">Sim — quero a sessão com Rodrygo por R$ 100</span>
+        <span class="btn-upsell-sub" data-i18n="ui.obrigado.ctaSub">Clique para garantir sua vaga · oferta por tempo limitado</span>
       </a>
-      <button class="btn-decline" id="btnDecline">
+      <button class="btn-decline" id="btnDecline" data-i18n="ui.obrigado.declineBtn">
         Não, obrigado — vou explorar o mapa por conta própria
       </button>
     </div>
@@ -796,21 +804,21 @@ try{localStorage.removeItem('sn_eid');localStorage.removeItem('sn_em');}catch(e)
 
   <!-- Testimonials -->
   <div class="testi-section reveal" style="transition-delay:.4s">
-    <div class="testi-label">Quem já fez a sessão</div>
+    <div class="testi-label" data-i18n="ui.obrigado.testiLabel">Quem já fez a sessão</div>
     <div class="testi-grid">
       <div class="testi-card">
         <div class="testi-stars">★★★★★</div>
-        <div class="testi-text">
+        <div class="testi-text" data-i18n="ui.obrigado.testi1Text">
           "Eu já tinha lido o mapa sozinha e achei incrível. Mas a sessão com o Rodrygo foi outra coisa — ele apontou em 10 minutos um padrão que eu carrego há anos sem perceber. Saí com clareza real do que fazer."
         </div>
-        <div class="testi-author"><strong>Camila R.</strong> · São Paulo, SP</div>
+        <div class="testi-author" data-i18n-html="true" data-i18n="ui.obrigado.testi1Author"><strong>Camila R.</strong> · São Paulo, SP</div>
       </div>
       <div class="testi-card">
         <div class="testi-stars">★★★★★</div>
-        <div class="testi-text">
+        <div class="testi-text" data-i18n="ui.obrigado.testi2Text">
           "Fui cético no começo. Mas o Rodrygo não ficou em cima de generalidades — foi direto ao que estava me travando na carreira. A gravação eu assisti três vezes. Vale muito mais do que paguei."
         </div>
-        <div class="testi-author"><strong>Thiago M.</strong> · Belo Horizonte, MG</div>
+        <div class="testi-author" data-i18n-html="true" data-i18n="ui.obrigado.testi2Author"><strong>Thiago M.</strong> · Belo Horizonte, MG</div>
       </div>
     </div>
   </div>
@@ -820,13 +828,13 @@ try{localStorage.removeItem('sn_eid');localStorage.removeItem('sn_em');}catch(e)
     <div class="guarantee-card">
       <div class="guarantee-icon">◎</div>
       <div class="guarantee-text">
-        <h4>Garantia de 7 dias</h4>
-        <p>Se por qualquer motivo a sessão não atender suas expectativas, devolvemos 100% do valor. Sem burocracia, sem questionamentos.</p>
+        <h4 data-i18n="ui.obrigado.guaranteeH">Garantia de 7 dias</h4>
+        <p data-i18n="ui.obrigado.guaranteeP">Se por qualquer motivo a sessão não atender suas expectativas, devolvemos 100% do valor. Sem burocracia, sem questionamentos.</p>
       </div>
     </div>
   </div>
 
-  <footer>
+  <footer data-i18n="ui.obrigado.footer">
     Seu Numerólogo · Sistema Pitagórico Aplicado &nbsp;·&nbsp; mapa.seunumerologo.com.br
   </footer>
 
