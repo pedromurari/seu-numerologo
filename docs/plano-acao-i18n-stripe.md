@@ -1,45 +1,57 @@
 # Plano de Ação — Internacionalização (i18n) + Migração Stripe
 
-> Documento de referência do projeto "Seu Numerólogo". Última atualização: sessão de implementação da infraestrutura i18n (pt/en/es), commit `8b5ca31`.
+> Documento de referência do projeto "Seu Numerólogo". Última atualização: 2026-07-09, após sincronizar trabalho de duas sessões (infraestrutura i18n + persistência de idioma no lead) e uma varredura de saúde do banco/deploy.
+
+---
+
+## 0. ⚠️ Achado urgente — RLS desligado em `seu_numerologo_leads`
+
+Fora do escopo do i18n, mas achado durante uma checagem de segurança de rotina: a tabela `seu_numerologo_leads` tem **6 políticas de RLS configuradas** (`anon_insert_lead`, `anon_update_lead`, `auth_read_leads`, `auth_update_leads`, `service_read_all`, `service_update_all`) **mas o Row Level Security em si está desligado na tabela** (confirmado via `pg_class.relrowsecurity = false`). Isso significa que as políticas não têm efeito nenhum — o controle de acesso real depende só de permissões de tabela, não de linha.
+
+**Por que isso importa:** a chave anônima do Supabase fica exposta no código-fonte do site (`index.html`), como é esperado. Com RLS desligado, qualquer pessoa com essa chave (visível pra qualquer visitante) pode, em tese, consultar a tabela inteira via API REST do Supabase — nome, e-mail, WhatsApp e data de nascimento de **todos** os leads, não só o próprio.
+
+**Não foi corrigido ainda** porque ligar RLS sem testar com cuidado pode quebrar o insert/update anônimo que o formulário público depende (`_saveLead`). Precisa de uma sessão dedicada: ligar RLS, testar cada política contra o fluxo real do site (lead novo, atualização por e-mail, leitura autenticada), antes de considerar resolvido.
+
+**Prioridade:** tratar antes ou em paralelo à Fase 1, não depois — é dado de cliente exposto, não é sobre conversão.
 
 ---
 
 ## 1. Status atual — o que já está no ar
 
-### Infraestrutura i18n (Fase 1 — parcial)
+### Infraestrutura i18n (Fase 1 — em andamento)
 - **`locales/pt.json`** — schema completo de tradução extraído do código real via script (não retranscrito à mão): 19 dicionários por número (Caminho de Vida 1-9, 11, 22, 33), toda a UI estática das 3 páginas (`index.html`, `obrigado.html`, `upsell.html`) e os templates de WhatsApp/e-mail do backend. ~24-32 mil palavras.
-- **`assets/i18n.js`** — runtime que lê o cookie `sn_lang`, carrega `/locales/{lang}.json` e aplica em todo elemento `[data-i18n]` da página.
+- **`assets/i18n.js`** — runtime que lê o cookie `sn_lang` (com fallback em `localStorage` se o cookie não persistir), carrega `/locales/{lang}.json` e aplica em todo elemento `[data-i18n]` da página. Seletor manual (PT/EN/ES) com estado visual ativo, corrigido e testado.
 - **196 elementos tagueados** com `data-i18n` nas 3 páginas do funil.
 - Dicionários por número (`TITULOS`, `LEITURAS`, `PERSONA_TEXT`, `ALMA_TEXT`, `AIDA_HOOK`, etc.) convertidos de `const` pra `var` e repopulados a partir do JSON carregado — a lógica de cálculo numerológico não mudou em nada.
 - **`middleware.js`** — Vercel Edge Middleware detecta o país do visitante (header `x-vercel-ip-country`, grátis, populado automaticamente) e seta o cookie `sn_lang` na primeira visita.
-- **Seletor manual de idioma** (PT / EN / ES) nas 3 páginas, como opção de troca manual — sempre visível, sobrescreve a detecção automática.
 
-### O que isso significa na prática hoje
-O site funciona **exatamente igual a antes** — porque só existe `pt.json`. Nada muda visualmente até que `en.json` e `es.json` sejam criados (próximo passo). A infraestrutura está pronta e testada; falta o conteúdo traduzido.
+### Persistência de idioma (Fase 1 — completo)
+- **Coluna `language`** em `seu_numerologo_leads`: existe no arquivo de migration (`supabase/migrations/20260709_language_column.sql`) **e agora também aplicada de fato no banco** — `text NOT NULL DEFAULT 'pt'`, com `CHECK (language IN ('pt','en','es'))`. (Estava só no arquivo até esta sessão; sem isso, todo insert/update de lead com `language` estava quebrando silenciosamente contra o Postgres.)
+- **`index.html`**: `language` é gravado em todo estágio do lead — `lead`, `calculou`, `checkout` e no PATCH do `pdf_path`. Links de checkout recebem `lang` na query string.
+- **`supabase/functions/vega-webhook/index.ts`**: PIX pendente, WhatsApp de entrega e e-mail de boas-vindas (Resend) escolhem template real por idioma (`pt`/`en`/`es`, com conteúdo de verdade nos 3, não placeholder). `content_name` do Meta CAPI continua fixo em português — decisão certa, não pode variar por idioma sem fragmentar o histórico de otimização de campanha.
+- **Deploy da função**: estava desatualizada no Supabase (última versão de 30/06, antes do código com idioma existir) — **Supabase não faz deploy automático a partir do GitHub como a Vercel faz**, precisa de push explícito. Já foi implantada a versão atual (v21, ACTIVE) nesta sessão.
 
-### Sincronizado com o trabalho do Igor
-Nesta mesma sessão, foram puxadas e integradas 3 melhorias que o Igor subiu direto no repositório (fora desta sessão): a ferramenta standalone `/mapa-7-esferas` (formulário nome+data → PDF, sem estar linkada no funil principal), melhorias nas leituras do Número Psíquico, e um sumário (TOC) no PDF gerado. Tudo testado em conjunto com as mudanças de i18n — sem conflito.
+### O que ainda falta pra Fase 1 estar completa
+O site funciona **exatamente igual a antes visualmente** — porque só existe `pt.json`. Nada muda na tela até que `en.json` e `es.json` existam. Toda a infraestrutura (frontend + backend + banco) já está pronta e testada pra receber esse conteúdo assim que ele existir.
+
+### Sincronizado com outro trabalho em paralelo no mesmo repositório
+Nesta sessão foram identificados e integrados commits feitos fora desta conversa (mesma identidade Git configurada aqui, então provavelmente outra sessão sua/da equipe no mesmo repo):
+- A ferramenta standalone `/mapa-7-esferas` (formulário nome+data → PDF, sem estar linkada no funil principal).
+- Melhorias nas leituras do Número Psíquico + sumário (TOC) no PDF gerado.
+- A própria persistência de idioma descrita acima.
+
+Tudo testado em conjunto — sem conflito, sem regressão.
 
 ---
 
 ## 2. Próximos passos — Fase 1 (tradução)
 
-### Atualização implementada — 2026-07-09
-
-- **Seletor manual de idioma corrigido** em `assets/i18n.js`: grava `sn_lang` com `Path=/`, `Max-Age`, `SameSite=Lax`, `Secure` em HTTPS, mantém fallback em `localStorage` e atualiza o estado visual ativo antes do reload.
-- **Idioma capturado no lead** em `index.html`: o campo `language` agora acompanha `lead`, `calculou`, `checkout` e o PATCH do `pdf_path`; os links do checkout atual também recebem `lang` na query string.
-- **Migration adicionada** em `supabase/migrations/20260709_language_column.sql`: cria/normaliza `seu_numerologo_leads.language` com valores `pt`, `en`, `es`.
-- **Backend preparado por idioma** em `supabase/functions/vega-webhook/index.ts`: PIX pendente, WhatsApp de entrega e e-mail de boas-vindas escolhem template por `language` salvo no lead; `content_name` da CAPI continua fixo em português.
-- **Fase Stripe ainda não ativada**: o checkout Vega permanece em produção até existirem chaves Stripe, sandbox testado nos 3 idiomas e decisão final de moeda para espanhol.
-
 Ordem pensada pra reduzir risco (validar com 1 idioma antes de multiplicar por 2):
 
-1. **Corrigir o seletor manual de idioma** — hoje tem um bug onde o clique não está persistindo o cookie corretamente (em investigação quando a sessão foi interrompida). Baixo risco: enquanto não existem `en.json`/`es.json`, o botão não tem efeito visível mesmo funcionando 100%, mas precisa ser corrigido antes do lançamento real dos outros idiomas.
+1. **Resolver o RLS desligado** (seção 0) — prioridade antes de continuar, é exposição de dado de cliente.
 2. **Traduzir para inglês (`en.json`)** — as ~24-32 mil palavras de copy emocional/venda, mantendo o tom (não é tradução literal — numerologia tem nuance que tradução automática erra). Depois, testar o fluxo inteiro em inglês, **incluindo gerar um PDF de verdade** e inspecionar visualmente os pontos identificados como frágeis (títulos longos em posição fixa no PDF).
 3. **Traduzir para espanhol (`es.json`)** — mesmo processo.
-4. **Adicionar coluna `language`** na tabela `seu_numerologo_leads` (migration nova), capturada no momento em que o lead preenche o formulário.
-5. **Templates do backend por idioma** — o Edge Function que envia e-mail (Resend) e WhatsApp após a compra precisa ler `language` do lead e escolher o template certo (pt/en/es).
-6. **QA final** — os 3 idiomas, ponta a ponta: formulário, validação, PDF, e-mail, WhatsApp, e conferir que os eventos do Meta Pixel continuam com `content_name` fixo em português (não pode variar por idioma, senão quebra o histórico de otimização de campanha).
+4. **QA final** — os 3 idiomas, ponta a ponta: formulário, validação, PDF, e-mail, WhatsApp. Confirmar que um lead real criado em cada idioma recebe o template certo do `vega-webhook` (agora que a função está atualizada e a coluna existe, isso já pode ser testado de ponta a ponta).
 
 ## 3. Próximos passos — Fase 2 (Stripe)
 
@@ -60,9 +72,10 @@ O objetivo final não é só "ter o site em 3 idiomas" — é transformar o Mapa
 
 - **Um só código-fonte, não 3 sites paralelos.** Foi essa a razão de montar o sistema de dicionário/JSON em vez de duplicar `index.html` em 3 arquivos — qualquer melhoria de conversão feita (como o timer real, a reordenação da oferta, a capa do vídeo) se aplica automaticamente aos 3 idiomas ao mesmo tempo, sem retrabalho.
 - **Estrutura pronta pra crescer pra mais idiomas depois.** Alemão e francês foram cortados do escopo agora só por tempo/prioridade — a arquitetura (schema `/locales/*.json` + middleware por país) já suporta adicionar qualquer idioma novo sem mexer no HTML de novo, só traduzindo o conteúdo.
-- **Stripe como base pra expansão real, não só like um checkout alternativo.** Taxa menor (3,9-4,9% vs ~9% da Vega/Hotmart) e checkout que já localiza idioma/moeda sozinho — é o que destrava vender de verdade fora do Brasil, já que hoje mesmo com o site traduzido o cliente cairia num checkout em português na hora de pagar.
-- **A ferramenta `/mapa-7-esferas` do Igor** é um ativo separado e pode virar, no futuro, uma porta de entrada adicional (lead magnet standalone, sem depender do funil principal) — vale considerar se ela também deveria entrar no sistema de tradução quando a Fase 1 estiver madura.
+- **Stripe como base pra expansão real, não só um checkout alternativo.** Taxa menor (3,9-4,9% vs ~9% da Vega/Hotmart) e checkout que já localiza idioma/moeda sozinho — é o que destrava vender de verdade fora do Brasil, já que hoje mesmo com o site traduzido o cliente cairia num checkout em português na hora de pagar.
+- **A ferramenta `/mapa-7-esferas`** é um ativo separado e pode virar, no futuro, uma porta de entrada adicional (lead magnet standalone, sem depender do funil principal) — vale considerar se ela também deveria entrar no sistema de tradução quando a Fase 1 estiver madura.
 - **O canal de recuperação de leads por WhatsApp** (PDFs personalizados + copy, já montado numa sessão anterior pra leads que calcularam mas não compraram) é um processo que só existe hoje em português — quando o funil internacional estiver rodando, esse mesmo mecanismo deveria funcionar por idioma também.
-- **Aprendizados de conversão já validados nesta sessão** (oferta aparecer primeiro, timer real de contagem regressiva, capa de vídeo com frase de impacto, remover qualquer menção a "grátis" que competisse com o preço direto) devem ser tratados como o **padrão-base** pros novos idiomas — não como algo específico do português que precisa ser redescoberto depois em inglês/espanhol.
+- **Aprendizados de conversão já validados** (oferta aparecer primeiro, timer real de contagem regressiva, capa de vídeo com frase de impacto, remover qualquer menção a "grátis" que competisse com o preço direto) devem ser tratados como o **padrão-base** pros novos idiomas — não como algo específico do português que precisa ser redescoberto depois em inglês/espanhol.
+- **Higiene de infraestrutura como hábito, não exceção.** Esta sessão achou dois exemplos do mesmo padrão de risco: uma migration escrita mas nunca aplicada, e uma Edge Function com código novo no repo mas nunca reimplantada. Nenhum dos dois dá erro visível na hora — só quebra silenciosamente em produção. Vale o hábito de, a cada mudança de banco/função, confirmar que ela realmente rodou no ambiente vivo, não só que o arquivo existe no Git.
 
-Em resumo: a meta não é traduzir uma vitrine estática, é ter **um funil de vendas que se comporta de forma idêntica e testada em qualquer idioma**, com o mínimo de superfície de manutenção possível.
+Em resumo: a meta não é traduzir uma vitrine estática, é ter **um funil de vendas que se comporta de forma idêntica e testada em qualquer idioma**, com o mínimo de superfície de manutenção possível — e com os dados dos clientes genuinamente protegidos, não só com políticas escritas e nunca ativadas.
