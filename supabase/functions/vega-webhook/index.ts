@@ -166,21 +166,110 @@ async function sendEmailResend(opts: {
 
 // ── templates ─────────────────────────────────────────────────────────────────
 
-function wppBoasVindas(nome: string) {
-  const p = nome.trim().split(' ')[0] || 'você';
+type Lang = 'pt' | 'en' | 'es';
+
+function normalizeLang(value: unknown): Lang {
+  return value === 'en' || value === 'es' || value === 'pt' ? value : 'pt';
+}
+
+function firstName(nome: string, fallback: string) {
+  return nome.trim().split(' ')[0] || fallback;
+}
+
+function wppPixRegistrado(nome: string, lang: Lang) {
+  const p = firstName(nome, lang === 'en' ? 'there' : lang === 'es' ? 'ti' : 'você');
+  if (lang === 'en') {
+    return `Hi, ${p}! 👋\n\nYour *Applied Pythagorean Numerology Map* order was registered.\n\nHere is the PIX copy-and-paste code to confirm your access:`;
+  }
+  if (lang === 'es') {
+    return `Hola, ${p}! 👋\n\nTu pedido del *Mapa Numerológico Pitagórico Aplicado* fue registrado.\n\nAquí tienes el código PIX copia y pega para confirmar tu acceso:`;
+  }
+  return `Olá, ${p}! 👋\n\nSeu pedido do *Mapa Numerológico Pitagórico Aplicado* foi registrado.\n\nSegue o PIX copia e cola para confirmar seu acesso:`;
+}
+
+function wppPixInstrucao(lang: Lang) {
+  if (lang === 'en') return `Copy the code above and paste it into your banking app. ✅\n\nOnce the payment is confirmed, we will send your complete map here and by e-mail. 🔢`;
+  if (lang === 'es') return `Solo copia el código de arriba y pégalo en la app de tu banco. ✅\n\nCuando el pago sea confirmado, enviaremos tu mapa completo por aquí y por e-mail. 🔢`;
+  return `É só copiar o código acima e colar no app do seu banco. ✅\n\nAssim que o pagamento for confirmado, enviaremos seu mapa completo por aqui e por e-mail. 🔢`;
+}
+
+function wppBoasVindas(nome: string, lang: Lang) {
+  const p = firstName(nome, lang === 'en' ? 'there' : lang === 'es' ? 'ti' : 'você');
+  if (lang === 'en') {
+    return `Hi, ${p}! 🌟\n\nYour *Applied Pythagorean Numerology Map* has been confirmed! ✨\n\nWe have just sent your complete map to your e-mail, with all 12 personalized analyses in PDF.\n\n📧 Please check your inbox and spam folder, just in case.\n\nIf you need anything, reply here. We are with you! 🔢`;
+  }
+  if (lang === 'es') {
+    return `Hola, ${p}! 🌟\n\nTu *Mapa Numerológico Pitagórico Aplicado* fue confirmado! ✨\n\nAcabamos de enviar tu mapa completo a tu e-mail, con los 12 análisis personalizados en PDF.\n\n📧 Revisa tu bandeja de entrada y la carpeta de spam, por si acaso.\n\nCualquier duda, responde aquí. Estamos contigo! 🔢`;
+  }
   return `Olá, ${p}! 🌟\n\nSeu *Mapa Numerológico Pitagórico Aplicado* foi confirmado! ✨\n\nAcabamos de enviar o seu mapa completo para o seu e-mail — com todas as 12 análises personalizadas em PDF.\n\n📧 Verifique sua caixa de entrada (e o spam, por precaução).\n\nQualquer dúvida é só responder aqui. Estamos com você! 🔢`;
 }
 
-function emailBoasVindas(nome: string, temPdf: boolean): { subject: string; html: string; text: string } {
-  const p       = nome.trim().split(' ')[0] || 'você';
-  const subject = `✨ Seu Mapa Numerológico está aqui, ${p}!`;
+function emailBoasVindas(nome: string, temPdf: boolean, lang: Lang): { subject: string; html: string; text: string } {
+  const p = firstName(nome, lang === 'en' ? 'there' : lang === 'es' ? 'ti' : 'você');
+  const copy = {
+    pt: {
+      htmlLang: 'pt-BR',
+      subject: `✨ Seu Mapa Numerológico está aqui, ${p}!`,
+      logo: 'Seu Numerólogo',
+      title: 'Seu Mapa chegou ✨',
+      hello: `Olá, ${p}!`,
+      confirmed: 'Seu <strong style="color:#D4B06A">Mapa Numerológico Pitagórico Aplicado</strong> foi confirmado com sucesso.',
+      pdf: temPdf
+        ? 'Seu mapa completo está <strong style="color:#D4B06A">anexado a este e-mail</strong> em PDF — 12 análises personalizadas prontas para você explorar.'
+        : `Seu mapa está sendo finalizado e em breve você receberá outro e-mail com o PDF completo. Se precisar antes, acesse: <a href="${SITE_URL}" style="color:#D4B06A">${SITE_URL}</a>`,
+      badge1: '📄 Mapa Numerológico Completo · 12 Análises',
+      badge2: 'Alma · Imagem · Expressão · Talento · Psíquico · Destino',
+      badge3: 'Ciclos · Desafios · Direcionamento · Plano de Ação',
+      support: 'Se tiver qualquer dúvida ou precisar de suporte, responda este e-mail.',
+      signoff: 'Com gratidão,',
+      team: 'Equipe Seu Numerólogo',
+      footer: 'Seu Numerólogo · Sistema Pitagórico Sistêmico',
+      text: `Olá, ${p}!\n\nSeu Mapa Numerológico Pitagórico Aplicado foi confirmado.\n\n${temPdf ? 'O PDF completo está anexado a este e-mail.' : `Acesse: ${SITE_URL}`}\n\nEquipe Seu Numerólogo`,
+    },
+    en: {
+      htmlLang: 'en',
+      subject: `✨ Your Numerology Map is here, ${p}!`,
+      logo: 'Seu Numerólogo',
+      title: 'Your Map has arrived ✨',
+      hello: `Hi, ${p}!`,
+      confirmed: 'Your <strong style="color:#D4B06A">Applied Pythagorean Numerology Map</strong> has been confirmed.',
+      pdf: temPdf
+        ? 'Your complete map is <strong style="color:#D4B06A">attached to this e-mail</strong> as a PDF, with 12 personalized analyses ready for you to explore.'
+        : `Your map is being finalized and you will soon receive another e-mail with the full PDF. If you need it sooner, visit: <a href="${SITE_URL}" style="color:#D4B06A">${SITE_URL}</a>`,
+      badge1: '📄 Complete Numerology Map · 12 Analyses',
+      badge2: 'Soul · Image · Expression · Talent · Psychic · Destiny',
+      badge3: 'Cycles · Challenges · Direction · Action Plan',
+      support: 'If you have any questions or need support, reply to this e-mail.',
+      signoff: 'With gratitude,',
+      team: 'Seu Numerólogo Team',
+      footer: 'Seu Numerólogo · Systemic Pythagorean Method',
+      text: `Hi, ${p}!\n\nYour Applied Pythagorean Numerology Map has been confirmed.\n\n${temPdf ? 'The complete PDF is attached to this e-mail.' : `Visit: ${SITE_URL}`}\n\nSeu Numerólogo Team`,
+    },
+    es: {
+      htmlLang: 'es',
+      subject: `✨ Tu Mapa Numerológico está aquí, ${p}!`,
+      logo: 'Seu Numerólogo',
+      title: 'Tu Mapa llegó ✨',
+      hello: `Hola, ${p}!`,
+      confirmed: 'Tu <strong style="color:#D4B06A">Mapa Numerológico Pitagórico Aplicado</strong> fue confirmado con éxito.',
+      pdf: temPdf
+        ? 'Tu mapa completo está <strong style="color:#D4B06A">adjunto a este e-mail</strong> en PDF, con 12 análisis personalizados listos para explorar.'
+        : `Tu mapa está siendo finalizado y pronto recibirás otro e-mail con el PDF completo. Si lo necesitas antes, accede a: <a href="${SITE_URL}" style="color:#D4B06A">${SITE_URL}</a>`,
+      badge1: '📄 Mapa Numerológico Completo · 12 Análisis',
+      badge2: 'Alma · Imagen · Expresión · Talento · Psíquico · Destino',
+      badge3: 'Ciclos · Desafíos · Dirección · Plan de Acción',
+      support: 'Si tienes cualquier duda o necesitas soporte, responde este e-mail.',
+      signoff: 'Con gratitud,',
+      team: 'Equipo Seu Numerólogo',
+      footer: 'Seu Numerólogo · Sistema Pitagórico Sistémico',
+      text: `Hola, ${p}!\n\nTu Mapa Numerológico Pitagórico Aplicado fue confirmado.\n\n${temPdf ? 'El PDF completo está adjunto a este e-mail.' : `Accede a: ${SITE_URL}`}\n\nEquipo Seu Numerólogo`,
+    },
+  }[lang];
 
-  const pdfInfo = temPdf
-    ? `<p>Seu mapa completo está <strong style="color:#D4B06A">anexado a este e-mail</strong> em PDF — 12 análises personalizadas prontas para você explorar.</p>`
-    : `<p>Seu mapa está sendo finalizado e em breve você receberá outro e-mail com o PDF completo. Se precisar antes, acesse: <a href="${SITE_URL}" style="color:#D4B06A">${SITE_URL}</a></p>`;
+  const subject = copy.subject;
 
   const html = `<!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="${copy.htmlLang}">
 <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>${subject}</title>
 <style>
@@ -200,33 +289,31 @@ function emailBoasVindas(nome: string, temPdf: boolean): { subject: string; html
 <body>
 <div class="wrap">
   <div class="header">
-    <div class="logo">Seu Numerólogo</div>
-    <h1 class="title">Seu Mapa chegou ✨</h1>
+    <div class="logo">${copy.logo}</div>
+    <h1 class="title">${copy.title}</h1>
   </div>
   <div class="body">
-    <p>Olá, ${p}!</p>
-    <p>Seu <strong style="color:#D4B06A">Mapa Numerológico Pitagórico Aplicado</strong> foi confirmado com sucesso.</p>
-    ${pdfInfo}
+    <p>${copy.hello}</p>
+    <p>${copy.confirmed}</p>
+    <p>${copy.pdf}</p>
     <div class="badge">
-      📄 Mapa Numerológico Completo · 12 Análises<br>
-      Alma · Imagem · Expressão · Talento · Psíquico · Destino<br>
-      Ciclos · Desafios · Direcionamento · Plano de Ação
+      ${copy.badge1}<br>
+      ${copy.badge2}<br>
+      ${copy.badge3}
     </div>
     <div class="ornament">* * *</div>
-    <p>Se tiver qualquer dúvida ou precisar de suporte, responda este e-mail.</p>
-    <p style="font-size:13px;color:#706050">Com gratidão,<br><strong style="color:#D4B06A">Equipe Seu Numerólogo</strong></p>
+    <p>${copy.support}</p>
+    <p style="font-size:13px;color:#706050">${copy.signoff}<br><strong style="color:#D4B06A">${copy.team}</strong></p>
   </div>
   <div class="footer">
-    Seu Numerólogo · Sistema Pitagórico Sistêmico<br>
+    ${copy.footer}<br>
     <a href="${SITE_URL}" style="color:#6A5A40">${SITE_URL}</a>
   </div>
 </div>
 </body>
 </html>`;
 
-  const text = `Olá, ${p}!\n\nSeu Mapa Numerológico Pitagórico Aplicado foi confirmado.\n\n${temPdf ? 'O PDF completo está anexado a este e-mail.' : `Acesse: ${SITE_URL}`}\n\nEquipe Seu Numerólogo`;
-
-  return { subject, html, text };
+  return { subject, html, text: copy.text };
 }
 
 // ── processamento principal ───────────────────────────────────────────────────
@@ -259,16 +346,28 @@ async function process(body: Record<string, unknown>, eventType: string) {
     Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!,
   );
 
+  let lead: any = null;
+  let lang = normalizeLang((body as any)?.language ?? (body as any)?.metadata?.language);
+  if (email) {
+    const { data, error } = await db
+      .from('seu_numerologo_leads')
+      .select('pdf_path, fbc, fbp, id, language')
+      .eq('email', email)
+      .maybeSingle();
+    if (error) console.warn('select lead:', error.message);
+    lead = data;
+    lang = normalizeLang(lead?.language ?? lang);
+  }
+
   // ── sale_wait_payment: envia PIX ─────────────────────────────────────────
   if (eventType === 'sale_wait_payment') {
     if (!pixCode) { console.warn('pix_code ausente'); return; }
     if (!numero)  { console.warn('phone ausente');    return; }
-    const p = nome.trim().split(' ')[0] || 'você';
-    await sendWpp(numero, `Olá, ${p}! 👋\n\nSeu pedido do *Mapa Numerológico Pitagórico Aplicado* foi registrado.\n\nSegue o PIX copia e cola para confirmar seu acesso:`);
+    await sendWpp(numero, wppPixRegistrado(nome, lang));
     await sleep(2000);
     await sendWpp(numero, pixCode);
     await sleep(1500);
-    await sendWpp(numero, `É só copiar o código acima e colar no app do seu banco. ✅\n\nAssim que o pagamento for confirmado, enviaremos seu mapa completo por aqui e por e-mail. 🔢`);
+    await sendWpp(numero, wppPixInstrucao(lang));
     return;
   }
 
@@ -277,11 +376,6 @@ async function process(body: Record<string, unknown>, eventType: string) {
     // 1. Busca lead para obter pdf_path
     let pdfPath: string | null = null;
     if (email) {
-      const { data: lead } = await db
-        .from('seu_numerologo_leads')
-        .select('pdf_path, fbc, fbp, id')
-        .eq('email', email)
-        .maybeSingle();
       pdfPath = lead?.pdf_path ?? null;
 
       // Atualiza status
@@ -291,6 +385,7 @@ async function process(body: Record<string, unknown>, eventType: string) {
         status:   'pago',
         pago_at:  new Date().toISOString(),
         whatsapp: numero || undefined,
+        language: lang,
       }, { onConflict: 'email', ignoreDuplicates: false })
       .then(({ error }) => { if (error) console.warn('upsert lead:', error.message); });
     }
@@ -307,13 +402,13 @@ async function process(body: Record<string, unknown>, eventType: string) {
     // 3. Email com PDF anexo
     if (email) {
       const pdfFilename = `${(nome||'Mapa').replace(/[^a-zA-Z0-9]/g,'_')}_Mapa_Numerologico.pdf`;
-      const { subject, html, text } = emailBoasVindas(nome, !!pdfBase64);
+      const { subject, html, text } = emailBoasVindas(nome, !!pdfBase64, lang);
       await sendEmailResend({ to: email, to_name: nome, subject, html, text, pdfBase64, pdfFilename });
     }
 
     // 4. WPP
     if (numero) {
-      await sendWpp(numero, wppBoasVindas(nome));
+      await sendWpp(numero, wppBoasVindas(nome, lang));
     }
 
     // 5. CAPI Purchase (server-side — captura o que o pixel browser pode perder)

@@ -12,13 +12,19 @@
   function getLang() {
     var m = document.cookie.match(new RegExp('(?:^|; )' + COOKIE_NAME + '=([^;]+)'));
     var lang = m ? decodeURIComponent(m[1]) : null;
+    if (!lang) {
+      try { lang = window.localStorage.getItem(COOKIE_NAME); } catch (_) {}
+    }
     if (!lang || SUPPORTED.indexOf(lang) === -1) lang = DEFAULT_LANG;
     return lang;
   }
 
   function setLang(lang) {
     if (SUPPORTED.indexOf(lang) === -1) return;
-    document.cookie = COOKIE_NAME + '=' + lang + '; path=/; max-age=31536000';
+    var secure = window.location.protocol === 'https:' ? '; Secure' : '';
+    document.cookie = COOKIE_NAME + '=' + encodeURIComponent(lang) + '; Path=/; Max-Age=31536000; SameSite=Lax' + secure;
+    try { window.localStorage.setItem(COOKIE_NAME, lang); } catch (_) {}
+    updateLangSwitch(lang);
   }
 
   function get(obj, path) {
@@ -55,6 +61,12 @@
     if (data && data.meta && data.meta.code) document.documentElement.lang = data.meta.code;
   }
 
+  function updateLangSwitch(current) {
+    document.querySelectorAll('.sn-lang-switch button[data-lang]').forEach(function (btn) {
+      btn.classList.toggle('active', btn.getAttribute('data-lang') === current);
+    });
+  }
+
   var readyResolve;
   window.I18N_READY = new Promise(function (res) { readyResolve = res; });
   window.I18N = null;
@@ -86,7 +98,7 @@
   function wireLangSwitch() {
     var current = getLang();
     document.querySelectorAll('.sn-lang-switch button[data-lang]').forEach(function (btn) {
-      if (btn.getAttribute('data-lang') === current) btn.classList.add('active');
+      updateLangSwitch(current);
       btn.addEventListener('click', function () {
         var lang = btn.getAttribute('data-lang');
         if (lang === current) return;

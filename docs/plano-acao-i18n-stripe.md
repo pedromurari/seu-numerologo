@@ -24,6 +24,14 @@ Nesta mesma sessão, foram puxadas e integradas 3 melhorias que o Igor subiu dir
 
 ## 2. Próximos passos — Fase 1 (tradução)
 
+### Atualização implementada — 2026-07-09
+
+- **Seletor manual de idioma corrigido** em `assets/i18n.js`: grava `sn_lang` com `Path=/`, `Max-Age`, `SameSite=Lax`, `Secure` em HTTPS, mantém fallback em `localStorage` e atualiza o estado visual ativo antes do reload.
+- **Idioma capturado no lead** em `index.html`: o campo `language` agora acompanha `lead`, `calculou`, `checkout` e o PATCH do `pdf_path`; os links do checkout atual também recebem `lang` na query string.
+- **Migration adicionada** em `supabase/migrations/20260709_language_column.sql`: cria/normaliza `seu_numerologo_leads.language` com valores `pt`, `en`, `es`.
+- **Backend preparado por idioma** em `supabase/functions/vega-webhook/index.ts`: PIX pendente, WhatsApp de entrega e e-mail de boas-vindas escolhem template por `language` salvo no lead; `content_name` da CAPI continua fixo em português.
+- **Fase Stripe ainda não ativada**: o checkout Vega permanece em produção até existirem chaves Stripe, sandbox testado nos 3 idiomas e decisão final de moeda para espanhol.
+
 Ordem pensada pra reduzir risco (validar com 1 idioma antes de multiplicar por 2):
 
 1. **Corrigir o seletor manual de idioma** — hoje tem um bug onde o clique não está persistindo o cookie corretamente (em investigação quando a sessão foi interrompida). Baixo risco: enquanto não existem `en.json`/`es.json`, o botão não tem efeito visível mesmo funcionando 100%, mas precisa ser corrigido antes do lançamento real dos outros idiomas.

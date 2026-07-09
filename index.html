@@ -4782,7 +4782,7 @@ fbq('track','PageView');
       buyBtn.onclick=function(){
         if(window.fbq)fbq('track','InitiateCheckout',{content_name:'Mapa Numerológico Completo',currency:'BRL',value:47.60,num_items:1});
         var base='https://checkout.institutodespertamente.shop/VCCL1O8SD04H';
-        var params=new URLSearchParams({name:_nome,email:_email});
+        var params=new URLSearchParams({name:_nome,email:_email,lang:(window.SN_I18N&&window.SN_I18N.getLang?window.SN_I18N.getLang():'pt')});
         window.open(base+'?'+params.toString(),'_blank');
         if(window._markComprou)window._markComprou();
       };
@@ -4795,7 +4795,7 @@ fbq('track','PageView');
     if(resBtn)resBtn.onclick=function(){
       if(window.fbq)fbq('track','InitiateCheckout',{content_name:'Mapa Numerológico Completo',currency:'BRL',value:47.60,num_items:1});
       var base='https://checkout.institutodespertamente.shop/VCCL1O8SD04H';
-      var params=new URLSearchParams({name:_nome,email:_email});
+      var params=new URLSearchParams({name:_nome,email:_email,lang:(window.SN_I18N&&window.SN_I18N.getLang?window.SN_I18N.getLang():'pt')});
       window.open(base+'?'+params.toString(),'_blank');
       if(window._markComprou)window._markComprou();
     };
@@ -6072,6 +6072,10 @@ fbq('track','PageView');
   var _db=window.supabase.createClient(SUPA_URL,SUPA_KEY);
   var _leadId=null;
 
+  function currentLang(){
+    return (window.SN_I18N&&window.SN_I18N.getLang?window.SN_I18N.getLang():'pt');
+  }
+
   /* Salva lead assim que o formulário é enviado */
   window._saveLead=function(nome,email,dataNasc,destino,whatsapp){
     var sp=new URLSearchParams(location.search);
@@ -6080,6 +6084,7 @@ fbq('track','PageView');
       data_nascimento:dataNasc,
       destino:destino||null,
       whatsapp:whatsapp||null,
+      language:currentLang(),
       status:'lead',
       utm_source:sp.get('utm_source')||null,
       utm_medium:sp.get('utm_medium')||null,
@@ -6104,6 +6109,7 @@ fbq('track','PageView');
       expressao:d.expressao,talento:talento,
       psiquico:d.dia,destino:d.caminho,
       ano_pessoal:d.anoPessoal,
+      language:currentLang(),
       calculou_at:new Date().toISOString()
     };
     var q=_leadId
@@ -6123,6 +6129,7 @@ fbq('track','PageView');
       expressao:d.expressao,talento:talento,
       psiquico:d.dia,destino:d.caminho,
       ano_pessoal:d.anoPessoal,
+      language:currentLang(),
       comprou_at:new Date().toISOString()
     };
     var q=_leadId
@@ -6174,7 +6181,7 @@ fbq('track','PageView');
             'Content-Type':'application/json',
             'Prefer':'return=minimal'
           },
-          body:JSON.stringify({pdf_path:'mapa-pdfs/'+path})
+          body:JSON.stringify({pdf_path:'mapa-pdfs/'+path,language:(window.SN_I18N&&window.SN_I18N.getLang?window.SN_I18N.getLang():'pt')})
         }).catch(function(){});
       }
     }).catch(function(){});
