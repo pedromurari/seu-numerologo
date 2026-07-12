@@ -76,6 +76,8 @@ Ainda falta traduzir o bloco grande `numbers` — especialmente `numbers.leitura
 
 **Atenção — estado atual é "meio traduzido", não "parado":** com `en.json`/`es.json` do jeito que estão, se um visitante trocar pro inglês ou espanhol agora, o menu/formulário/oferta aparecem certinhos em inglês/espanhol, mas os cards de resultado (Personalidade, Alma, Ano Pessoal) e o PDF completo continuam em português — porque o runtime cai no fallback de `pt.json` quando a chave não existe (`numbers.persona`, `numbers.alma`, `numbers.aidaHook`, `numbers.ano`, `numbers.leituras` etc. ainda não existem em en/es). Isso é pior que não ter tradução nenhuma, porque mistura os dois idiomas na mesma tela. **Não ativar o seletor de idioma pro público até o bloco `numbers` estar completo nos 3 idiomas.**
 
+**Mitigação aplicada:** `assets/i18n.js` agora mantém apenas `pt` habilitado para o público (`PUBLIC_ENABLED = ['pt']`). Os botões EN/ES ficam ocultos/desabilitados e qualquer cookie `sn_lang=en/es` cai de volta para PT. Para QA interno dos arquivos parciais, usar `?i18n_preview=1`, que libera temporariamente os botões e o carregamento de `en.json`/`es.json`.
+
 ### Rodapé — crédito da agência (2026-07-12)
 Trocado "Desenvolvido por 11 Digital" por um crédito visual mais premium — pill com borda/gradiente dourado, ponto luminoso e link pra `onzedigitalstrategy.com.br` — em `index.html` e `mapa-7-esferas.html`. Sem relação com o roadmap de i18n/Stripe, só registro de mudança visual feita na mesma janela de trabalho.
 

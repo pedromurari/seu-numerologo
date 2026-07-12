@@ -8,6 +8,20 @@
   var SUPPORTED = ['pt', 'en', 'es'];
   var DEFAULT_LANG = 'pt';
   var COOKIE_NAME = 'sn_lang';
+  var PUBLIC_ENABLED = ['pt'];
+
+  function isPreviewMode() {
+    try {
+      var params = new URLSearchParams(window.location.search);
+      return params.get('i18n_preview') === '1';
+    } catch (_) {
+      return false;
+    }
+  }
+
+  function isPublicEnabled(lang) {
+    return PUBLIC_ENABLED.indexOf(lang) !== -1 || isPreviewMode();
+  }
 
   function getLang() {
     var m = document.cookie.match(new RegExp('(?:^|; )' + COOKIE_NAME + '=([^;]+)'));
@@ -15,12 +29,12 @@
     if (!lang) {
       try { lang = window.localStorage.getItem(COOKIE_NAME); } catch (_) {}
     }
-    if (!lang || SUPPORTED.indexOf(lang) === -1) lang = DEFAULT_LANG;
+    if (!lang || SUPPORTED.indexOf(lang) === -1 || !isPublicEnabled(lang)) lang = DEFAULT_LANG;
     return lang;
   }
 
   function setLang(lang) {
-    if (SUPPORTED.indexOf(lang) === -1) return;
+    if (SUPPORTED.indexOf(lang) === -1 || !isPublicEnabled(lang)) return;
     var secure = window.location.protocol === 'https:' ? '; Secure' : '';
     document.cookie = COOKIE_NAME + '=' + encodeURIComponent(lang) + '; Path=/; Max-Age=31536000; SameSite=Lax' + secure;
     try { window.localStorage.setItem(COOKIE_NAME, lang); } catch (_) {}
@@ -34,11 +48,12 @@
   }
 
   function loadLocale(lang) {
-    return fetch('/locales/' + lang + '.json').then(function (r) {
+    var targetLang = isPublicEnabled(lang) ? lang : DEFAULT_LANG;
+    return fetch('/locales/' + targetLang + '.json').then(function (r) {
       if (!r.ok) throw new Error('locale not found: ' + lang);
       return r.json();
     }).catch(function (err) {
-      if (lang !== DEFAULT_LANG) return loadLocale(DEFAULT_LANG);
+      if (targetLang !== DEFAULT_LANG) return loadLocale(DEFAULT_LANG);
       throw err;
     });
   }
@@ -63,7 +78,12 @@
 
   function updateLangSwitch(current) {
     document.querySelectorAll('.sn-lang-switch button[data-lang]').forEach(function (btn) {
-      btn.classList.toggle('active', btn.getAttribute('data-lang') === current);
+      var lang = btn.getAttribute('data-lang');
+      var enabled = isPublicEnabled(lang);
+      btn.classList.toggle('active', lang === current);
+      btn.disabled = !enabled;
+      btn.style.display = enabled ? '' : 'none';
+      btn.setAttribute('aria-disabled', enabled ? 'false' : 'true');
     });
   }
 
@@ -89,6 +109,8 @@
     setLang: setLang,
     loadLocale: loadLocale,
     applyTranslations: applyTranslations,
+    isPreviewMode: isPreviewMode,
+    PUBLIC_ENABLED: PUBLIC_ENABLED,
     SUPPORTED: SUPPORTED,
     init: init
   };
