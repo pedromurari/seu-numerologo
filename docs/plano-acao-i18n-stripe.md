@@ -1,6 +1,21 @@
 # Plano de Ação — Internacionalização (i18n) + Migração Stripe
 
-> Documento de referência do projeto "Seu Numerólogo". Última atualização: 2026-07-12. Nesta passada: verificado de forma independente (não só lido) que `en.json`/`es.json` existem com `ui`+`backend` completos mas `numbers` só parcial (faltando `leituras` e o resto do conteúdo pesado); confirmado que a Fase 2 (Stripe) segue 100% não iniciada (zero arquivo, zero referência no repo); e commitado o `locales/es.json`, que estava pronto no disco mas nunca tinha sido salvo no Git.
+> Documento de referência do projeto "Seu Numerólogo". Última atualização: 2026-07-12.
+
+---
+
+## Commits desta sessão (histórico rápido)
+
+| Commit | O que fez |
+|---|---|
+| `5101f6c` | Infraestrutura i18n — `locales/pt.json`, `assets/i18n.js`, 196 elementos `data-i18n` nas 3 páginas |
+| `85b8496` | Persistência de `language` no lead + templates pt/en/es no `vega-webhook` (código; migration e deploy da function ainda não tinham sido aplicados de fato) |
+| `309fed6` | Doc: registra achado do RLS desligado |
+| `f656dc8` | Corrige RLS — nova Edge Function `lead-event`, `index.html` para de escrever direto na tabela, migration de RLS aplicada |
+| `adcd83b` | Crédito do rodapé trocado por "Onze Digital Strategy" (visual premium) |
+| `f52af69` | Doc: registra tradução parcial en/es + commita `locales/es.json` que estava pendente |
+
+Nesta passada mais recente: confirmado que **tudo isso está sincronizado** (local = GitHub = site em produção), depois de um imprevisto onde o `git push` ficou travado por autenticação expirada do Git Credential Manager — resolvido rodando `git push` uma vez direto no terminal do Windows (fora desta sessão), o que renovou o cache de login.
 
 ---
 
@@ -74,14 +89,14 @@ Tudo testado em conjunto — sem conflito, sem regressão.
 
 ---
 
-## 2. Próximos passos — Fase 1 (tradução)
+## 2. O que falta — Fase 1 (tradução)
 
-Ordem pensada pra reduzir risco (validar com 1 idioma antes de multiplicar por 2):
+RLS já resolvido (seção 0). Ordem pensada pra reduzir risco (validar com 1 idioma antes de multiplicar por 2):
 
-1. **Resolver o RLS desligado** (seção 0) — prioridade antes de continuar, é exposição de dado de cliente.
-2. **Completar inglês (`en.json`)** — traduzir `numbers` inteiro, com foco em `numbers.leituras`, mantendo o tom (não é tradução literal — numerologia tem nuance que tradução automática erra). Depois, testar o fluxo inteiro em inglês, **incluindo gerar um PDF de verdade** e inspecionar visualmente os pontos identificados como frágeis (títulos longos em posição fixa no PDF).
-3. **Completar espanhol (`es.json`)** — mesmo processo para `numbers`.
-4. **QA final** — os 3 idiomas, ponta a ponta: formulário, validação, PDF, e-mail, WhatsApp. Confirmar que um lead real criado em cada idioma recebe o template certo do `vega-webhook` (agora que a função está atualizada e a coluna existe, isso já pode ser testado de ponta a ponta).
+1. **Completar inglês (`en.json`)** — traduzir o bloco `numbers` que falta: `leituras` (o maior, concentra o PDF completo), `persona`, `alma`, `aidaHook`, `ano`, `tasteLines`, `pinaculos`, `desafios`, `licoes`, `maturidade`, `equilibrio`, `ciclos`, `sequenceMap`, `colorHex`, `cores`. Manter o tom (não é tradução literal — numerologia tem nuance que tradução automática erra). Depois, testar o fluxo inteiro em inglês, **incluindo gerar um PDF de verdade** e inspecionar visualmente os pontos identificados como frágeis (títulos longos em posição fixa no PDF — os títulos já traduzidos em `en.json`/`es.json` mostram que alguns ficam bem mais longos que o português, ex. "The Architect of the Great Work").
+2. **Completar espanhol (`es.json`)** — mesmo bloco `numbers` que falta, mesmo processo.
+3. **QA final** — os 3 idiomas, ponta a ponta: formulário, validação, PDF, e-mail, WhatsApp. Confirmar que um lead real criado em cada idioma recebe o template certo do `vega-webhook`.
+4. **Só depois de 1-3: liberar o seletor de idioma pro público.** Hoje ele já existe na UI mas ativá-lo antes do `numbers` completo mistura português com inglês/espanhol na mesma tela (ver aviso na seção 1).
 
 ## 3. Próximos passos — Fase 2 (Stripe)
 
