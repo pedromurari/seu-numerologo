@@ -6065,21 +6065,36 @@ fbq('track','PageView');
 
 /* ── SUPABASE INTEGRATION ── */
 (function(){
-  if(!window.supabase)return;
-
   var SUPA_URL='https://usqiyekfmwwnvkmkdlej.supabase.co';
   var SUPA_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVzcWl5ZWtmbXd3bnZrbWtkbGVqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ1NTM5MTIsImV4cCI6MjA5MDEyOTkxMn0.HImguQINgMUvuetgIfDL3sr7KwhSWGoXvaNMKldxYmQ';
-  var _db=window.supabase.createClient(SUPA_URL,SUPA_KEY);
+  var LEAD_EVENT_URL=SUPA_URL+'/functions/v1/lead-event';
   var _leadId=null;
 
   function currentLang(){
     return (window.SN_I18N&&window.SN_I18N.getLang?window.SN_I18N.getLang():'pt');
   }
 
+  function postLeadEvent(action,payload){
+    payload=payload||{};
+    payload.action=action;
+    return fetch(LEAD_EVENT_URL,{
+      method:'POST',
+      headers:{
+        'Content-Type':'application/json',
+        'apikey':SUPA_KEY,
+        'Authorization':'Bearer '+SUPA_KEY
+      },
+      body:JSON.stringify(payload)
+    }).then(function(r){
+      if(!r.ok)throw new Error('lead-event '+r.status);
+      return r.json();
+    });
+  }
+
   /* Salva lead assim que o formulário é enviado */
   window._saveLead=function(nome,email,dataNasc,destino,whatsapp){
     var sp=new URLSearchParams(location.search);
-    _db.from('seu_numerologo_leads').upsert({
+    postLeadEvent('save_lead',{
       nome:nome,email:email,
       data_nascimento:dataNasc,
       destino:destino||null,
@@ -6092,9 +6107,8 @@ fbq('track','PageView');
       utm_content:sp.get('utm_content')||null,
       utm_term:sp.get('utm_term')||null,
       referrer:document.referrer||null
-    },{onConflict:'email',ignoreDuplicates:false})
-    .select('id').single()
-    .then(function(r){if(r.data)_leadId=r.data.id;})
+    })
+    .then(function(r){if(r&&r.id)_leadId=r.id;})
     .catch(function(){});
   };
 
@@ -6112,10 +6126,9 @@ fbq('track','PageView');
       language:currentLang(),
       calculou_at:new Date().toISOString()
     };
-    var q=_leadId
-      ?_db.from('seu_numerologo_leads').update(payload).eq('id',_leadId)
-      :_db.from('seu_numerologo_leads').update(payload).eq('email',window._email||'');
-    q.then(function(){}).catch(function(){});
+    if(_leadId)payload.id=_leadId;
+    else payload.email=window._email||'';
+    postLeadEvent('update_nums',payload).catch(function(){});
   };
 
   /* Atualiza lead com todos os números e status 'comprou' ao clicar em Comprar */
@@ -6132,10 +6145,16 @@ fbq('track','PageView');
       language:currentLang(),
       comprou_at:new Date().toISOString()
     };
-    var q=_leadId
-      ?_db.from('seu_numerologo_leads').update(payload).eq('id',_leadId)
-      :_db.from('seu_numerologo_leads').update(payload).eq('email',window._email||'');
-    return q.then(function(){}).catch(function(){});
+    if(_leadId)payload.id=_leadId;
+    else payload.email=window._email||'';
+    return postLeadEvent('checkout',payload).catch(function(){});
+  };
+
+  window._updateLeadPdfPath=function(path){
+    var payload={pdf_path:path,language:currentLang()};
+    if(_leadId)payload.id=_leadId;
+    else payload.email=window._email||'';
+    return postLeadEvent('pdf_path',payload).catch(function(){});
   };
 
 })();
@@ -6172,17 +6191,8 @@ fbq('track','PageView');
       body:blob
     }).then(function(r){
       if(r.ok){
-        // Atualiza lead com o caminho do PDF
-        fetch(SN_URL+'/rest/v1/seu_numerologo_leads?email=eq.'+encodeURIComponent(_email),{
-          method:'PATCH',
-          headers:{
-            'Authorization':'Bearer '+SN_KEY,
-            'apikey':SN_KEY,
-            'Content-Type':'application/json',
-            'Prefer':'return=minimal'
-          },
-          body:JSON.stringify({pdf_path:'mapa-pdfs/'+path,language:(window.SN_I18N&&window.SN_I18N.getLang?window.SN_I18N.getLang():'pt')})
-        }).catch(function(){});
+        // Atualiza lead com o caminho do PDF via Edge Function, sem expor a tabela no REST público.
+        if(window._updateLeadPdfPath)window._updateLeadPdfPath('mapa-pdfs/'+path);
       }
     }).catch(function(){});
   };

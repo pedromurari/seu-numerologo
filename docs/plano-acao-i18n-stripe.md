@@ -10,9 +10,27 @@ Fora do escopo do i18n, mas achado durante uma checagem de segurança de rotina:
 
 **Por que isso importa:** a chave anônima do Supabase fica exposta no código-fonte do site (`index.html`), como é esperado. Com RLS desligado, qualquer pessoa com essa chave (visível pra qualquer visitante) pode, em tese, consultar a tabela inteira via API REST do Supabase — nome, e-mail, WhatsApp e data de nascimento de **todos** os leads, não só o próprio.
 
-**Não foi corrigido ainda** porque ligar RLS sem testar com cuidado pode quebrar o insert/update anônimo que o formulário público depende (`_saveLead`). Precisa de uma sessão dedicada: ligar RLS, testar cada política contra o fluxo real do site (lead novo, atualização por e-mail, leitura autenticada), antes de considerar resolvido.
+**Corrigido em 2026-07-12.** A tabela agora está com RLS ligado, acesso direto de `anon`/`authenticated` revogado, e o formulário público grava leads via Edge Function `lead-event`, que usa `service_role` no servidor e não retorna dados sensíveis.
 
-**Prioridade:** tratar antes ou em paralelo à Fase 1, não depois — é dado de cliente exposto, não é sobre conversão.
+### Atualização — correção aplicada em produção
+
+Foi aplicada uma correção segura para não depender de escrita direta do navegador na tabela:
+
+- Nova Edge Function `supabase/functions/lead-event/index.ts` para receber eventos do funil (`save_lead`, `update_nums`, `checkout`, `pdf_path`) e gravar com `service_role` no servidor, sem retornar dados sensíveis.
+- `index.html` alterado para chamar `/functions/v1/lead-event` em vez de escrever direto em `seu_numerologo_leads` pelo REST público.
+- `supabase/config.toml` atualizado com `[functions.lead-event] verify_jwt = false`, pois o formulário público precisa invocar essa função.
+- Migration `supabase/migrations/20260709180551_enable_leads_rls.sql` criada para ativar RLS, remover policies antigas e revogar acesso direto de `anon`/`authenticated` à tabela.
+
+**Ordem executada para não quebrar leads:**
+
+1. CLI Supabase autenticada e projeto `usqiyekfmwwnvkmkdlej` linkado.
+2. `lead-event` deployada no Supabase com `--no-verify-jwt`.
+3. SQL da migration de RLS aplicado via `supabase db query --linked --file ...` porque `supabase db push` não pôde ser usado: o histórico remoto tem migrations antigas que não existem neste repo local.
+4. `lead-event` testada com lead fake: criação e atualização retornaram `{"ok":true}`.
+5. REST público de `seu_numerologo_leads` testado com anon key: antes respondia `206` com contagem; depois da correção responde `401 Unauthorized`.
+6. Grants diretos de `anon`/`authenticated` conferidos: nenhum grant restante na tabela.
+
+Com isso, o frontend alterado pode ser publicado com segurança: a captura de leads passa pela function em vez do REST direto.
 
 ---
 
