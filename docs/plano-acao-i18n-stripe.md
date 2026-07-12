@@ -64,19 +64,19 @@ Com isso, o frontend alterado pode ser publicado com segurança: a captura de le
 - **`supabase/functions/vega-webhook/index.ts`**: PIX pendente, WhatsApp de entrega e e-mail de boas-vindas (Resend) escolhem template real por idioma (`pt`/`en`/`es`, com conteúdo de verdade nos 3, não placeholder). `content_name` do Meta CAPI continua fixo em português — decisão certa, não pode variar por idioma sem fragmentar o histórico de otimização de campanha.
 - **Deploy da função**: estava desatualizada no Supabase (última versão de 30/06, antes do código com idioma existir) — **Supabase não faz deploy automático a partir do GitHub como a Vercel faz**, precisa de push explícito. Já foi implantada a versão atual (v21, ACTIVE) nesta sessão.
 
-### O que ainda falta pra Fase 1 estar completa
-O primeiro corte de tradução foi iniciado em 2026-07-12:
+### Tradução i18n — estado atual
+O primeiro corte de tradução foi iniciado em 2026-07-12 e o bloco grande `numbers` foi completado em seguida:
 
 - **`locales/en.json`** criado com `meta`, toda a `ui` das 3 páginas do funil e `backend` traduzidos para inglês.
 - **`locales/es.json`** criado com `meta`, toda a `ui` das 3 páginas do funil e `backend` traduzidos para espanhol.
-- Ambos já incluem rótulos curtos de `numbers` (`titulos`, `essencias`, `teaserTitulo`, `colorName`) e os grupos não linguísticos de cor (`cores`, `colorHex`), mantendo fallback para as leituras numerológicas longas sem quebrar o runtime.
-- Validação local: JSON parse OK, cobertura 100% das chaves de `ui` e `backend` contra `pt.json`, e HTTP local retornando `200` para `/locales/en.json` e `/locales/es.json`.
+- Ambos incluem agora o bloco completo `numbers`: `leituras`, `persona`, `alma`, `aidaHook`, `ano`, `tasteLines`, `pinaculos`, `desafios`, `licoes`, `maturidade`, `equilibrio`, `ciclos`, `sequenceMap`, rótulos curtos, cores e metadados.
+- Validação local: JSON parse OK, cobertura 100% das chaves de `numbers` contra `pt.json`, placeholders preservados (`{grau}`), e contagem estrutural de tags HTML preservada nos blocos longos de leitura.
 
-Ainda falta traduzir o bloco grande `numbers` — especialmente `numbers.leituras`, que concentra a maior parte do conteúdo do PDF e das leituras completas.
+As traduções longas foram geradas como primeiro corte operacional. Antes de liberar EN/ES para tráfego público, ainda falta QA visual/editorial: conferir tom, termos numerológicos, quebras no PDF e fluxo real de compra/entrega.
 
-**Atenção — estado atual é "meio traduzido", não "parado":** com `en.json`/`es.json` do jeito que estão, se um visitante trocar pro inglês ou espanhol agora, o menu/formulário/oferta aparecem certinhos em inglês/espanhol, mas os cards de resultado (Personalidade, Alma, Ano Pessoal) e o PDF completo continuam em português — porque o runtime cai no fallback de `pt.json` quando a chave não existe (`numbers.persona`, `numbers.alma`, `numbers.aidaHook`, `numbers.ano`, `numbers.leituras` etc. ainda não existem em en/es). Isso é pior que não ter tradução nenhuma, porque mistura os dois idiomas na mesma tela. **Não ativar o seletor de idioma pro público até o bloco `numbers` estar completo nos 3 idiomas.**
+**Atenção — estado atual é "traduzido em preview", não "liberado":** o risco anterior de misturar português com inglês/espanhol foi removido porque `numbers` agora está completo. Mesmo assim, **não ativar o seletor de idioma pro público até passar QA editorial/visual e gerar PDFs reais em EN/ES**, porque alguns títulos e parágrafos longos podem estourar layout.
 
-**Mitigação aplicada:** `assets/i18n.js` agora mantém apenas `pt` habilitado para o público (`PUBLIC_ENABLED = ['pt']`). Os botões EN/ES ficam ocultos/desabilitados e qualquer cookie `sn_lang=en/es` cai de volta para PT. Para QA interno dos arquivos parciais, usar `?i18n_preview=1`, que libera temporariamente os botões e o carregamento de `en.json`/`es.json`.
+**Mitigação aplicada:** `assets/i18n.js` agora mantém apenas `pt` habilitado para o público (`PUBLIC_ENABLED = ['pt']`). Os botões EN/ES ficam ocultos/desabilitados e qualquer cookie `sn_lang=en/es` cai de volta para PT. Para QA interno, usar `?i18n_preview=1`, que libera temporariamente os botões e o carregamento de `en.json`/`es.json`.
 
 ### Rodapé — crédito da agência (2026-07-12)
 Trocado "Desenvolvido por 11 Digital" por um crédito visual mais premium — pill com borda/gradiente dourado, ponto luminoso e link pra `onzedigitalstrategy.com.br` — em `index.html` e `mapa-7-esferas.html`. Sem relação com o roadmap de i18n/Stripe, só registro de mudança visual feita na mesma janela de trabalho.
@@ -95,10 +95,10 @@ Tudo testado em conjunto — sem conflito, sem regressão.
 
 RLS já resolvido (seção 0). Ordem pensada pra reduzir risco (validar com 1 idioma antes de multiplicar por 2):
 
-1. **Completar inglês (`en.json`)** — traduzir o bloco `numbers` que falta: `leituras` (o maior, concentra o PDF completo), `persona`, `alma`, `aidaHook`, `ano`, `tasteLines`, `pinaculos`, `desafios`, `licoes`, `maturidade`, `equilibrio`, `ciclos`, `sequenceMap`, `colorHex`, `cores`. Manter o tom (não é tradução literal — numerologia tem nuance que tradução automática erra). Depois, testar o fluxo inteiro em inglês, **incluindo gerar um PDF de verdade** e inspecionar visualmente os pontos identificados como frágeis (títulos longos em posição fixa no PDF — os títulos já traduzidos em `en.json`/`es.json` mostram que alguns ficam bem mais longos que o português, ex. "The Architect of the Great Work").
-2. **Completar espanhol (`es.json`)** — mesmo bloco `numbers` que falta, mesmo processo.
-3. **QA final** — os 3 idiomas, ponta a ponta: formulário, validação, PDF, e-mail, WhatsApp. Confirmar que um lead real criado em cada idioma recebe o template certo do `vega-webhook`.
-4. **Só depois de 1-3: liberar o seletor de idioma pro público.** Hoje ele já existe na UI mas ativá-lo antes do `numbers` completo mistura português com inglês/espanhol na mesma tela (ver aviso na seção 1).
+1. **QA visual/editorial do inglês (`en.json`)** — revisar tom numerológico, títulos longos e textos do PDF. Testar o fluxo inteiro em inglês, **incluindo gerar um PDF de verdade** e inspecionar visualmente os pontos frágeis.
+2. **QA visual/editorial do espanhol (`es.json`)** — mesmo processo: fluxo completo, PDF real, termos numerológicos e quebras de layout.
+3. **QA final de entrega** — os 3 idiomas, ponta a ponta: formulário, validação, PDF, e-mail, WhatsApp. Confirmar que um lead real criado em cada idioma recebe o template certo do `vega-webhook`.
+4. **Só depois de 1-3: liberar o seletor de idioma pro público.** Hoje ele já existe na UI, mas continua escondido até a revisão final.
 
 ## 3. Próximos passos — Fase 2 (Stripe)
 
