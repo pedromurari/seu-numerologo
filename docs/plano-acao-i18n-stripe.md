@@ -1,6 +1,6 @@
 # Plano de Ação — Internacionalização (i18n) + Migração Stripe
 
-> Documento de referência do projeto "Seu Numerólogo". Última atualização: 2026-07-09, após sincronizar trabalho de duas sessões (infraestrutura i18n + persistência de idioma no lead) e uma varredura de saúde do banco/deploy.
+> Documento de referência do projeto "Seu Numerólogo". Última atualização: 2026-07-12. Nesta passada: verificado de forma independente (não só lido) que `en.json`/`es.json` existem com `ui`+`backend` completos mas `numbers` só parcial (faltando `leituras` e o resto do conteúdo pesado); confirmado que a Fase 2 (Stripe) segue 100% não iniciada (zero arquivo, zero referência no repo); e commitado o `locales/es.json`, que estava pronto no disco mas nunca tinha sido salvo no Git.
 
 ---
 
@@ -50,7 +50,19 @@ Com isso, o frontend alterado pode ser publicado com segurança: a captura de le
 - **Deploy da função**: estava desatualizada no Supabase (última versão de 30/06, antes do código com idioma existir) — **Supabase não faz deploy automático a partir do GitHub como a Vercel faz**, precisa de push explícito. Já foi implantada a versão atual (v21, ACTIVE) nesta sessão.
 
 ### O que ainda falta pra Fase 1 estar completa
-O site funciona **exatamente igual a antes visualmente** — porque só existe `pt.json`. Nada muda na tela até que `en.json` e `es.json` existam. Toda a infraestrutura (frontend + backend + banco) já está pronta e testada pra receber esse conteúdo assim que ele existir.
+O primeiro corte de tradução foi iniciado em 2026-07-12:
+
+- **`locales/en.json`** criado com `meta`, toda a `ui` das 3 páginas do funil e `backend` traduzidos para inglês.
+- **`locales/es.json`** criado com `meta`, toda a `ui` das 3 páginas do funil e `backend` traduzidos para espanhol.
+- Ambos já incluem rótulos curtos de `numbers` (`titulos`, `essencias`, `teaserTitulo`, `colorName`) e mantêm fallback para as leituras numerológicas longas, sem quebrar o runtime.
+- Validação local: JSON parse OK, cobertura 100% das chaves de `ui` e `backend` contra `pt.json`, e HTTP local retornando `200` para `/locales/en.json` e `/locales/es.json`.
+
+Ainda falta traduzir o bloco grande `numbers` — especialmente `numbers.leituras`, que concentra a maior parte do conteúdo do PDF e das leituras completas.
+
+**Atenção — estado atual é "meio traduzido", não "parado":** com `en.json`/`es.json` do jeito que estão, se um visitante trocar pro inglês ou espanhol agora, o menu/formulário/oferta aparecem certinhos em inglês/espanhol, mas os cards de resultado (Personalidade, Alma, Ano Pessoal) e o PDF completo continuam em português — porque o runtime cai no fallback de `pt.json` quando a chave não existe (`numbers.persona`, `numbers.alma`, `numbers.aidaHook`, `numbers.ano`, `numbers.leituras` etc. ainda não existem em en/es). Isso é pior que não ter tradução nenhuma, porque mistura os dois idiomas na mesma tela. **Não ativar o seletor de idioma pro público até o bloco `numbers` estar completo nos 3 idiomas.**
+
+### Rodapé — crédito da agência (2026-07-12)
+Trocado "Desenvolvido por 11 Digital" por um crédito visual mais premium — pill com borda/gradiente dourado, ponto luminoso e link pra `onzedigitalstrategy.com.br` — em `index.html` e `mapa-7-esferas.html`. Sem relação com o roadmap de i18n/Stripe, só registro de mudança visual feita na mesma janela de trabalho.
 
 ### Sincronizado com outro trabalho em paralelo no mesmo repositório
 Nesta sessão foram identificados e integrados commits feitos fora desta conversa (mesma identidade Git configurada aqui, então provavelmente outra sessão sua/da equipe no mesmo repo):
@@ -67,13 +79,13 @@ Tudo testado em conjunto — sem conflito, sem regressão.
 Ordem pensada pra reduzir risco (validar com 1 idioma antes de multiplicar por 2):
 
 1. **Resolver o RLS desligado** (seção 0) — prioridade antes de continuar, é exposição de dado de cliente.
-2. **Traduzir para inglês (`en.json`)** — as ~24-32 mil palavras de copy emocional/venda, mantendo o tom (não é tradução literal — numerologia tem nuance que tradução automática erra). Depois, testar o fluxo inteiro em inglês, **incluindo gerar um PDF de verdade** e inspecionar visualmente os pontos identificados como frágeis (títulos longos em posição fixa no PDF).
-3. **Traduzir para espanhol (`es.json`)** — mesmo processo.
+2. **Completar inglês (`en.json`)** — traduzir `numbers` inteiro, com foco em `numbers.leituras`, mantendo o tom (não é tradução literal — numerologia tem nuance que tradução automática erra). Depois, testar o fluxo inteiro em inglês, **incluindo gerar um PDF de verdade** e inspecionar visualmente os pontos identificados como frágeis (títulos longos em posição fixa no PDF).
+3. **Completar espanhol (`es.json`)** — mesmo processo para `numbers`.
 4. **QA final** — os 3 idiomas, ponta a ponta: formulário, validação, PDF, e-mail, WhatsApp. Confirmar que um lead real criado em cada idioma recebe o template certo do `vega-webhook` (agora que a função está atualizada e a coluna existe, isso já pode ser testado de ponta a ponta).
 
 ## 3. Próximos passos — Fase 2 (Stripe)
 
-Só começa depois da Fase 1 validada em produção.
+Só começa depois da Fase 1 validada em produção. **Status: não iniciada** — confirmado em 2026-07-12, zero arquivo/referência a Stripe no repositório ainda.
 
 1. Você cria/configura a conta Stripe (CPF ou CNPJ + dados bancários) e me passa as chaves de API (publicável + secreta) como variável de ambiente no Supabase — mesmo padrão que já usamos pro Resend e Meta CAPI.
 2. Criar Edge Function `create-checkout-session` — recebe nome/e-mail/idioma do visitante, cria uma Stripe Checkout Session já no idioma e moeda certos (pt→BRL, en→USD, es→USD ou EUR a decidir), devolve o link.
