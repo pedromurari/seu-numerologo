@@ -72,7 +72,13 @@ O primeiro corte de tradução foi iniciado em 2026-07-12 e o bloco grande `numb
 - Ambos incluem agora o bloco completo `numbers`: `leituras`, `persona`, `alma`, `aidaHook`, `ano`, `tasteLines`, `pinaculos`, `desafios`, `licoes`, `maturidade`, `equilibrio`, `ciclos`, `sequenceMap`, rótulos curtos, cores e metadados.
 - Validação local: JSON parse OK, cobertura 100% das chaves de `numbers` contra `pt.json`, placeholders preservados (`{grau}`), e contagem estrutural de tags HTML preservada nos blocos longos de leitura.
 
-As traduções longas foram geradas como primeiro corte operacional. Antes de liberar EN/ES para tráfego público, ainda falta QA visual/editorial: conferir tom, termos numerológicos, quebras no PDF e fluxo real de compra/entrega.
+As traduções longas foram geradas como primeiro corte operacional, via script (`scripts/translate-numbers.mjs` + `scripts/repair-number-html-translations.mjs`) chamando o endpoint não-oficial do Google Translate (`translate.googleapis.com`), sem revisão humana/editorial. Antes de liberar EN/ES para tráfego público, ainda falta QA visual/editorial: conferir tom, termos numerológicos, quebras no PDF e fluxo real de compra/entrega.
+
+**Bug corrigido (2026-07-12, sessão de revisão) — `numbers.aidaHook.{N}.insight`, os 12 números centrais (1,2,3,4,5,6,7,8,9,11,22,33):** o script de tradução preservava tags HTML traduzindo os fragmentos de texto ao redor de `<strong>` isoladamente, o que quebrou a gramática nas duas línguas nesse campo específico (é o gancho de persuasão mostrado na página de resultado, então é visível e de alto impacto).
+- **EN corrigido:** todos os 12 insights agora começam com a construção correta, ex. `"The **Life Path 1** is not about ambition..."`.
+- **ES corrigido:** todos os 12 insights agora usam `"Camino de Vida N"` e frase natural, ex. `"El **Camino de Vida 1** no se trata de ambición..."`.
+- Também foram corrigidos vazamentos terminológicos encontrados na mesma varredura: `Alma` dentro do inglês, `Soul`/`Life Path`/`Personal Year`/`Pinnacles` dentro do espanhol.
+- Validação pós-correção: JSON parse OK, cobertura `numbers` 376/376 em EN e ES, placeholders preservados, tags/atributos HTML idênticos aos do `pt.json`, sem `?` corrompido no meio de palavras/frases e sem vazamento dos termos acima.
 
 **Atenção — estado atual é "traduzido em preview", não "liberado":** o risco anterior de misturar português com inglês/espanhol foi removido porque `numbers` agora está completo. Mesmo assim, **não ativar o seletor de idioma pro público até passar QA editorial/visual e gerar PDFs reais em EN/ES**, porque alguns títulos e parágrafos longos podem estourar layout.
 
