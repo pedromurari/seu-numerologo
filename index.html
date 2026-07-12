@@ -2544,7 +2544,27 @@ fbq('track','PageView');
     flex-wrap:wrap;gap:10px;
   }
   .lp-footer-copy{font-size:.72rem;color:var(--muted2)}
-  
+  .lp-footer-credit{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:.72rem;color:var(--muted2);text-decoration:none;
+    padding:7px 14px;border-radius:999px;
+    border:1px solid rgba(208,94,42,.16);
+    background:linear-gradient(135deg,rgba(208,94,42,.05),rgba(208,94,42,.01));
+    transition:border-color .25s ease,background .25s ease,color .25s ease;
+  }
+  .lp-footer-credit:hover{
+    color:var(--text2,#c9c2b4);
+    border-color:rgba(208,94,42,.4);
+    background:linear-gradient(135deg,rgba(208,94,42,.1),rgba(208,94,42,.03));
+  }
+  .lp-footer-credit-dot{
+    width:5px;height:5px;border-radius:50%;flex-shrink:0;
+    background:var(--amber);box-shadow:0 0 8px rgba(208,94,42,.65);
+  }
+  .lp-footer-credit strong{color:var(--amber);font-weight:600}
+  .lp-footer-credit-group{opacity:.65;font-size:.66rem;letter-spacing:.02em}
+  @media(max-width:480px){.lp-footer-credit{font-size:.68rem;padding:6px 12px}}
+
   /* ═══════════════════════════════════════════════════
      DESIGN SYSTEM OVERRIDE — Codex Pitagórico
      Direção: manuscrito sagrado + precisão editorial
@@ -3714,7 +3734,10 @@ fbq('track','PageView');
     </div>
     <div class="lp-footer-bottom">
       <span class="lp-footer-copy" data-i18n="ui.index.footer.copy">© 2026 Seu Numerólogo · Todos os direitos reservados</span>
-      <span class="lp-footer-copy" data-i18n="ui.index.footer.dev">Desenvolvido por 11 Digital</span>
+      <a class="lp-footer-credit" href="https://www.onzedigitalstrategy.com.br/" target="_blank" rel="noopener">
+        <span class="lp-footer-credit-dot"></span>
+        <span data-i18n-html="true" data-i18n="ui.index.footer.dev">Desenvolvido com carinho pela <strong>Onze Digital Strategy</strong> <span class="lp-footer-credit-group">· Grupo Despertamente</span></span>
+      </a>
     </div>
   </footer>
 
