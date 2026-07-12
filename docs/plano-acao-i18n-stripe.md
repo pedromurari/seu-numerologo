@@ -69,7 +69,7 @@ O primeiro corte de tradução foi iniciado em 2026-07-12:
 
 - **`locales/en.json`** criado com `meta`, toda a `ui` das 3 páginas do funil e `backend` traduzidos para inglês.
 - **`locales/es.json`** criado com `meta`, toda a `ui` das 3 páginas do funil e `backend` traduzidos para espanhol.
-- Ambos já incluem rótulos curtos de `numbers` (`titulos`, `essencias`, `teaserTitulo`, `colorName`) e mantêm fallback para as leituras numerológicas longas, sem quebrar o runtime.
+- Ambos já incluem rótulos curtos de `numbers` (`titulos`, `essencias`, `teaserTitulo`, `colorName`) e os grupos não linguísticos de cor (`cores`, `colorHex`), mantendo fallback para as leituras numerológicas longas sem quebrar o runtime.
 - Validação local: JSON parse OK, cobertura 100% das chaves de `ui` e `backend` contra `pt.json`, e HTTP local retornando `200` para `/locales/en.json` e `/locales/es.json`.
 
 Ainda falta traduzir o bloco grande `numbers` — especialmente `numbers.leituras`, que concentra a maior parte do conteúdo do PDF e das leituras completas.
