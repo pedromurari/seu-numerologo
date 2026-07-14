@@ -4124,7 +4124,7 @@ fbq('track','PageView');
   }
   // P1=dia+mes, P2=mes+ano, P3=P1+P2, P4=dia+ano (fórmula NPA verificada)
   function calcPinaculos(date){const dia=reduzir(somarDigitos(String(date.dia)));const mes=reduzir(somarDigitos(String(date.mes)));const ano=reduzir(somarDigitos(String(date.ano)));const p1=reduzir(dia+mes);const p2=reduzir(mes+ano);const p3=reduzir(p1+p2);const p4=reduzir(dia+ano);return[p1,p2,p3,p4]}
-  function calcPeriodosPinaculos(caminho,anoNasc){const durP1=36-(MESTRES.has(caminho)?reduzirSimples(caminho):caminho);const ini1=anoNasc,fim1=anoNasc+durP1-1;const ini2=fim1+1,fim2=ini2+8;const ini3=fim2+1,fim3=ini3+8;const ini4=fim3+1;return[{ini:ini1,fim:fim1,label:`${ini1}–${fim1}`},{ini:ini2,fim:fim2,label:`${ini2}–${fim2}`},{ini:ini3,fim:fim3,label:`${ini3}–${fim3}`},{ini:ini4,fim:null,label:`${ini4} em diante`}]}
+  function calcPeriodosPinaculos(caminho,anoNasc){const durP1=36-(MESTRES.has(caminho)?reduzirSimples(caminho):caminho);const ini1=anoNasc,fim1=anoNasc+durP1-1;const ini2=fim1+1,fim2=ini2+8;const ini3=fim2+1,fim3=ini3+8;const ini4=fim3+1;return[{ini:ini1,fim:fim1,label:`${ini1}–${fim1}`},{ini:ini2,fim:fim2,label:`${ini2}–${fim2}`},{ini:ini3,fim:fim3,label:`${ini3}–${fim3}`},{ini:ini4,fim:null,label:mapCopyTpl('labels','yearOnward',{year:ini4})}]}
   function calcDesafios(date){const dia=reduzirSimples(somarDigitos(String(date.dia)));const mes=reduzirSimples(somarDigitos(String(date.mes)));const ano=reduzirSimples(somarDigitos(String(date.ano)));const d1=Math.abs(dia-mes),d2=Math.abs(ano-dia);const d3=Math.abs(d2-d1),d4=Math.abs(ano-mes);return[d1,d2,d3,d4]}
   function calcLicoesKarmicas(nome){const s=limpar(nome).replace(/\s/g,'');const presentes=new Set([...s].map(c=>TAB[c]).filter(Boolean));const ausentes=[];for(let i=1;i<=9;i++){if(!presentes.has(i))ausentes.push(i);}return ausentes}
   function calcMaturidade(caminho,expressao){return reduzir(caminho+expressao)}
@@ -4134,9 +4134,17 @@ fbq('track','PageView');
   /* ── PIRÂMIDE ── */
   function calcPiramide(nome){const letrasValidas=[...limpar(nome).replace(/\s/g,'')].filter(c=>TAB[c]);if(letrasValidas.length<2)return null;const linhaBase=letrasValidas.map(c=>TAB[c]);const linhas=[linhaBase];let atual=linhaBase;while(atual.length>1){const prox=[];for(let i=0;i<atual.length-1;i++){prox.push(reduzirSimples(atual[i]+atual[i+1]));}linhas.push(prox);atual=prox;}return{linhas,letras:letrasValidas}}
   function detectarSequencias(linhas){const encontradas=[];linhas.forEach((linha,li)=>{let i=0;while(i<linha.length){let j=i;while(j<linha.length&&linha[j]===linha[i])j++;if(j-i>=3)encontradas.push({num:linha[i],tamanho:j-i,linhaIdx:li});i=j;}});return encontradas}
-  function interpretarSequencia(n,tam){const grau=tam>=5?'Concentração extrema e dominante':tam===4?'Forte concentração':'Concentração significativa';const map={1:`${grau} da energia do 1. Você pode apresentar um impulso quase compulsivo de controle, dificuldade real de delegar e uma tendência ao isolamento disfarçado de autonomia. O excesso de 1 na pirâmide sugere um padrão de auto-dependência que, quando não conscientizado, cria solidão — não liberdade.`,2:`${grau} da energia do 2. Hipersensibilidade emocional que pode resultar em indecisão paralisante e uma dependência afetiva que você nem sempre reconhece em si mesmo. O excesso de 2 exige trabalho consciente com limites e com a capacidade de se posicionar sem culpa.`,3:`${grau} da energia do 3. Dispersão criativa intensa: muitos projetos iniciados, poucos finalizados. Uma tendência à superficialidade relacional — muitos conhecidos, poucos vínculos de profundidade real. O brilho do 3 em excesso pode mascarar um vazio interior que a leveza temporariamente esconde.`,4:`${grau} da energia do 4. Rigidez mental e resistência intensa à mudança. Perfeccionismo que se torna armadilha — a busca pelo controle total pode paralisar completamente a ação. O excesso de 4 sugere dificuldade em soltar, em confiar no processo sem necessidade de previsão absoluta.`,5:`${grau} da energia do 5. Instabilidade crônica que se disfarça de liberdade. Dificuldade real de comprometimento — não apenas em relacionamentos, mas com projetos, lugares e versões de si mesmo. O excesso de 5 pode criar uma vida acelerada mas vazia: muita experiência, pouca profundidade.`,6:`${grau} da energia do 6. Tendência ao martírio emocional — cuidar dos outros como forma de evitar cuidar de si. Sobrecarga de responsabilidade afetiva que acaba gerando ressentimento acumulado. O excesso de 6 pede que você reveja o que é amor genuíno e o que é necessidade de ser necessário.`,7:`${grau} da energia do 7. Isolamento que se aprofunda em desconfiança crônica. Dificuldade real de conexão emocional — não por frieza, mas por um medo profundo de ser mal compreendido. O excesso de 7 pode criar uma vida intelectualmente rica e emocionalmente solitária.`,8:`${grau} da energia do 8. Obsessão por controle, resultados e poder que pode consumir relacionamentos e saúde. Uma confusão fundamental entre o que você vale e o que você possui ou conquista. O excesso de 8 exige trabalho de desapego e de reconhecimento do próprio valor além dos resultados.`,9:`${grau} da energia do 9. Dificuldade severa em encerrar ciclos — apego ao passado que se disfarça de lealdade ou compaixão. Uma tendência a sacrificar a própria identidade em nome de uma causa ou pessoa. O excesso de 9 pede que você aprenda a diferença entre servir e se dissolver.`};return map[n]||'Energia amplificada que exige atenção consciente e trabalho de equilíbrio.'}
+  function interpretarSequencia(n,tam){
+    var key=tam>=5?'extreme':(tam===4?'strong':'significant');
+    var grau=mapCopy('sequenceGrade',key)||key;
+    var seq=(window.I18N&&window.I18N.numbers&&window.I18N.numbers.sequenceMap&&(window.I18N.numbers.sequenceMap[n]||window.I18N.numbers.sequenceMap[String(n)]))||'';
+    if(seq)return String(seq).replace(/\{grau\}/g,grau);
+    if(mapLang()==='en')return grau+' of the energy of '+n+'. This repetition indicates a pattern that asks for conscious balance.';
+    if(mapLang()==='es')return grau+' de la energia del '+n+'. Esta repeticion indica un patron que pide equilibrio consciente.';
+    return grau+' da energia do '+n+'. Essa repeticao indica um padrao que pede equilibrio consciente.';
+  }
 
-  function renderPiramide(nome){const resultado=calcPiramide(nome);if(!resultado)return '<p style="color:var(--muted)">Nome insuficiente para calcular a pirâmide.</p>';const{linhas,letras}=resultado;const seqCells=new Set();linhas.forEach((linha,li)=>{let i=0;while(i<linha.length){let j=i;while(j<linha.length&&linha[j]===linha[i])j++;if(j-i>=3){for(let k=i;k<j;k++)seqCells.add(`${li}-${k}`);}i=j;}});const numLinhas=linhas.length;let html='<div class="pyramidWrap"><div class="pyramidFlex">';html+='<div class="pyrRow letterRow">';letras.forEach(l=>{html+=`<div class="pyrCell pyrLetter">${l}</div>`;});html+='</div>';linhas.forEach((linha,li)=>{html+='<div class="pyrRow">';linha.forEach((n,ci)=>{const isApex=li===numLinhas-1&&ci===0;const isSeq=seqCells.has(`${li}-${ci}`);let cls='pyrCell';if(isApex)cls+=' apex';else if(isSeq)cls+=' seq';html+=`<div class="${cls}">${n}</div>`;});html+='</div>';});html+='</div></div>';html+=`<p class="pyrCaption">Pirâmide pitagórica · ${letras.length} letras · ${numLinhas} níveis · Ápice: ${linhas[numLinhas-1][0]}</p>`;const sequencias=detectarSequencias(linhas);if(sequencias.length){const msgs=sequencias.map(s=>`<div class="seqItem"><span class="seqNum">${String(s.num).repeat(s.tamanho)}</span> <span class="seqDesc">${interpretarSequencia(s.num,s.tamanho)}</span></div>`).join('');html+=`<div class="seqAlert"><div class="seqAlertTitle">⚠ Sequências de energia detectadas</div><p class="seqAlertSub">Repetição de três ou mais números idênticos consecutivos indica energia em alta concentração — um padrão que amplifica tanto os dons quanto as sombras daquele número.</p>${msgs}</div>`;}return html}
+  function renderPiramide(nome){const resultado=calcPiramide(nome);if(!resultado)return '<p style="color:var(--muted)">'+mapUi('pyramidFallback')+'</p>';const{linhas,letras}=resultado;const seqCells=new Set();linhas.forEach((linha,li)=>{let i=0;while(i<linha.length){let j=i;while(j<linha.length&&linha[j]===linha[i])j++;if(j-i>=3){for(let k=i;k<j;k++)seqCells.add(`${li}-${k}`);}i=j;}});const numLinhas=linhas.length;let html='<div class="pyramidWrap"><div class="pyramidFlex">';html+='<div class="pyrRow letterRow">';letras.forEach(l=>{html+=`<div class="pyrCell pyrLetter">${l}</div>`;});html+='</div>';linhas.forEach((linha,li)=>{html+='<div class="pyrRow">';linha.forEach((n,ci)=>{const isApex=li===numLinhas-1&&ci===0;const isSeq=seqCells.has(`${li}-${ci}`);let cls='pyrCell';if(isApex)cls+=' apex';else if(isSeq)cls+=' seq';html+=`<div class="${cls}">${n}</div>`;});html+='</div>';});html+='</div></div>';html+=`<p class="pyrCaption">${mapTpl('pyramidCaption',{letters:letras.length,levels:numLinhas,apex:linhas[numLinhas-1][0]})}</p>`;const sequencias=detectarSequencias(linhas);if(sequencias.length){const msgs=sequencias.map(s=>`<div class="seqItem"><span class="seqNum">${String(s.num).repeat(s.tamanho)}</span> <span class="seqDesc">${interpretarSequencia(s.num,s.tamanho)}</span></div>`).join('');html+=`<div class="seqAlert"><div class="seqAlertTitle">${mapUi('sequenceTitle')}</div><p class="seqAlertSub">${mapUi('sequenceSub')}</p>${msgs}</div>`;}return html}
 
   /* ── TÍTULOS & ESSÊNCIAS ── */
   var TITULOS={1:'O Pioneiro',2:'A Ponte do Vínculo',3:'A Voz que Ilumina',4:'O Arquiteto do Real',5:'O Mensageiro Livre',6:'O Guardião do Amor',7:'O Eremita Sagrado',8:'A Autoridade da Matéria',9:'O Mestre da Entrega',11:'O Canal da Luz',22:'O Arquiteto da Grande Obra',33:'A Compaixão Mestra'};
@@ -4265,6 +4273,13 @@ fbq('track','PageView');
 
   /* ── RESUMO PSICOLÓGICO ── */
   function gerarResumoPsicologico(nums){
+    /* i18n dynamic summary */
+    if(mapLang()!=='pt'){
+      const caminho=nums['Caminho de Vida'].val,expressao=nums['Express\u00e3o'].val,alma=nums['Alma'].val,personalidade=nums['Personalidade'].val;
+      const vars={caminho,expressao,alma,personalidade,essC:ESSENCIAS[caminho]||'',essE:ESSENCIAS[expressao]||'',essA:ESSENCIAS[alma]||'',essP:ESSENCIAS[personalidade]||''};
+      return mapCopyTpl('summary','p1',vars)+mapCopyTpl('summary','p2',vars)+mapCopyTpl('summary','p3',vars);
+    }
+
     const caminho=nums['Caminho de Vida'].val,expressao=nums['Expressão'].val,alma=nums['Alma'].val,personalidade=nums['Personalidade'].val;
     const essC=ESSENCIAS[caminho]||'',essE=ESSENCIAS[expressao]||'',essA=ESSENCIAS[alma]||'',essP=ESSENCIAS[personalidade]||'';
     return`<p>Seu mapa pitagórico revela uma configuração de alta complexidade. No núcleo, seu <strong>Caminho de Vida ${caminho}</strong> define a direção fundamental: ${essC} Mas essa missão não se desdobra no vácuo — ela se manifesta através da sua <strong>Expressão ${expressao}</strong>, que carrega em si: ${essE}</p><p>O que move você por dentro — o combustível invisível de todas as suas escolhas — é revelado pela sua <strong>Alma ${alma}</strong>: ${essA} E a forma como o mundo te lê antes de te conhecer é moldada pela sua <strong>Personalidade ${personalidade}</strong>: ${essP}</p><p>A interação entre esses quatro números cria o padrão central do seu funcionamento: onde há reforço mútuo entre eles, você age com naturalidade e força. Onde há tensão, surgem os conflitos internos mais característicos — aqueles que você já reconheceu em si mesmo e provavelmente não sabia nomear. As próximas seções vão nomeá-los com precisão.</p>`;
@@ -4272,6 +4287,19 @@ fbq('track','PageView');
 
   /* ── INTERPRETAÇÃO SISTÊMICA ── */
   function gerarSistemica(nums){
+    /* i18n dynamic systemic */
+    if(mapLang()!=='pt'){
+      const vals=Object.values(nums).map(v=>v.val);
+      const caminho=nums['Caminho de Vida'].val,expressao=nums['Express\u00e3o'].val,alma=nums['Alma'].val,personalidade=nums['Personalidade'].val;
+      const insights=[];
+      if(caminho===expressao)insights.push({type:mapCopy('labels','lifePath')+' = '+mapCopy('labels','expression'),text:mapCopyTpl('systemic','samePathExpression',{n:caminho})});
+      if(alma===personalidade)insights.push({type:mapCopy('labels','soul')+' = '+mapCopy('labels','personality'),text:mapCopyTpl('systemic','sameSoulPersonality',{n:alma})});
+      const contagem={}; vals.forEach(v=>{contagem[v]=(contagem[v]||0)+1;});
+      Object.entries(contagem).forEach(([n,c])=>{if(c>=3)insights.push({type:'Dominant concentration - '+n,text:mapCopyTpl('systemic','dominant',{n,count:c})});});
+      if(!insights.length)insights.push({type:mapUi('systemicInterpretation'),text:mapCopy('systemic','fallback')});
+      return insights.map(i=>'<div class="sistemicaCard"><span class="sistemicaType">'+i.type+'</span><div class="sistemicaText">'+i.text+'</div></div>').join('');
+    }
+
     const vals=Object.values(nums).map(v=>v.val);
     const caminho=nums['Caminho de Vida'].val,expressao=nums['Expressão'].val,alma=nums['Alma'].val,personalidade=nums['Personalidade'].val;
     const insights=[];
@@ -4291,6 +4319,20 @@ fbq('track','PageView');
 
   /* ── PADRÕES DE AUTOSSABOTAGEM ── */
   function gerarSabotagem(nums,desafios){
+    /* i18n dynamic sabotage */
+    if(mapLang()!=='pt'){
+      const caminho=nums['Caminho de Vida'].val,expressao=nums['Express\u00e3o'].val,desafioPrincipal=desafios[2];
+      const aida=AIDA_HOOK[caminho]||{};
+      const expr=AIDA_HOOK[expressao]||{};
+      const desafio=DESAFIOS_LEITURAS[desafioPrincipal]||'';
+      const items=[
+        {icon:'*',label:mapCopy('sabotage','life'),text:aida.pattern||aida.sabotage||mapCopy('sabotage','fallback')},
+        {icon:'*',label:mapCopy('sabotage','expression'),text:expr.sabotage||expr.pattern||mapCopy('sabotage','fallback')},
+        {icon:'*',label:mapCopy('sabotage','challenge'),text:desafio||mapCopy('sabotage','fallback')}
+      ];
+      return items.map(i=>'<div class="sabotaItem"><span class="sabotaIcon">'+i.icon+'</span><div class="sabotaText"><strong>'+i.label+'</strong> '+i.text+'</div></div>').join('');
+    }
+
     const caminho=nums['Caminho de Vida'].val,expressao=nums['Expressão'].val,desafioPrincipal=desafios[2];
     const mapa={1:{icon:'⚡',txt:`<strong>O padrão do "eu faço sozinho":</strong> Você recusa ajuda antes que ela seja oferecida, rejeita colaboração por medo de perder controle e frequentemente se sobrecarrega desnecessariamente. Esse padrão se manifesta especialmente em momentos de pressão — quando é exatamente quando mais precisaria de suporte, você fecha as portas.`},2:{icon:'🌊',txt:`<strong>O padrão do "tudo bem" que não está:</strong> Você diz que está bem quando não está, cede em situações onde não deveria e acumula ressentimento silencioso que eventualmente explode. O gatilho é sempre algum momento em que o outro não percebe o que você precisava que fosse percebido.`},3:{icon:'🌪️',txt:`<strong>O padrão da dispersão disfarçada de criatividade:</strong> Você começa projetos com entusiasmo genuíno e os abandona antes da colheita, sempre com uma justificativa criativa. O que está por baixo frequentemente é o medo do julgamento que vem quando algo está pronto — enquanto está em processo, não pode ser criticado.`},4:{icon:'🔒',txt:`<strong>O padrão do controle que bloqueia o movimento:</strong> Você perfecciona tanto antes de lançar que nunca lança. Ou você insiste no plano original mesmo quando a evidência pede adaptação. O medo de fazer errado é tão intenso que às vezes fazer nada se torna a escolha padrão.`},5:{icon:'🏃',txt:`<strong>O padrão da fuga para o próximo começo:</strong> Quando uma situação começa a pedir aprofundamento real, você cria inconscientemente um gatilho para sair. Nova oportunidade, conflito magnificado, perda de interesse súbita. O que está por baixo é frequentemente o medo da profundidade.`},6:{icon:'💔',txt:`<strong>O padrão do martírio que gera ressentimento:</strong> Você faz mais do que deveria, não pede o que precisa, e depois ressente quem não percebeu que você estava sobrecarregado. O ciclo se repete porque o padrão real — dificuldade de pedir diretamente — raramente é nomeado.`},7:{icon:'🚪',txt:`<strong>O padrão do isolamento preventivo:</strong> Antes de ser mal compreendido, você se afasta. Antes de ser decepcionado, você reduz as expectativas ao mínimo. Isso protege — mas também impede as conexões que poderiam ser exatamente o que você mais precisa.`},8:{icon:'🎯',txt:`<strong>O padrão da autossabotagem no momento do sucesso:</strong> Quando o resultado está próximo — quando tudo está funcionando — você inconscientemente cria um problema que o impede de chegar lá. O que está por baixo é frequentemente o medo de ser visto no sucesso — e de perder o sucesso depois.`},9:{icon:'⚓',txt:`<strong>O padrão do apego ao ciclo encerrado:</strong> Você mantém vivas relações, situações e versões de si mesmo que já cumpriram seu papel — não por necessidade atual, mas por medo do vazio que vem depois. Isso impede o movimento natural da vida.`},11:{icon:'⚡',txt:`<strong>O padrão da dúvida que paralisa o dom:</strong> Você percebe com clareza extraordinária — e depois passa horas ou dias questionando se o que percebeu é real. Essa oscilação entre percepção aguçada e autodoubt profundo é o padrão mais característico do 11.`},22:{icon:'🏗️',txt:`<strong>O padrão da grandiosidade que paralisa o início:</strong> A visão é tão grande que o primeiro passo parece insuficiente — então você continua planejando, refinando, esperando a condição perfeita. A obra que existe apenas na cabeça não serve ao mundo. Começar imperfeito é parte do método.`},33:{icon:'❤️',txt:`<strong>O padrão do amor que se esgota ao dar:</strong> Você oferece de um lugar de plenitude — e depois percebe que está vazio sem ter percebido o momento exato em que a plenitude virou obrigação. O gatilho é quase sempre a sensação de que o outro não percebeu quanto você deu.`}};
     const items=[];[caminho,expressao,desafioPrincipal].forEach(n=>{if(mapa[n]&&!items.some(i=>i.n===n))items.push({n,...mapa[n]});});
@@ -4299,6 +4341,12 @@ fbq('track','PageView');
 
   /* ── DIRECIONAMENTO ── */
   function gerarDirecionamento(caminho){
+    /* i18n dynamic direction */
+    if(mapLang()!=='pt'){
+      const ess=ESSENCIAS[caminho]||'';
+      return '<div class="direcGrid"><div class="direcCard"><span class="direcTitle">'+mapCopy('labels','naturalAdvantage')+'</span><div class="direcText">'+mapCopyTpl('direction','adv',{n:caminho,ess})+'</div></div><div class="direcCard"><span class="direcTitle">'+mapCopy('labels','tendsToLose')+'</span><div class="direcText">'+mapCopyTpl('direction','lose',{n:caminho,ess})+'</div></div></div>';
+    }
+
     const vantagens={1:'Você tem vantagem natural em posições de liderança que exigem iniciativa, em empreendimentos próprios onde a autonomia é real e em ambientes de criação de algo novo — negócios, projetos, movimentos. Você performa melhor quando tem autoridade real, não apenas título.',2:'Você tem vantagem natural em papéis que envolvem mediação, parceria, relações humanas e bastidores estratégicos. Consultoria, terapia, gestão de relacionamentos, negociação e qualquer papel onde a sensibilidade ao outro é um ativo são seus terrenos férteis.',3:'Você tem vantagem natural em comunicação, criação de conteúdo, educação, entretenimento, marketing e qualquer área onde a capacidade de tornar o complexo acessível e inspirador é o diferencial.',4:'Você tem vantagem natural em áreas que exigem método, confiabilidade e capacidade de entregar o que promete. Gestão de projetos, contabilidade, arquitetura, engenharia, processos e qualquer área onde a consistência é o maior ativo.',5:'Você tem vantagem natural em ambientes que mudam rápido, em comunicação, vendas, relações públicas, viagens, inovação e qualquer área onde a adaptabilidade e o pensamento lateral são mais valiosos do que a especialização rígida.',6:'Você tem vantagem natural em educação, saúde, cuidado, design de ambientes, gestão de comunidades e qualquer área onde a qualidade das relações e a criação de ambientes seguros é o fator diferenciador.',7:'Você tem vantagem natural em pesquisa, análise, tecnologia, filosofia, espiritualidade e qualquer área que exija profundidade, rigor e capacidade de encontrar padrões onde outros veem apenas dados.',8:'Você tem vantagem natural em negócios, finanças, liderança executiva e qualquer área que envolva gestão de recursos em escala. Você funciona melhor quando tem poder real de decisão e quando os resultados são mensuráveis.',9:'Você tem vantagem natural em causas humanitárias, artes, ensino, espiritualidade e qualquer área onde o impacto vai além do financeiro. Você funciona melhor quando o trabalho tem significado claro além do resultado imediato.',11:'Você tem vantagem natural em áreas criativas e espirituais, coaching, psicologia, artes e qualquer contexto onde a capacidade de inspirar e de perceber o que não está sendo dito é mais valiosa do que o conhecimento técnico.',22:'Você tem vantagem natural em liderança de alto nível, empreendedorismo de impacto, gestão de organizações complexas e qualquer área onde visão de longo prazo e capacidade de execução em escala são o diferencial.',33:'Você tem vantagem natural em cura, educação transformadora, liderança espiritual e qualquer área onde a qualidade da sua presença é o produto — onde ser é mais impactante do que fazer.'};
     const perdas={1:'Você perde em ambientes de micro-gerenciamento, onde a autonomia é apenas nominal, e em papéis de suporte puro sem espaço para iniciativa.',2:'Você perde em ambientes de alta competição individualista e em papéis onde a colaboração é vista como fraqueza.',3:'Você perde em ambientes de alta burocracia e em papéis que exigem consistência rotineira sem espaço para criatividade.',4:'Você perde em ambientes caóticos e em papéis que exigem improvisação constante sem estrutura de suporte.',5:'Você perde em ambientes altamente rígidos e em papéis que exigem a mesma tarefa repetida indefinidamente.',6:'Você perde em ambientes de cinismo emocional e em papéis onde cuidar genuinamente do outro é visto como ingenuidade.',7:'Você perde em ambientes de alta socialização forçada e em papéis que exigem superficialidade estratégica como modo de operação.',8:'Você perde em ambientes onde não tem poder real de decisão — título sem autonomia genuína drena sua energia.',9:'Você perde em ambientes puramente transacionais onde o resultado financeiro é o único critério de sucesso.',11:'Você perde em ambientes de alta pressão para resultados imediatos e em papéis que não toleram sensibilidade.',22:'Você perde em papéis de execução pura sem espaço para visão estratégica e construção de algo mais amplo.',33:'Você perde em ambientes altamente transacionais e em qualquer contexto onde ser autêntico tem custo social alto.'};
     return`<div class="direcGrid"><div class="direcCard"><span class="direcTitle">✦ Onde você tem vantagem natural</span><div class="direcText">${vantagens[caminho]||''}</div></div><div class="direcCard"><span class="direcTitle">↯ Onde você tende a se perder</span><div class="direcText">${perdas[caminho]||''}</div></div></div>`;
@@ -4306,6 +4354,12 @@ fbq('track','PageView');
 
   /* ── PLANO DE AÇÃO ── */
   function gerarPlanoAcao(caminho){
+    /* i18n dynamic action plan */
+    if(mapLang()!=='pt'){
+      const p=mapCopy('plan','stop')||[],c=mapCopy('plan','start')||[],m=mapCopy('plan','keep')||[];
+      return '<div class="planoGrid"><div class="planoCard parar"><span class="planoTitle">'+mapCopy('labels','stop')+'</span><ul class="planoList">'+p.map(i=>'<li>'+i+'</li>').join('')+'</ul></div><div class="planoCard comecar"><span class="planoTitle">'+mapCopy('labels','start')+'</span><ul class="planoList">'+c.map(i=>'<li>'+i+'</li>').join('')+'</ul></div><div class="planoCard manter"><span class="planoTitle">'+mapCopy('labels','keep')+'</span><ul class="planoList">'+m.map(i=>'<li>'+i+'</li>').join('')+'</ul></div></div>';
+    }
+
     const parar={1:['Pedir permissão para ser quem você é','Esperar estar 100% pronto para começar','Interpretar pedido de ajuda como fraqueza'],2:['Dizer "tudo bem" quando não está','Ceder sem negociar em questões que importam','Acumular ressentimento em silêncio'],3:['Abandonar projetos antes da colheita','Usar o humor para evitar conversas difíceis','Dispersar energia por falta de escolha consciente'],4:['Perfeccionar infinitamente antes de lançar','Insistir no plano quando a realidade pede ajuste','Negar a si mesmo o descanso que merece'],5:['Criar saídas antes de explorar a profundidade','Usar a liberdade como fuga do aprofundamento','Mudar para evitar o que pede comprometimento'],6:['Assumir o sofrimento alheio como responsabilidade sua','Cuidar dos outros às expensas de si mesmo','Esperar que percebam o que você precisa sem dizer'],7:['Usar a análise como substituto da ação','Prolongar o isolamento além da restauração','Questionar sua própria percepção excessivamente'],8:['Confundir o que você vale com o que você tem','Usar o controle onde a confiança seria mais poderosa','Sacrificar relações em nome da eficiência'],9:['Manter vivos ciclos que já se encerraram','Absorver o sofrimento do mundo como seu','Adiar o próprio descanso em nome do serviço'],11:['Desconfiar sistematicamente da sua intuição','Permitir que a hipersensibilidade paralise a ação','Aguardar a condição "ideal" para manifestar seu dom'],22:['Postergar o começo esperando a visão completa','Assumir mais responsabilidade do que pode sustentar','Negar ao projeto de vida o início imperfeito que precisa'],33:['Dar até o esgotamento sem pedir reposição','Assumir a cura do outro como missão','Confundir amor com autossacrifício']};
     const comecar={1:['Uma prática diária de escuta ativa — ouvir antes de decidir','Criar parcerias onde delegar é genuinamente possível','Celebrar completar o que começou'],2:['Articular suas necessidades diretamente, sem esperar que percebam','Criar limites que você mantém por respeito próprio, não por raiva','Buscar relações onde a reciprocidade é estrutural, não eventual'],3:['Escolher um projeto para aprofundar neste ciclo','Compartilhar o trabalho inacabado — o processo tem valor','Criar rotinas que sustentam a criatividade em vez de depender da inspiração'],4:['Lançar antes do perfeito — "bom o suficiente" que existe vale mais','Criar flexibilidade intencional no planejamento','Programar descanso com a mesma seriedade com que programa trabalho'],5:['Identificar o que merece profundidade e comprometer-se','Explorar o desconforto do aprofundamento como parte do crescimento','Criar rituais de enraizamento que contrabalanceiem o movimento natural'],6:['Pedir o que precisa — diretamente, sem rodeios','Praticar dizer não sem justificativa excessiva','Criar práticas de autocuidado inegociáveis'],7:['Compartilhar o que descobre — em escrita, fala ou criação','Criar rituais de conexão que respeitem o ritmo introspectivo','Praticar agir com o que sabe sem precisar saber tudo'],8:['Criar métricas de sucesso que incluam bem-estar relacional','Praticar confiança deliberada com pessoas que o merecem','Desenvolver uma definição de valor que não dependa de resultado externo'],9:['Praticar encerrar ciclos com ritual e gratidão','Receber cuidado sem minimizar ou recusar','Criar limites sobre quanto do sofrimento alheio você absorve'],11:['Registrar suas percepções — diário, notas — antes de questioná-las','Criar práticas de aterramento que contrabalanceiem a sensibilidade','Agir a partir das percepções antes de analisá-las ao ponto da dúvida'],22:['Começar o projeto importante com o primeiro passo imperfeito','Construir a equipe que sustenta a visão sem precisar controlar tudo','Criar rituais de restauração que sejam inegociáveis'],33:['Praticar receber sem minimizar ou recusar','Criar limites de cuidado que são amor — não abandono','Desenvolver práticas de restauração que precedem o dar']};
     const manter={1:['A coragem de começar antes de estar pronto','O senso claro de direção mesmo em ambiguidade','A capacidade de se reposicionar quando necessário'],2:['A sensibilidade que percebe o que outros não veem','A capacidade de criar conexões de profundidade','A paciência estratégica com processos que precisam de tempo'],3:['A leveza que é sua forma mais genuína de sabedoria','A capacidade de tornar o complexo acessível','O dom de criar conexão através da expressão'],4:['A confiabilidade que construiu ao longo do tempo','A capacidade de trabalho sustentado que outros admiram','A atenção ao detalhe que diferencia o seu trabalho'],5:['A curiosidade que nunca envelhece','A capacidade de adaptação que é genuinamente um superpoder','O dom de encontrar o novo dentro do conhecido'],6:['O cuidado genuíno que cria comunidade onde não havia','A capacidade de criar harmonia e beleza nos ambientes','O amor que é sua contribuição mais fundamental ao mundo'],7:['A profundidade analítica que poucos possuem','A intuição que enxerga além do óbvio','A capacidade de permanecer com a questão até encontrar a resposta real'],8:['A visão estratégica de longo prazo','A capacidade de execução em escala','A resiliência que reconstrói mais sólido do que o que caiu'],9:['A compaixão que não julga','A perspectiva que enxerga além do imediato','A sabedoria que transforma experiência em serviço'],11:['A percepção intuitiva que é um dom genuíno','A capacidade de inspirar sem precisar de estrutura','A sensibilidade que cria conexões de nível espiritual'],22:['A visão que pensa em escala e em legado','A capacidade de inspirar e executar simultaneamente','A resiliência de construtor que aprende com cada colapso'],33:['O amor que cura simplesmente pela qualidade da sua presença','A compaixão que não julga e que inclui','O ensino pelo exemplo que não precisa de palco']};
@@ -4315,6 +4369,9 @@ fbq('track','PageView');
 
   /* ── FRASE FINAL ── */
   function gerarFrase(caminho){
+    /* i18n dynamic final phrase */
+    if(mapLang()!=='pt')return mapCopyTpl('phrase','',{n:caminho});
+
     const frases={1:'Você foi feito para abrir o que ainda não existe. Cada vez que recua por medo de julgamento, o mundo perde algo que apenas você poderia ter inaugurado. Comece.',2:'Sua força mais profunda não é a de quem lidera com barulho — é a de quem une com precisão e transforma com delicadeza. O poder da ponte é que ela existe para os dois lados.',3:'O mundo se lembra de você. Sua presença deixa rastro de cor onde passa. Isso não é acidente — é missão. Use sua voz com a coragem de quem sabe que ela importa.',4:'O que você constrói não desmorona. Sua persistência não é teimosia — é a qualidade mais rara que existe: a coragem de continuar quando ninguém está olhando.',5:'A vida que você quer não precisa de menos comprometimento — precisa de comprometimentos mais inteligentes. Quando você escolhe profundidade com a mesma coragem com que escolhe liberdade, tudo muda.',6:'Você não precisa se sacrificar para ser digno de amor. Cuidar de si com a mesma generosidade com que cuida dos outros não é egoísmo — é o começo de tudo que é genuíno.',7:'O que você descobre em silêncio pertence ao mundo. Compartilhar o que você sabe não é vaidade — é serviço. Sua profundidade não foi feita apenas para você.',8:'Seu valor não está no que você possui, não está no que você controla, não está no que você construiu. Está no que você é quando tudo isso não existe. E isso, ninguém tira.',9:'Você carrega a sabedoria de muitos ciclos. Use-a. Não para reter o que passou, mas para iluminar o que ainda está chegando — em você e nos que caminham ao seu lado.',11:'Você não está imaginando. O que você percebe é real. O que você sente é sinal. Confie na frequência que te move — ela sabe onde você precisa estar antes que sua mente processe.',22:'A obra que você veio construir já começou — mesmo que você ainda não a reconheça por completo. Cada passo, mesmo o imperfeito, é parte da fundação do que ficará depois de você.',33:'O amor que você oferece ao mundo começa no amor que você oferece a si mesmo. Quando esses dois são iguais em qualidade e em generosidade, você se torna irresistível — não por performance, mas por inteireza.'};
     return frases[caminho]||'Você tem exatamente o que precisa para o caminho que é seu. Confie nisso.';
   }
@@ -4515,6 +4572,321 @@ fbq('track','PageView');
       if (n.aidaHook) AIDA_HOOK = n.aidaHook;
     });
   }
+
+  var MAP_UI_TEXT={
+    pt:{
+      brand:'SEU NUMERÓLOGO',
+      system:'SISTEMA PITAGÓRICO APLICADO · NPA',
+      systemicSystem:'SISTEMA PITAGÓRICO SISTÊMICO',
+      pdfTitle:'MAPA NUMEROLÓGICO',
+      pdfSubtitle:'COMPLETO  ·  12 ANÁLISES PERSONALIZADAS',
+      sevenSpheres:'7 ESFERAS NUMEROLÓGICAS',
+      footer:'Leitura personalizada · Sistema Pitagórico Sistêmico · seunumerologo.com.br',
+      toc:'SUMÁRIO',
+      mapOf:'Mapa de {name}',
+      personalizedFor:'Mapa personalizado para {name}',
+      page:'Pág. {page}',
+      masterNumber:'NÚMERO MESTRE',
+      overview:'Visão Geral · 7 Esferas do Mapa',
+      newConsult:'✦ Nova Consulta',
+      downloadPdf:'Baixar PDF',
+      generatingPdf:'Gerando PDF...',
+      lifePath:'Caminho de Vida',
+      sphereSoul:'ESFERA DA ALMA',
+      sphereImage:'ESFERA DA IMAGEM',
+      sphereExpression:'ESFERA DA EXPRESSÃO',
+      sphereHiddenTalent:'TALENTO OCULTO',
+      spherePsychic:'ESFERA PSÍQUICA',
+      sphereDestiny:'ESFERA DO DESTINO',
+      spherePersonalYear:'ANO PESSOAL',
+      synthesis:'SÍNTESE DO MAPA',
+      systemic:'INTERPRETAÇÃO SISTÊMICA',
+      cyclesPinnacles:'CICLOS E PINÁCULOS',
+      challengesLessons:'DESAFIOS E LIÇÕES KÁRMICAS',
+      directionPlan:'DIRECIONAMENTO E PLANO DE AÇÃO',
+      psychologicalSummary:'Resumo Psicológico',
+      pythagoreanPyramid:'Pirâmide Pitagórica',
+      directionCareer:'Direcionamento de Vida e Carreira',
+      realActionPlan:'Plano de Ação Real',
+      synthesisLabel:'Síntese',
+      maturityLabel:'Maturidade',
+      balanceLabel:'Equilíbrio',
+      periodCurrent:'● Período atual',
+      lifeCycles:'Ciclos de Vida',
+      pinnaclesFour:'Pináculos · Os Quatro Grandes Ciclos',
+      firstPinnacle:'Primeiro Pináculo',
+      secondPinnacle:'Segundo Pináculo',
+      thirdPinnacle:'Terceiro Pináculo',
+      fourthPinnacle:'Quarto Pináculo',
+      formation:'Formação e impulso inicial',
+      realization:'Realização e amadurecimento',
+      integration:'Síntese e integração',
+      legacy:'Plenitude e legado',
+      firstChallenge:'Primeiro Desafio',
+      secondChallenge:'Segundo Desafio',
+      mainChallenge:'Desafio Principal',
+      fourthChallenge:'Quarto Desafio',
+      centralChallenge:'Desafio central de toda a vida',
+      periodChallenge:'Desafio do período',
+      challengesGrowth:'Desafios · Obstáculos que Promovem Crescimento',
+      karmicLessons:'Lições Kármicas · Ausências no Nome',
+      maturityBalance:'Maturidade e Equilíbrio',
+      noKarmicLessons:'Sem lições kármicas ausentes',
+      completeVibration:'Todos os números de 1 a 9 estão presentes no seu nome. Configuração rara de completude vibratória.',
+      karmicLesson:'Lição Kármica {n}',
+      maturityNumber:'Número de Maturidade',
+      balanceNumber:'Número de Equilíbrio',
+      activeAfter45:'Ativo após os 45',
+      crisisAnchor:'Âncora em crises',
+      pyramidFallback:'Nome insuficiente para calcular a pirâmide.',
+      pyramidCaption:'Pirâmide pitagórica · {letters} letras · {levels} níveis · Ápice: {apex}',
+      sequenceTitle:'⚠ Sequências de energia detectadas',
+      sequenceSub:'Repetição de três ou mais números idênticos consecutivos indica energia em alta concentração — um padrão que amplifica tanto os dons quanto as sombras daquele número.',
+      mapNumbers:'Números do Mapa',
+      detailedReadings:'Leituras Detalhadas · toque para expandir',
+      systemicInterpretation:'Interpretação Sistêmica',
+      selfSabotage:'Padrões de Autossabotagem',
+      birthTo28:'Nascimento até ~28 anos',
+      age29To56:'~29 a ~56 anos',
+      age57Plus:'~57 anos em diante'
+    },
+    en:{
+      brand:'SEU NUMERÓLOGO',
+      system:'APPLIED PYTHAGOREAN SYSTEM · NPA',
+      systemicSystem:'SYSTEMIC PYTHAGOREAN SYSTEM',
+      pdfTitle:'NUMEROLOGY MAP',
+      pdfSubtitle:'COMPLETE  ·  12 PERSONALIZED ANALYSES',
+      sevenSpheres:'7 NUMEROLOGICAL SPHERES',
+      footer:'Personalized reading · Systemic Pythagorean System · seunumerologo.com.br',
+      toc:'CONTENTS',
+      mapOf:'Map of {name}',
+      personalizedFor:'Personalized map for {name}',
+      page:'Page {page}',
+      masterNumber:'MASTER NUMBER',
+      overview:'Overview · 7 Map Spheres',
+      newConsult:'✦ New Reading',
+      downloadPdf:'Download PDF',
+      generatingPdf:'Generating PDF...',
+      lifePath:'Life Path',
+      sphereSoul:'SOUL SPHERE',
+      sphereImage:'IMAGE SPHERE',
+      sphereExpression:'EXPRESSION SPHERE',
+      sphereHiddenTalent:'HIDDEN TALENT',
+      spherePsychic:'PSYCHIC SPHERE',
+      sphereDestiny:'DESTINY SPHERE',
+      spherePersonalYear:'PERSONAL YEAR',
+      synthesis:'MAP SYNTHESIS',
+      systemic:'SYSTEMIC INTERPRETATION',
+      cyclesPinnacles:'CYCLES AND PINNACLES',
+      challengesLessons:'CHALLENGES AND KARMIC LESSONS',
+      directionPlan:'DIRECTION AND ACTION PLAN',
+      psychologicalSummary:'Psychological Summary',
+      pythagoreanPyramid:'Pythagorean Pyramid',
+      directionCareer:'Life and Career Direction',
+      realActionPlan:'Real Action Plan',
+      synthesisLabel:'Synthesis',
+      maturityLabel:'Maturity',
+      balanceLabel:'Balance',
+      periodCurrent:'● Current period',
+      lifeCycles:'Life Cycles',
+      pinnaclesFour:'Pinnacles · The Four Great Cycles',
+      firstPinnacle:'First Pinnacle',
+      secondPinnacle:'Second Pinnacle',
+      thirdPinnacle:'Third Pinnacle',
+      fourthPinnacle:'Fourth Pinnacle',
+      formation:'Formation and initial impulse',
+      realization:'Realization and maturation',
+      integration:'Synthesis and integration',
+      legacy:'Fulfillment and legacy',
+      firstChallenge:'First Challenge',
+      secondChallenge:'Second Challenge',
+      mainChallenge:'Main Challenge',
+      fourthChallenge:'Fourth Challenge',
+      centralChallenge:'Central lifetime challenge',
+      periodChallenge:'Challenge of the period',
+      challengesGrowth:'Challenges · Obstacles That Promote Growth',
+      karmicLessons:'Karmic Lessons · Absences in the Name',
+      maturityBalance:'Maturity and Balance',
+      noKarmicLessons:'No missing karmic lessons',
+      completeVibration:'All numbers from 1 to 9 are present in your name. A rare configuration of vibrational completeness.',
+      karmicLesson:'Karmic Lesson {n}',
+      maturityNumber:'Maturity Number',
+      balanceNumber:'Balance Number',
+      activeAfter45:'Active after 45',
+      crisisAnchor:'Anchor in crises',
+      pyramidFallback:'Name is too short to calculate the pyramid.',
+      pyramidCaption:'Pythagorean pyramid · {letters} letters · {levels} levels · Apex: {apex}',
+      sequenceTitle:'⚠ Energy sequences detected',
+      sequenceSub:'A repetition of three or more identical consecutive numbers indicates highly concentrated energy — a pattern that amplifies both the gifts and the shadows of that number.',
+      mapNumbers:'Map Numbers',
+      detailedReadings:'Detailed Readings · tap to expand',
+      systemicInterpretation:'Systemic Interpretation',
+      selfSabotage:'Self-Sabotage Patterns',
+      birthTo28:'Birth to ~28 years',
+      age29To56:'~29 to ~56 years',
+      age57Plus:'~57 years onward'
+    },
+    es:{
+      brand:'SEU NUMERÓLOGO',
+      system:'SISTEMA PITAGÓRICO APLICADO · NPA',
+      systemicSystem:'SISTEMA PITAGÓRICO SISTÉMICO',
+      pdfTitle:'MAPA NUMEROLÓGICO',
+      pdfSubtitle:'COMPLETO  ·  12 ANÁLISIS PERSONALIZADOS',
+      sevenSpheres:'7 ESFERAS NUMEROLÓGICAS',
+      footer:'Lectura personalizada · Sistema Pitagórico Sistémico · seunumerologo.com.br',
+      toc:'ÍNDICE',
+      mapOf:'Mapa de {name}',
+      personalizedFor:'Mapa personalizado para {name}',
+      page:'Pág. {page}',
+      masterNumber:'NÚMERO MAESTRO',
+      overview:'Visión general · 7 esferas del mapa',
+      newConsult:'✦ Nueva consulta',
+      downloadPdf:'Descargar PDF',
+      generatingPdf:'Generando PDF...',
+      lifePath:'Camino de Vida',
+      sphereSoul:'ESFERA DEL ALMA',
+      sphereImage:'ESFERA DE LA IMAGEN',
+      sphereExpression:'ESFERA DE LA EXPRESIÓN',
+      sphereHiddenTalent:'TALENTO OCULTO',
+      spherePsychic:'ESFERA PSÍQUICA',
+      sphereDestiny:'ESFERA DEL DESTINO',
+      spherePersonalYear:'AÑO PERSONAL',
+      synthesis:'SÍNTESIS DEL MAPA',
+      systemic:'INTERPRETACIÓN SISTÉMICA',
+      cyclesPinnacles:'CICLOS Y PINÁCULOS',
+      challengesLessons:'DESAFÍOS Y LECCIONES KÁRMICAS',
+      directionPlan:'DIRECCIÓN Y PLAN DE ACCIÓN',
+      psychologicalSummary:'Resumen psicológico',
+      pythagoreanPyramid:'Pirámide pitagórica',
+      directionCareer:'Dirección de vida y carrera',
+      realActionPlan:'Plan de acción real',
+      synthesisLabel:'Síntesis',
+      maturityLabel:'Madurez',
+      balanceLabel:'Equilibrio',
+      periodCurrent:'● Período actual',
+      lifeCycles:'Ciclos de vida',
+      pinnaclesFour:'Pináculos · Los cuatro grandes ciclos',
+      firstPinnacle:'Primer Pináculo',
+      secondPinnacle:'Segundo Pináculo',
+      thirdPinnacle:'Tercer Pináculo',
+      fourthPinnacle:'Cuarto Pináculo',
+      formation:'Formación e impulso inicial',
+      realization:'Realización y maduración',
+      integration:'Síntesis e integración',
+      legacy:'Plenitud y legado',
+      firstChallenge:'Primer Desafío',
+      secondChallenge:'Segundo Desafío',
+      mainChallenge:'Desafío Principal',
+      fourthChallenge:'Cuarto Desafío',
+      centralChallenge:'Desafío central de toda la vida',
+      periodChallenge:'Desafío del período',
+      challengesGrowth:'Desafíos · Obstáculos que promueven crecimiento',
+      karmicLessons:'Lecciones kármicas · Ausencias en el nombre',
+      maturityBalance:'Madurez y equilibrio',
+      noKarmicLessons:'Sin lecciones kármicas ausentes',
+      completeVibration:'Todos los números del 1 al 9 están presentes en tu nombre. Configuración rara de completitud vibratoria.',
+      karmicLesson:'Lección Kármica {n}',
+      maturityNumber:'Número de Madurez',
+      balanceNumber:'Número de Equilibrio',
+      activeAfter45:'Activo después de los 45',
+      crisisAnchor:'Ancla en crisis',
+      pyramidFallback:'Nombre insuficiente para calcular la pirámide.',
+      pyramidCaption:'Pirámide pitagórica · {letters} letras · {levels} niveles · Ápice: {apex}',
+      sequenceTitle:'⚠ Secuencias de energía detectadas',
+      sequenceSub:'La repetición de tres o más números idénticos consecutivos indica energía en alta concentración: un patrón que amplifica tanto los dones como las sombras de ese número.',
+      mapNumbers:'Números del mapa',
+      detailedReadings:'Lecturas detalladas · toca para expandir',
+      systemicInterpretation:'Interpretación sistémica',
+      selfSabotage:'Patrones de autosabotaje',
+      birthTo28:'Nacimiento hasta ~28 años',
+      age29To56:'~29 a ~56 años',
+      age57Plus:'~57 años en adelante'
+    }
+  };
+  function mapLang(){return (window.SN_I18N&&window.SN_I18N.getLang&&window.SN_I18N.getLang())||'pt';}
+  function mapUi(key){
+    var lang=mapLang();
+    return (MAP_UI_TEXT[lang]&&MAP_UI_TEXT[lang][key])||MAP_UI_TEXT.pt[key]||key;
+  }
+  function mapTpl(key,vars){
+    return mapUi(key).replace(/\{([^}]+)\}/g,function(_,name){return vars&&vars[name]!==undefined?vars[name]:'';});
+  }
+
+  var MAP_DYNAMIC_COPY={
+    pt:{
+      labels:{completeMapMeta:'Mapa Completo - 12 Analises NPA',permissionTraining:'PERMISSAO + TREINAMENTO = EXCELENCIA',soul:'Alma',image:'Imagem',expression:'Expressao',personality:'Personalidade',lifePath:'Caminho de Vida',stop:'x Parar',start:'-> Comecar',keep:'v Manter',naturalAdvantage:'* Onde voce tem vantagem natural',tendsToLose:'* Onde voce tende a se perder',yearOnward:'{year} em diante'},
+      formulas:{dayMonth:'|DIA - MES|',yearDay:'|ANO - DIA|',main:'|2o - 1o| - TODA A VIDA',yearMonth:'|ANO - MES|'},
+      sequenceGrade:{significant:'Concentracao significativa',strong:'Forte concentracao',extreme:'Concentracao extrema e dominante'},
+      sphereIntro:{
+        alma:'<p>Eu Interior, Motivacao Secreta, Numero da Alma. Essa vibracao mostra a sua essencia: o que ha de mais intimo e verdadeiro em voce. Uma energia que indica suas metas e desejos a medio e longo prazo.</p><p>A alma tambem fala sobre uma ligacao forte com a primeira infancia, limitacoes, anseios e aprendizados que determinaram sua formacao de personalidade.</p>',
+        personalidade:'<p>Tudo la fora e reflexo do mundo interior. O numero de Imagem e a projecao do EU: indica a impressao que voce passa ao mundo e como os outros te veem.</p><p>Quando aprendemos a projetar nosso numero de imagem, tudo la fora flui melhor pela atracao dessa energia que carregamos nas consoantes. E o seu cartao de visita vibracional.</p>',
+        expressao:'<p>O numero da Expressao e a vibracao maxima da sua identidade: a heranca dos antepassados carregada no seu nome. DNA Espiritual. Cada letra e um fio construtivo da sua essencia.</p><p>A partir dessa assinatura original, estamos predestinados a cumprir uma tarefa unica nessa vida, como um manual da nossa intimidade que, quando equilibrado, nos faz assumir o proposito de vida.</p>',
+        hiddenTalent:'<p>O Talento Oculto e a sintese vibracional da sua Alma com a sua Expressao. Um poder que ja existe dentro de voce: quando ativado, transforma o que era dificil em algo natural e fluido.</p><p><strong>Permissao:</strong> sem obediencia e determinacao, o talento se esconde e bloqueia as melhores oportunidades. <strong>Treinamento:</strong> a repeticao e a mae da excelencia. A vida premia quem se empenha na direcao proposital.</p>',
+        dia:'<p>O Numero Psiquico e revelado pelo seu dia de nascimento. Ele fala dos impulsos naturais da personalidade: os dons e aptidoes que expressamos instintivamente na direcao de um resultado.</p><p>Esta e a primeira persona em acao: a vibracao que da movimento a tudo que expressamos ao interagir com o mundo.</p>',
+        caminho:'<p>A vibracao do Destino e considerada a mais importante: o caminho, a jornada, a travessia existencial desta vida. O codigo por tras da sua data de nascimento e essencial.</p><p>Trata-se do caminho de licao: questoes que precisam ser desenvolvidas para que sua missao de vida seja cumprida. Esse numero nao pode ser mudado; depois que e aceito e compreendido, torna-se sua maior forca.</p>',
+        ano:'<p>A jornada secreta do Ano Pessoal e revelada pelos ciclos da vida, que comecam no dia em que voce nasceu. Essa energia te acompanha durante um ano completo.</p><p>Compreender o ciclo atual e como ter um mapa do territorio: voce nao escolhe o terreno, mas escolhe como caminhar nele. Cada ano pessoal convida para uma licao e uma expansao especifica.</p>'
+      },
+      synthesisIntro:'A Sintese integra os tres pilares da sua personalidade numerologica: Alma, Imagem e Expressao. Ela revela o grau de harmonia entre o que voce sente, como e percebido e como se manifesta no mundo.',
+      summary:{p1:'<p>Seu mapa pitagorico revela uma configuracao de alta complexidade. No nucleo, seu <strong>Caminho de Vida {caminho}</strong> define a direcao fundamental: {essC} Mas essa missao nao se desdobra no vacuo; ela se manifesta atraves da sua <strong>Expressao {expressao}</strong>, que carrega em si: {essE}</p>',p2:'<p>O que move voce por dentro, o combustivel invisivel de todas as suas escolhas, e revelado pela sua <strong>Alma {alma}</strong>: {essA} E a forma como o mundo te le antes de te conhecer e moldada pela sua <strong>Personalidade {personalidade}</strong>: {essP}</p>',p3:'<p>A interacao entre esses quatro numeros cria o padrao central do seu funcionamento. Onde ha reforco mutuo, voce age com naturalidade e forca. Onde ha tensao, surgem conflitos internos caracteristicos que agora podem ser nomeados com precisao.</p>'},
+      systemic:{samePathExpression:'Quando o Caminho de Vida e a Expressao sao o mesmo numero ({n}), existe uma linearidade poderosa entre direcao interna e acao externa. Isso cria autenticidade natural, mas tambem amplifica luz e sombra dessa vibracao.',sameSoulPersonality:'Quando Alma e Personalidade sao o mesmo numero ({n}), o que voce mostra ao mundo e genuinamente o que existe por dentro. Isso e valioso, mas deixa sua vulnerabilidade mais visivel.',dominant:'A presenca do {n} em {count} posicoes do mapa cria uma energia dominante que atravessa varias dimensoes da sua existencia. Esse numero merece atencao estrategica.',fallback:'O mapa mostra campos complementares: cada numero atua como uma lente especifica para alma, expressao, imagem e caminho. A integracao consciente reduz conflito interno e aumenta direcao.'},
+      sabotage:{life:'O padrao central do Caminho de Vida:',expression:'O ponto de atencao da Expressao:',challenge:'O desafio que pede maturidade:',fallback:'O principal ponto de autossabotagem aparece quando voce usa a sombra desse numero como protecao em vez de trabalhar sua luz.'},
+      direction:{adv:'Voce tem vantagem natural quando transforma a essencia do {n} - {ess} - em contribuicao concreta. Procure ambientes onde essa frequencia seja reconhecida como valor, nao tratada como excesso.',lose:'Voce tende a se perder quando atua contra essa essencia ou tenta caber em papeis que negam o ritmo do seu Caminho de Vida {n}. O trabalho certo precisa dar espaco para essa energia respirar.'},
+      plan:{stop:['Repetir padroes antigos depois que ja entendeu o custo deles','Tomar decisoes para agradar o campo externo e depois ressentir','Adiar o proximo passo esperando clareza perfeita'],start:['Escolher uma acao pequena e concreta alinhada ao seu Caminho de Vida','Nomear diretamente a necessidade que costuma ficar escondida','Criar um ritual semanal para revisar limites, energia e prioridades'],keep:['A forca essencial que ja aparece no seu mapa','A consciencia dos padroes que agora voce consegue nomear','O compromisso de agir com mais verdade e menos automatismo']},
+      phrase:'Voce tem exatamente o que precisa para viver o Caminho de Vida {n} com mais consciencia. Quando essa energia amadurece, ela deixa de ser peso e vira direcao.'
+    },
+    en:{
+      labels:{completeMapMeta:'Complete Map - 12 NPA Analyses',permissionTraining:'PERMISSION + TRAINING = EXCELLENCE',soul:'Soul',image:'Image',expression:'Expression',personality:'Personality',lifePath:'Life Path',stop:'x Stop',start:'-> Start',keep:'v Keep',naturalAdvantage:'* Where You Have Natural Advantage',tendsToLose:'* Where You Tend to Lose Yourself',yearOnward:'{year} onward'},
+      formulas:{dayMonth:'|DAY - MONTH|',yearDay:'|YEAR - DAY|',main:'|2nd - 1st| - LIFETIME',yearMonth:'|YEAR - MONTH|'},
+      sequenceGrade:{significant:'Significant concentration',strong:'Strong concentration',extreme:'Extreme and dominant concentration'},
+      sphereIntro:{
+        alma:'<p>Inner self, secret motivation, Soul Number. This vibration reveals your essence: what is most intimate and true in you. It points to your medium- and long-term desires, goals and inner fuel.</p><p>The Soul also speaks to early childhood links, limitations, longings and lessons that shaped your personality formation.</p>',
+        personalidade:'<p>The outer world reflects the inner world. The Image Number is the projection of the self: the impression you make and the way others tend to perceive you.</p><p>When you learn to project this number consciously, the outside world flows better through the attraction carried by your consonants. It is your vibrational calling card.</p>',
+        expressao:'<p>The Expression Number is the highest vibration of your identity: the ancestral inheritance carried by your name. Spiritual DNA. Each letter is a constructive thread of your essence.</p><p>Through this original signature, you are called to fulfill a unique task in this life, like an intimate manual that, when balanced, helps you assume your life purpose.</p>',
+        hiddenTalent:'<p>The Hidden Talent is the vibrational synthesis of your Soul and your Expression. It is a power already inside you: when activated, it turns what felt difficult into something natural and fluid.</p><p><strong>Permission:</strong> without obedience and determination, talent hides and blocks the best opportunities. <strong>Training:</strong> repetition is the mother of excellence. Life rewards those who move with purpose.</p>',
+        dia:'<p>The Psychic Number is revealed by your day of birth. It speaks of the natural impulses of personality: gifts and aptitudes you express instinctively toward results.</p><p>This is the first persona in action: the vibration that gives movement to everything you express when interacting with the world.</p>',
+        caminho:'<p>The Destiny vibration is considered the most important: the path, journey and existential crossing of this life. The code behind your birth date is essential.</p><p>It is the path of lesson: themes that need to be developed so your life mission can be fulfilled. This number cannot be changed; once accepted and understood, it becomes your greatest strength.</p>',
+        ano:'<p>The secret journey of the Personal Year is revealed through life cycles, which begin on the day you were born. This energy accompanies you for a full year.</p><p>Understanding the current cycle is like having a map of the territory: you do not choose the terrain, but you choose how to walk it. Each personal year invites a specific lesson and expansion.</p>'
+      },
+      synthesisIntro:'The Synthesis integrates the three pillars of your numerological personality: Soul, Image and Expression. It reveals the degree of harmony between what you feel, how you are perceived and how you manifest in the world.',
+      summary:{p1:'<p>Your Pythagorean map reveals a highly complex configuration. At the core, your <strong>Life Path {caminho}</strong> defines the fundamental direction: {essC} But this mission does not unfold in a vacuum: it manifests through your <strong>Expression {expressao}</strong>, which carries: {essE}</p>',p2:'<p>What moves you from within, the invisible fuel behind your choices, is revealed by your <strong>Soul {alma}</strong>: {essA} And the way the world reads you before knowing you is shaped by your <strong>Personality {personalidade}</strong>: {essP}</p>',p3:'<p>The interaction between these four numbers creates the central pattern of your functioning. Where they reinforce one another, you act with natural strength. Where tension appears, your most characteristic inner conflicts emerge and can now be named with precision.</p>'},
+      systemic:{samePathExpression:'When Life Path and Expression are the same number ({n}), there is a powerful line between inner direction and outer action. This creates natural authenticity, while also amplifying both the light and shadow of this vibration.',sameSoulPersonality:'When Soul and Personality are the same number ({n}), what you show the world is genuinely what exists inside. This is valuable, but it also makes your vulnerability more visible.',dominant:'The presence of {n} in {count} positions of the map creates a dominant energy that crosses several dimensions of your existence. This number deserves strategic attention.',fallback:'The map shows complementary fields: each number acts as a specific lens for soul, expression, image and path. Conscious integration reduces inner conflict and increases direction.'},
+      sabotage:{life:'The central Life Path pattern:',expression:'The Expression attention point:',challenge:'The challenge asking for maturity:',fallback:'The main self-sabotage point appears when you use this number shadow as protection instead of working with its light.'},
+      direction:{adv:'You have natural advantage when you turn the essence of {n} - {ess} - into concrete contribution. Seek environments where this frequency is recognized as value, not treated as excess.',lose:'You tend to lose yourself when you act against this essence or try to fit roles that deny the rhythm of your Life Path {n}. The right work must give this energy room to breathe.'},
+      plan:{stop:['Repeating old patterns after you already understand their cost','Making decisions to please the outside field and resenting it later','Delaying the next step while waiting for perfect clarity'],start:['Choose one small concrete action aligned with your Life Path','Name directly the need that usually stays hidden','Create a weekly ritual to review limits, energy and priorities'],keep:['The essential strength already visible in your map','The awareness of patterns you can now name','The commitment to act with more truth and less automatic behavior']},
+      phrase:'You have exactly what you need to live Life Path {n} with more consciousness. When this energy matures, it stops being a weight and becomes direction.'
+    },
+    es:{
+      labels:{completeMapMeta:'Mapa completo - 12 analisis NPA',permissionTraining:'PERMISO + ENTRENAMIENTO = EXCELENCIA',soul:'Alma',image:'Imagen',expression:'Expresion',personality:'Personalidad',lifePath:'Camino de Vida',stop:'x Parar',start:'-> Empezar',keep:'v Mantener',naturalAdvantage:'* Donde tienes ventaja natural',tendsToLose:'* Donde tiendes a perderte',yearOnward:'{year} en adelante'},
+      formulas:{dayMonth:'|D\u00cdA - MES|',yearDay:'|A\u00d1O - D\u00cdA|',main:'|2o - 1o| - TODA LA VIDA',yearMonth:'|A\u00d1O - MES|'},
+      sequenceGrade:{significant:'Concentracion significativa',strong:'Fuerte concentracion',extreme:'Concentracion extrema y dominante'},
+      sphereIntro:{
+        alma:'<p>Yo interior, motivacion secreta, Numero del Alma. Esta vibracion revela tu esencia: lo mas intimo y verdadero en ti. Senala tus metas, deseos y combustible interno a mediano y largo plazo.</p><p>El Alma tambien habla de vinculos con la primera infancia, limitaciones, anhelos y aprendizajes que determinaron la formacion de tu personalidad.</p>',
+        personalidade:'<p>El mundo exterior refleja el mundo interior. El Numero de Imagen es la proyeccion del yo: la impresion que das y la forma en que los demas suelen percibirte.</p><p>Cuando aprendes a proyectar este numero conscientemente, el afuera fluye mejor por la atraccion de la energia que cargan tus consonantes. Es tu tarjeta vibracional de presentacion.</p>',
+        expressao:'<p>El Numero de Expresion es la vibracion maxima de tu identidad: la herencia ancestral cargada en tu nombre. ADN espiritual. Cada letra es un hilo constructor de tu esencia.</p><p>A partir de esta firma original, estas llamado a cumplir una tarea unica en esta vida, como un manual intimo que, cuando esta equilibrado, te ayuda a asumir tu proposito.</p>',
+        hiddenTalent:'<p>El Talento Oculto es la sintesis vibracional de tu Alma y tu Expresion. Es un poder que ya existe dentro de ti: cuando se activa, transforma lo dificil en algo natural y fluido.</p><p><strong>Permiso:</strong> sin obediencia y determinacion, el talento se esconde y bloquea las mejores oportunidades. <strong>Entrenamiento:</strong> la repeticion es la madre de la excelencia. La vida premia a quien avanza con proposito.</p>',
+        dia:'<p>El Numero Psiquico se revela por tu dia de nacimiento. Habla de los impulsos naturales de la personalidad: dones y aptitudes que expresas instintivamente hacia un resultado.</p><p>Esta es la primera persona en accion: la vibracion que da movimiento a todo lo que expresas al interactuar con el mundo.</p>',
+        caminho:'<p>La vibracion del Destino es considerada la mas importante: el camino, la jornada y la travesia existencial de esta vida. El codigo detras de tu fecha de nacimiento es esencial.</p><p>Se trata del camino de aprendizaje: temas que necesitan desarrollarse para que tu mision de vida se cumpla. Este numero no se puede cambiar; cuando se acepta y se comprende, se vuelve tu mayor fuerza.</p>',
+        ano:'<p>El viaje secreto del Ano Personal se revela por los ciclos de la vida, que comienzan el dia en que naciste. Esta energia te acompana durante un ano completo.</p><p>Comprender el ciclo actual es como tener un mapa del territorio: no eliges el terreno, pero eliges como caminarlo. Cada ano personal invita a una leccion y expansion especificas.</p>'
+      },
+      synthesisIntro:'La Sintesis integra los tres pilares de tu personalidad numerologica: Alma, Imagen y Expresion. Revela el grado de armonia entre lo que sientes, como eres percibido y como te manifiestas en el mundo.',
+      summary:{p1:'<p>Tu mapa pitagorico revela una configuracion de alta complejidad. En el nucleo, tu <strong>Camino de Vida {caminho}</strong> define la direccion fundamental: {essC} Pero esta mision no se despliega en el vacio: se manifiesta a traves de tu <strong>Expresion {expressao}</strong>, que carga: {essE}</p>',p2:'<p>Lo que te mueve por dentro, el combustible invisible de tus elecciones, se revela por tu <strong>Alma {alma}</strong>: {essA} Y la forma en que el mundo te lee antes de conocerte esta moldeada por tu <strong>Personalidad {personalidade}</strong>: {essP}</p>',p3:'<p>La interaccion entre estos cuatro numeros crea el patron central de tu funcionamiento. Donde se refuerzan, actuas con naturalidad y fuerza. Donde hay tension, aparecen conflictos internos caracteristicos que ahora pueden nombrarse con precision.</p>'},
+      systemic:{samePathExpression:'Cuando Camino de Vida y Expresion son el mismo numero ({n}), existe una linea poderosa entre direccion interna y accion externa. Esto crea autenticidad natural, pero tambien amplifica la luz y la sombra de esta vibracion.',sameSoulPersonality:'Cuando Alma y Personalidad son el mismo numero ({n}), lo que muestras al mundo es genuinamente lo que existe por dentro. Esto es valioso, pero deja tu vulnerabilidad mas visible.',dominant:'La presencia del {n} en {count} posiciones del mapa crea una energia dominante que atraviesa varias dimensiones de tu existencia. Este numero merece atencion estrategica.',fallback:'El mapa muestra campos complementarios: cada numero actua como una lente especifica para alma, expresion, imagen y camino. La integracion consciente reduce el conflicto interno y aumenta la direccion.'},
+      sabotage:{life:'El patron central del Camino de Vida:',expression:'El punto de atencion de la Expresion:',challenge:'El desafio que pide madurez:',fallback:'El principal punto de autosabotaje aparece cuando usas la sombra de este numero como proteccion en vez de trabajar su luz.'},
+      direction:{adv:'Tienes ventaja natural cuando transformas la esencia del {n} - {ess} - en contribucion concreta. Busca ambientes donde esta frecuencia sea reconocida como valor, no tratada como exceso.',lose:'Tiendes a perderte cuando actuas contra esta esencia o intentas encajar en roles que niegan el ritmo de tu Camino de Vida {n}. El trabajo correcto debe darle espacio a esta energia para respirar.'},
+      plan:{stop:['Repetir patrones antiguos despues de entender su costo','Tomar decisiones para agradar al campo externo y resentirlo despues','Aplazar el siguiente paso esperando claridad perfecta'],start:['Elige una accion pequena y concreta alineada con tu Camino de Vida','Nombra directamente la necesidad que suele quedar escondida','Crea un ritual semanal para revisar limites, energia y prioridades'],keep:['La fuerza esencial que ya aparece en tu mapa','La conciencia de los patrones que ahora puedes nombrar','El compromiso de actuar con mas verdad y menos automatismo']},
+      phrase:'Tienes exactamente lo que necesitas para vivir el Camino de Vida {n} con mas conciencia. Cuando esta energia madura, deja de ser peso y se convierte en direccion.'
+    }
+  };
+  function mapCopy(group,key){
+    var lang=mapLang();
+    var bucket=(MAP_DYNAMIC_COPY[lang]&&MAP_DYNAMIC_COPY[lang][group])||MAP_DYNAMIC_COPY.pt[group]||{};
+    if(typeof bucket==='string')return key?'' : bucket;
+    return bucket[key]!==undefined?bucket[key]:((MAP_DYNAMIC_COPY.pt[group]||{})[key]||'');
+  }
+  function mapCopyTpl(group,key,vars){
+    return String(mapCopy(group,key)).replace(/\{([^}]+)\}/g,function(_,name){return vars&&vars[name]!==undefined?vars[name]:'';});
+  }
+  function sphereIntro(ctx){return mapCopy('sphereIntro',ctx);}
 
   /* ── Helpers gamificação ── */
   function countUp(el,target,ms){
@@ -4892,7 +5264,7 @@ fbq('track','PageView');
     var btn=document.getElementById('v2PdfBtn');
     if(!btn)return;
     btn.classList.add('loading');
-    btn.textContent='Gerando PDF...';
+    btn.textContent=mapUi('generatingPdf');
 
     // 1. Open ALL phases
     document.querySelectorAll('.v2-phase').forEach(function(ph){ph.classList.add('open');});
@@ -4930,7 +5302,7 @@ fbq('track','PageView');
     function cleanup(){
       var s=document.getElementById('_pdfTmp');if(s)s.remove();
       var b=document.getElementById('v2PdfBtn');
-      if(b){b.classList.remove('loading');b.innerHTML=SVG_ICON+' Baixar PDF';}
+      if(b){b.classList.remove('loading');b.innerHTML=SVG_ICON+' '+mapUi('downloadPdf');}
     }
 
     function fallback(){window.print();cleanup();}
@@ -4990,15 +5362,15 @@ fbq('track','PageView');
 
         // ── Header ──
         pdf.setFontSize(7); pdf.setTextColor(G[0],G[1],G[2]); pdf.setFont('helvetica','normal');
-        pdf.text('SEU NUMERÓLOGO',pageW/2,10,{align:'center'});
+        pdf.text(mapUi('brand'),pageW/2,10,{align:'center'});
         pdf.setFontSize(5.5); pdf.setTextColor(100,80,40);
-        pdf.text('SISTEMA PITAGÓRICO APLICADO · NPA',pageW/2,15,{align:'center'});
+        pdf.text(sanitizePdf(mapUi('system')),pageW/2,15,{align:'center'});
 
         // Title block
         pdf.setFontSize(28); pdf.setTextColor(G[0],G[1],G[2]); pdf.setFont('helvetica','bold');
-        pdf.text('MAPA NUMEROLÓGICO',pageW/2,26,{align:'center'});
+        pdf.text(sanitizePdf(mapUi('pdfTitle')),pageW/2,26,{align:'center'});
         pdf.setFont('helvetica','normal'); pdf.setFontSize(8); pdf.setTextColor(100,80,40);
-        pdf.text('COMPLETO  ·  12 ANÁLISES PERSONALIZADAS',pageW/2,32,{align:'center'});
+        pdf.text(sanitizePdf(mapUi('pdfSubtitle')),pageW/2,32,{align:'center'});
 
         // ── Sacred Geometry — Nonagrama ──
         var scx=pageW/2, scy=83;
@@ -5075,17 +5447,17 @@ fbq('track','PageView');
         // ── 7 Esferas list ──
         var esfy=nameBaseY+23;
         pdf.setFontSize(6.5); pdf.setTextColor(G[0],G[1],G[2]); pdf.setFont('helvetica','bold');
-        pdf.text('7 ESFERAS NUMEROLÓGICAS',margin+3,esfy);
+        pdf.text(sanitizePdf(mapUi('sevenSpheres')),margin+3,esfy);
         esfy+=5; pdf.setFont('helvetica','normal');
 
         var esfCoverData=[
-          {n:'1ª',esfera:'ALMA',ctx:'alma',v:(_nums&&_nums.alma)||''},
-          {n:'2ª',esfera:'IMAGEM',ctx:'personalidade',v:(_nums&&_nums.personalidade)||''},
-          {n:'3ª',esfera:'EXPRESSÃO',ctx:'expressao',v:(_nums&&_nums.expressao)||''},
-          {n:'4ª',esfera:'TALENTO OCULTO',ctx:'alma',v:(_nums?reduzir(_nums.alma+_nums.expressao):'')||''},
-          {n:'5ª',esfera:'PSÍQUICO',ctx:'dia',v:(_nums&&_nums.dia)||''},
-          {n:'6ª',esfera:'DESTINO',ctx:'caminho',v:(_nums&&_nums.caminho)||''},
-          {n:'7ª',esfera:'ANO PESSOAL',ctx:'ano',v:(_nums&&_nums.anoPessoal)||''}
+          {n:'1ª',esfera:mapUi('sphereSoul').replace(/^ESFERA (DA|DEL) /,''),ctx:'alma',v:(_nums&&_nums.alma)||''},
+          {n:'2ª',esfera:mapUi('sphereImage').replace(/^ESFERA (DA|DE LA) /,''),ctx:'personalidade',v:(_nums&&_nums.personalidade)||''},
+          {n:'3ª',esfera:mapUi('sphereExpression').replace(/^ESFERA (DA|DE LA) /,''),ctx:'expressao',v:(_nums&&_nums.expressao)||''},
+          {n:'4ª',esfera:mapUi('sphereHiddenTalent'),ctx:'alma',v:(_nums?reduzir(_nums.alma+_nums.expressao):'')||''},
+          {n:'5ª',esfera:mapUi('spherePsychic').replace(/^ESFERA /,''),ctx:'dia',v:(_nums&&_nums.dia)||''},
+          {n:'6ª',esfera:mapUi('sphereDestiny').replace(/^ESFERA (DO|DEL) /,''),ctx:'caminho',v:(_nums&&_nums.caminho)||''},
+          {n:'7ª',esfera:mapUi('spherePersonalYear'),ctx:'ano',v:(_nums&&_nums.anoPessoal)||''}
         ];
         esfCoverData.forEach(function(e){
           var rgb=hexToRgb(CORES[e.v]||'#888888');
@@ -5119,9 +5491,9 @@ fbq('track','PageView');
           var sinteseCover=reduzir(_nums.alma+_nums.personalidade+_nums.expressao);
           var maturCover=(_nums.caminho+_nums.expressao)>9?reduzir(_nums.caminho+_nums.expressao):(_nums.caminho+_nums.expressao);
           var derivados=[
-            {l:'Síntese',v:sinteseCover},
-            {l:'Maturidade',v:maturCover},
-            {l:'Equilíbrio',v:reduzir(_nums.alma+_nums.expressao+_nums.personalidade)}
+            {l:mapUi('synthesisLabel'),v:sinteseCover},
+            {l:mapUi('maturityLabel'),v:maturCover},
+            {l:mapUi('balanceLabel'),v:reduzir(_nums.alma+_nums.expressao+_nums.personalidade)}
           ];
           var dColW=(usableW-4)/3;
           derivados.forEach(function(d,i){
@@ -5141,7 +5513,7 @@ fbq('track','PageView');
 
         // Footer
         pdf.setFontSize(7); pdf.setTextColor(80,65,35);
-        pdf.text('Leitura personalizada · Sistema Pitagórico Sistêmico · seunumerologo.com.br',pageW/2,pageH-7,{align:'center'});
+        pdf.text(sanitizePdf(mapUi('footer')),pageW/2,pageH-7,{align:'center'});
 
         /* ── Content pages — capture each phase separately ── */
         var phaseEls=Array.from(document.querySelectorAll('#v2Phases .v2-phase'));
@@ -5169,7 +5541,7 @@ fbq('track','PageView');
           // Page header
           pdf.setFontSize(7);
           pdf.setTextColor(150,120,80);
-          pdf.text('SEU NUMERÓLOGO · SISTEMA PITAGÓRICO SISTÊMICO',margin+2,10,{});
+          pdf.text(sanitizePdf(mapUi('brand')+' · '+mapUi('systemicSystem')),margin+2,10,{});
           if(title){
             pdf.setFontSize(8);
             pdf.setTextColor(rgb[0],rgb[1],rgb[2]);
@@ -5184,8 +5556,8 @@ fbq('track','PageView');
           // Footer
           pdf.setFontSize(6.5);
           pdf.setTextColor(100,80,60);
-          pdf.text('Mapa personalizado para '+nome,margin+2,pageH-5,{});
-          pdf.text('Pág. '+pageNum,pageW-margin,pageH-5,{align:'right'});
+          pdf.text(sanitizePdf(mapTpl('personalizedFor',{name:nome})),margin+2,pageH-5,{});
+          pdf.text(sanitizePdf(mapTpl('page',{page:pageNum})),pageW-margin,pageH-5,{align:'right'});
         }
 
         // ── jsPDF TEXT RENDERER — sem html2canvas, sem corte ──
@@ -5271,7 +5643,7 @@ fbq('track','PageView');
           pageFrame(pdf,pageW,pageH);
           /* Breadcrumb */
           pdf.setFontSize(6.5);pdf.setTextColor(rgb[0],rgb[1],rgb[2]);pdf.setFont('helvetica','bold');
-          pdf.text('SEU NUMERÓLOGO · '+curEsfLabel.toUpperCase(),margin+3,12);
+          pdf.text(sanitizePdf(mapUi('brand')+' · '+curEsfLabel.toUpperCase()),margin+3,12);
           pdf.setFont('helvetica','normal');
           pdf.setFontSize(6.5);pdf.setTextColor(90,75,55);
           pdf.text(nome,pageW-margin,12,{align:'right'});
@@ -5287,7 +5659,7 @@ fbq('track','PageView');
           /* Selo de Número Mestre */
           if(typeof MESTRES!=='undefined'&&MESTRES.has(Number(numVal))){
             pdf.setFontSize(6);pdf.setTextColor(rgb[0],rgb[1],rgb[2]);pdf.setFont('helvetica','bold');
-            var mLbl='NÚMERO MESTRE';
+            var mLbl=mapUi('masterNumber');
             var mW=pdf.getTextWidth(mLbl)+6;
             pdf.setDrawColor(rgb[0],rgb[1],rgb[2]);pdf.setLineWidth(0.3);
             pdf.roundedRect(margin+4+nw,43,mW,6,1,1,'S');
@@ -5678,12 +6050,12 @@ fbq('track','PageView');
           pageFrame(pdf,pageW,pageH);
           pdf.setFillColor(G[0],G[1],G[2]);pdf.rect(0,0,pageW,1,'F');
           pdf.setFontSize(8);pdf.setTextColor(G[0],G[1],G[2]);pdf.setFont('helvetica','normal');
-          pdf.text('SEU NUMERÓLOGO',pageW/2,16,{align:'center'});
+          pdf.text(mapUi('brand'),pageW/2,16,{align:'center'});
           pdf.setFontSize(22);pdf.setFont('helvetica','bold');
-          pdf.text('SUMÁRIO',pageW/2,27,{align:'center'});
+          pdf.text(sanitizePdf(mapUi('toc')),pageW/2,27,{align:'center'});
           pdf.setFont('helvetica','normal');
           pdf.setFontSize(8);pdf.setTextColor(120,100,60);
-          pdf.text('Mapa de '+nome,pageW/2,33,{align:'center'});
+          pdf.text(sanitizePdf(mapTpl('mapOf',{name:nome})),pageW/2,33,{align:'center'});
           pdf.setDrawColor(G[0],G[1],G[2]);pdf.setLineWidth(0.3);
           pdf.line(margin+30,38,pageW-margin-30,38);
           var ty=50;
@@ -5750,35 +6122,35 @@ fbq('track','PageView');
     var talento=reduzir(alma+expressao);
 
     document.getElementById('v2MapName').textContent=nomeRaw.trim();
-    document.getElementById('v2MapMeta').textContent=dateRaw+' · Mapa Completo · 12 Análises NPA';
+    document.getElementById('v2MapMeta').textContent=dateRaw+' - '+mapCopy('labels','completeMapMeta');
 
     var esferas=[
-      {n:'1ª',esfera:'ESFERA DA ALMA',icon:'◐',num:alma,ctx:'alma',
-       intro:'<p>Eu Interior, Motivação Secreta, Número da Alma. Essa vibração mostra a sua essência — o que há de mais íntimo e verdadeiro em você. Uma energia que indica suas metas e desejos a média e longo prazo.</p><p>A alma também fala sobre uma ligação fortíssima com a primeira infância, das limitações, dos anseios e aprendizados que determinaram sua formação de personalidade.</p>',
+      {n:'1ª',esfera:mapUi('sphereSoul'),icon:'◐',num:alma,ctx:'alma',
+       intro:sphereIntro('alma'),
        mantra:null},
-      {n:'2ª',esfera:'ESFERA DA IMAGEM',icon:'◑',num:personalidade,ctx:'personalidade',
-       intro:'<p>Tudo lá fora é reflexo do mundo interior. O número de Imagem é a projeção do EU — indica a impressão que você passa ao mundo e como os outros te veem.</p><p>Quando aprendemos a projetar nosso número de imagem, tudo lá fora flui melhor pela atração dessa energia que carregamos nas nossas consoantes. É o seu cartão de visita vibracional.</p>',
+      {n:'2ª',esfera:mapUi('sphereImage'),icon:'◑',num:personalidade,ctx:'personalidade',
+       intro:sphereIntro('personalidade'),
        mantra:null},
-      {n:'3ª',esfera:'ESFERA DA EXPRESSÃO',icon:'◈',num:expressao,ctx:'expressao',
-       intro:'<p>O número da Expressão é a vibração máxima da sua identidade — a herança dos antepassados carregada no seu nome. DNA Espiritual. Cada letra é um fio construtivo da sua essência.</p><p>A partir dessa assinatura original, estamos predestinados a cumprir uma tarefa única nessa vida — como um manual da nossa intimidade, que quando equilibrado nos faz assumir o propósito de vida.</p>',
+      {n:'3ª',esfera:mapUi('sphereExpression'),icon:'◈',num:expressao,ctx:'expressao',
+       intro:sphereIntro('expressao'),
        mantra:null},
-      {n:'4ª',esfera:'TALENTO OCULTO',icon:'✦',num:talento,ctx:'alma',
-       intro:'<p>O Talento Oculto é a síntese vibracional da sua Alma com a sua Expressão. Um poder que já existe dentro de você — que quando ativado, transforma o que era difícil em algo natural e fluido.</p><p><strong>Permissão:</strong> sem obediência e determinação, o talento se esconde e bloqueia as melhores oportunidades. <strong>Treinamento:</strong> a repetição é a mãe da excelência. A vida premia quem se empenha na direção proposital.</p>',
-       mantra:'PERMISSÃO + TREINAMENTO = EXCELÊNCIA'},
-      {n:'5ª',esfera:'ESFERA PSÍQUICA',icon:'◎',num:dia,ctx:'dia',
-       intro:'<p>O Número Psíquico é revelado pelo seu dia de nascimento. Ele fala dos impulsos naturais da personalidade — os dons e aptidões que expressamos instintivamente na direção de um resultado.</p><p>Esta é a primeira persona em ação: a vibração que dá movimento a tudo que expressamos ao interagir com o mundo.</p>',
+      {n:'4ª',esfera:mapUi('sphereHiddenTalent'),icon:'✦',num:talento,ctx:'alma',
+       intro:sphereIntro('hiddenTalent'),
+       mantra:mapCopy('labels','permissionTraining')},
+      {n:'5ª',esfera:mapUi('spherePsychic'),icon:'◎',num:dia,ctx:'dia',
+       intro:sphereIntro('dia'),
        mantra:null},
-      {n:'6ª',esfera:'ESFERA DO DESTINO',icon:'◉',num:caminho,ctx:'caminho',
-       intro:'<p>A vibração do Destino é considerada a mais importante — o caminho, a jornada, a travessia existencial desta vida. O código por trás da sua data de nascimento é extremamente essencial.</p><p>Trata-se do caminho de lição — questões que precisam ser desenvolvidas para que efetivamente sua missão de vida seja cumprida. Esse número não pode ser mudado, e depois que é aceito e compreendido, se torna sua maior força.</p>',
+      {n:'6ª',esfera:mapUi('sphereDestiny'),icon:'◉',num:caminho,ctx:'caminho',
+       intro:sphereIntro('caminho'),
        mantra:null},
-      {n:'7ª',esfera:'ANO PESSOAL',icon:'◷',num:anoPessoal,ctx:'ano',
-       intro:'<p>A jornada secreta do Ano Pessoal é revelada pelos ciclos da vida — que começam no dia em que você nasceu. Essa energia te acompanha durante um ano completo.</p><p>Compreender o ciclo atual é como ter um mapa do território: você não escolhe o terreno, mas escolhe como caminhar nele. Cada ano pessoal convida para uma lição e uma expansão específica.</p>',
+      {n:'7ª',esfera:mapUi('spherePersonalYear'),icon:'◷',num:anoPessoal,ctx:'ano',
+       intro:sphereIntro('ano'),
        mantra:null}
     ];
 
     // Overview rápido
     var overviewHTML='<div class="v2-esferas-overview">'+
-      '<div class="v2-ov-title">Visão Geral · 7 Esferas do Mapa</div>'+
+      '<div class="v2-ov-title">'+mapUi('overview')+'</div>'+
       '<div class="v2-ov-grid">'+
       esferas.map(function(e,i){
         var cor=CORES[e.num]||'#F5A623';
@@ -5808,36 +6180,36 @@ fbq('track','PageView');
     document.getElementById('v2MapNav').innerHTML=(function(){var d='';for(var i=0;i<TOTAL_PHASES;i++)d+='<div class="v2-phase-dot" id="dot'+i+'"></div>';return d;})();
 
     var extraPhases=[
-      {n:'8ª',esfera:'SÍNTESE DO MAPA',icon:'◈',num:sintese,
+      {n:'8ª',esfera:mapUi('synthesis'),icon:'◈',num:sintese,
        body:'<div class="v2-phase-content">'+
-         '<p style="font-size:.9rem;color:var(--text2);line-height:1.75;margin-bottom:20px">A Síntese integra os três pilares da sua personalidade numerológica: Alma, Imagem e Expressão. Ela revela o grau de harmonia entre o que você sente, como é percebido e como se manifesta no mundo.</p>'+
+         '<p style="font-size:.9rem;color:var(--text2);line-height:1.75;margin-bottom:20px">'+mapCopy('synthesisIntro','')+'</p>'+
          '<div class="v2-mini-grid" style="grid-template-columns:repeat(3,1fr);margin-bottom:20px">'+
-           '<div class="v2-mini-card"><span class="v2-mini-label">Alma</span><div class="v2-mini-val">'+alma+'</div><div class="v2-mini-title">'+(TITULOS[alma]||'')+'</div></div>'+
-           '<div class="v2-mini-card"><span class="v2-mini-label">Imagem</span><div class="v2-mini-val">'+personalidade+'</div><div class="v2-mini-title">'+(TITULOS[personalidade]||'')+'</div></div>'+
+           '<div class="v2-mini-card"><span class="v2-mini-label">'+mapCopy('labels','soul')+'</span><div class="v2-mini-val">'+alma+'</div><div class="v2-mini-title">'+(TITULOS[alma]||'')+'</div></div>'+
+           '<div class="v2-mini-card"><span class="v2-mini-label">'+mapCopy('labels','image')+'</span><div class="v2-mini-val">'+personalidade+'</div><div class="v2-mini-title">'+(TITULOS[personalidade]||'')+'</div></div>'+
            '<div class="v2-mini-card"><span class="v2-mini-label">Expressão</span><div class="v2-mini-val">'+expressao+'</div><div class="v2-mini-title">'+(TITULOS[expressao]||'')+'</div></div>'+
          '</div>'+
          '<div class="v2-divider"><div class="v2-divider-inner">✦</div></div>'+
-         '<div class="v2-section-label">Resumo Psicológico</div>'+
+         '<div class="v2-section-label">'+mapUi('psychologicalSummary')+'</div>'+
          gerarResumoPsicologico(numsObj)+
          '<div class="v2-divider"><div class="v2-divider-inner">✦</div></div>'+
-         '<div class="v2-section-label">Pirâmide Pitagórica</div>'+
+         '<div class="v2-section-label">'+mapUi('pythagoreanPyramid')+'</div>'+
          renderPiramideV2(nome)+
          '</div>'},
-      {n:'9ª',esfera:'INTERPRETAÇÃO SISTÊMICA',icon:'◐',num:null,
+      {n:'9ª',esfera:mapUi('systemic'),icon:'◐',num:null,
        body:'<div class="v2-phase-content">'+buildPhase2(numsObj,desafiosV)+'</div>'},
-      {n:'10ª',esfera:'CICLOS E PINÁCULOS',icon:'◷',num:null,
+      {n:'10ª',esfera:mapUi('cyclesPinnacles'),icon:'◷',num:null,
        body:'<div class="v2-phase-content">'+buildPhase3(date,caminho,pinaculosV,periodosV,ciclosV,idadeAprox)+'</div>'},
-      {n:'11ª',esfera:'DESAFIOS E LIÇÕES KÁRMICAS',icon:'◉',num:null,
+      {n:'11ª',esfera:mapUi('challengesLessons'),icon:'◉',num:null,
        body:'<div class="v2-phase-content">'+buildPhase4(desafiosV,licoesV,maturidadeV,equilibrioV)+'</div>'},
-      {n:'12ª',esfera:'DIRECIONAMENTO E PLANO DE AÇÃO',icon:'✦',num:caminho,
+      {n:'12ª',esfera:mapUi('directionPlan'),icon:'✦',num:caminho,
        body:'<div class="v2-phase-content">'+
-         '<div class="v2-section-label">Direcionamento de Vida e Carreira</div>'+
+          '<div class="v2-section-label">'+mapUi('directionCareer')+'</div>'+
          gerarDirecionamento(caminho).replace(/class="direcGrid"/g,'class="v2-direc-grid"').replace(/class="direcCard"/g,'class="v2-direc-card"').replace(/class="direcTitle"/g,'class="v2-direc-title"').replace(/class="direcText"/g,'class="v2-direc-text"')+
          '<div class="v2-divider"><div class="v2-divider-inner">✦</div></div>'+
-         '<div class="v2-section-label">Plano de Ação Real</div>'+
+          '<div class="v2-section-label">'+mapUi('realActionPlan')+'</div>'+
          gerarPlanoAcao(caminho).replace(/class="planoGrid"/g,'class="v2-plano-grid"').replace(/class="planoCard parar"/g,'class="v2-plano-card parar"').replace(/class="planoCard comecar"/g,'class="v2-plano-card comecar"').replace(/class="planoCard manter"/g,'class="v2-plano-card manter"').replace(/class="planoTitle"/g,'class="v2-plano-title"').replace(/class="planoList"/g,'class="v2-plano-list"')+
          '<div class="v2-divider"><div class="v2-divider-inner">✦</div></div>'+
-         '<div class="v2-frase-box"><span class="v2-frase-symbol">✦</span><div class="v2-frase-text">'+gerarFrase(caminho)+'</div><span class="v2-frase-label">Caminho de Vida '+caminho+' · '+(TITULOS[caminho]||'')+'</span></div>'+
+          '<div class="v2-frase-box"><span class="v2-frase-symbol">✦</span><div class="v2-frase-text">'+gerarFrase(caminho)+'</div><span class="v2-frase-label">'+mapUi('lifePath')+' '+caminho+' · '+(TITULOS[caminho]||'')+'</span></div>'+
          '</div>'},
     ];
 
@@ -5885,10 +6257,10 @@ fbq('track','PageView');
           '</div>';
       }).join('')+
       '<div style="text-align:center;margin-top:40px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap">'+
-      '<button class="v2-btn-new" id="v2BtnNew">✦ Nova Consulta</button>'+
+      '<button class="v2-btn-new" id="v2BtnNew">'+mapUi('newConsult')+'</button>'+
       '<button class="v2-pdf-btn" id="v2PdfBtn">'+
       '<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 12.5h10M8 2v8M5 7l3 3 3-3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>'+
-      'Baixar PDF</button>'+
+      mapUi('downloadPdf')+'</button>'+
       '</div>';
 
     setTimeout(function(){var f=document.querySelector('.v2-phase');if(f){f.classList.add('open');updateProgress();}},400);
@@ -5980,26 +6352,26 @@ fbq('track','PageView');
     return tresMovHTML+
       '<div class="v2-resumo"><span class="v2-resumo-label">Síntese do Mapa</span><div class="v2-resumo-text">'+resumo+'</div></div>'+
       '<div class="v2-divider"><div class="v2-divider-inner">✦</div></div>'+
-      '<div class="v2-section-label">Números do Mapa</div>'+
+      '<div class="v2-section-label">'+mapUi('mapNumbers')+'</div>'+
       '<div class="v2-nums-grid">'+cards+'</div>'+
       '<div class="v2-divider"><div class="v2-divider-inner">✦</div></div>'+
-      '<div class="v2-section-label">Leituras Detalhadas · toque para expandir</div>'+
+      '<div class="v2-section-label">'+mapUi('detailedReadings')+'</div>'+
       '<div class="v2-acc">'+acc+'</div>'+
       '<div class="v2-divider"><div class="v2-divider-inner">✦</div></div>'+
-      '<div class="v2-section-label">Pirâmide Pitagórica</div>'+piramide;
+      '<div class="v2-section-label">'+mapUi('pythagoreanPyramid')+'</div>'+piramide;
   }
 
   function buildPhase2(numsObj,desafios){
     var sist=gerarSistemica(numsObj).replace(/class="sistemicaCard"/g,'class="v2-sist-card"').replace(/class="sistemicaType"/g,'class="v2-sist-type"').replace(/class="sistemicaText"/g,'class="v2-sist-text"');
     var sabo=gerarSabotagem(numsObj,desafios).replace(/class="sabotaItem"/g,'class="v2-sabota-item"').replace(/class="sabotaIcon"/g,'class="v2-sabota-icon"').replace(/class="sabotaText"/g,'class="v2-sabota-text"');
-    return'<div class="v2-section-label">Interpretação Sistêmica</div><div style="display:grid;gap:8px;margin-bottom:24px">'+sist+'</div>'+
+    return'<div class="v2-section-label">'+mapUi('systemicInterpretation')+'</div><div style="display:grid;gap:8px;margin-bottom:24px">'+sist+'</div>'+
       '<div class="v2-divider"><div class="v2-divider-inner">✦</div></div>'+
-      '<div class="v2-section-label">Padrões de Autossabotagem</div><div>'+sabo+'</div>';
+      '<div class="v2-section-label">'+mapUi('selfSabotage')+'</div><div>'+sabo+'</div>';
   }
 
   function buildPhase3(date,caminho,pinaculos,periodos,ciclos,idadeAprox){
-    var cicloNames=['Ciclo Formativo','Ciclo Produtivo','Ciclo da Colheita'];
-    var cicloPeriods=['Nascimento até ~28 anos','~29 a ~56 anos','~57 anos em diante'];
+    var cicloNames=[mapUi('formation'),mapUi('realization'),mapUi('legacy')];
+    var cicloPeriods=[mapUi('birthTo28'),mapUi('age29To56'),mapUi('age57Plus')];
     var cicloKeys=['formativo','produtivo','colheita'];
     var ciclosHtml=ciclos.map(function(c,i){
       var isActive=(i===0&&idadeAprox<=28)||(i===1&&idadeAprox>=29&&idadeAprox<=56)||(i===2&&idadeAprox>=57);
@@ -6011,8 +6383,8 @@ fbq('track','PageView');
         '<div class="v2-ciclo-period">'+cicloPeriods[i]+'</div>'+
         '<div class="v2-ciclo-desc">'+desc+'</div></div>';
     }).join('');
-    var pinaNames=['Primeiro Pináculo','Segundo Pináculo','Terceiro Pináculo','Quarto Pináculo'];
-    var pinaCtx=['Formação e impulso inicial','Realização e amadurecimento','Síntese e integração','Plenitude e legado'];
+    var pinaNames=[mapUi('firstPinnacle'),mapUi('secondPinnacle'),mapUi('thirdPinnacle'),mapUi('fourthPinnacle')];
+    var pinaCtx=[mapUi('formation'),mapUi('realization'),mapUi('integration'),mapUi('legacy')];
     var pinsHtml=pinaculos.map(function(p,i){
       var per=periodos[i];
       var isActive=idadeAprox>=(per.ini-date.ano)&&(per.fim===null||idadeAprox<=(per.fim-date.ano));
@@ -6023,64 +6395,64 @@ fbq('track','PageView');
         '<div class="v2-pin-label">'+pinaNames[i]+'</div>'+
         '<div class="v2-pin-period">'+pinaCtx[i]+' · '+per.label+'</div>'+
         '<div class="v2-pin-desc">'+desc+'</div>'+
-        (isActive?'<div class="v2-active-badge">● Período atual</div>':'')+
+        (isActive?'<div class="v2-active-badge">'+mapUi('periodCurrent')+'</div>':'')+
         '</div></div>';
     }).join('');
-    return'<div class="v2-section-label">Ciclos de Vida</div>'+
+    return'<div class="v2-section-label">'+mapUi('lifeCycles')+'</div>'+
       '<div class="v2-ciclos-grid">'+ciclosHtml+'</div>'+
       '<div class="v2-divider"><div class="v2-divider-inner">✦</div></div>'+
-      '<div class="v2-section-label">Pináculos · Os Quatro Grandes Ciclos</div>'+
+      '<div class="v2-section-label">'+mapUi('pinnaclesFour')+'</div>'+
       '<div>'+pinsHtml+'</div>';
   }
 
   function buildPhase4(desafios,licoes,maturidade,equilibrio){
-    var dNames=['Primeiro Desafio','Segundo Desafio','Desafio Principal','Quarto Desafio'];
-    var dSubs=['|dia − mês|','|ano − dia|','|2º − 1º| · Toda a vida','|ano − mês|'];
+    var dNames=[mapUi('firstChallenge'),mapUi('secondChallenge'),mapUi('mainChallenge'),mapUi('fourthChallenge')];
+    var dSubs=[mapCopy('formulas','dayMonth'),mapCopy('formulas','yearDay'),mapCopy('formulas','main'),mapCopy('formulas','yearMonth')];
     var desH=desafios.map(function(d,i){
       var ip=i===2;
       return'<div class="v2-desafio-card'+(ip?' principal':'')+'">'+
         '<span class="v2-desafio-label">'+dNames[i]+(ip?' ✦':'')+'</span>'+
         '<div class="v2-desafio-val">'+d+'</div>'+
-        '<div class="v2-desafio-title">'+(ip?'Desafio central de toda a vida':'Desafio do período')+'</div>'+
+        '<div class="v2-desafio-title">'+(ip?mapUi('centralChallenge'):mapUi('periodChallenge'))+'</div>'+
         '<div class="v2-desafio-sub">'+dSubs[i]+'</div>'+
         '<div class="v2-desafio-desc">'+(DESAFIOS_LEITURAS[d]||'')+'</div></div>';
     }).join('');
-    var licH=licoes.length===0?'<div class="v2-sist-card"><span class="v2-sist-type">Sem lições kármicas ausentes</span><div class="v2-sist-text">Todos os números de 1 a 9 estão presentes no seu nome. Configuração rara de completude vibratória.</div></div>':
-      licoes.map(function(n){return'<div class="v2-licao-item"><div class="v2-licao-num-col"><div class="v2-licao-num">'+n+'</div></div><div class="v2-licao-body"><span class="v2-licao-label">Lição Kármica '+n+'</span><div class="v2-licao-desc">'+(LICOES_LEITURAS[n]||'')+'</div></div></div>';}).join('');
+    var licH=licoes.length===0?'<div class="v2-sist-card"><span class="v2-sist-type">'+mapUi('noKarmicLessons')+'</span><div class="v2-sist-text">'+mapUi('completeVibration')+'</div></div>':
+      licoes.map(function(n){return'<div class="v2-licao-item"><div class="v2-licao-num-col"><div class="v2-licao-num">'+n+'</div></div><div class="v2-licao-body"><span class="v2-licao-label">'+mapTpl('karmicLesson',{n:n})+'</span><div class="v2-licao-desc">'+(LICOES_LEITURAS[n]||'')+'</div></div></div>';}).join('');
     var specH='<div class="v2-mini-grid">'+
-      '<div class="v2-mini-card"><span class="v2-mini-label">Número de Maturidade</span>'+
+      '<div class="v2-mini-card"><span class="v2-mini-label">'+mapUi('maturityNumber')+'</span>'+
       '<div class="v2-mini-val">'+maturidade+'</div>'+
       '<div class="v2-mini-title">'+(TITULOS[maturidade]||'')+'</div>'+
-      '<div class="v2-mini-desc">Ativo após os 45 — '+(MATURIDADE_LEITURAS[maturidade]||'')+'</div></div>'+
-      '<div class="v2-mini-card"><span class="v2-mini-label">Número de Equilíbrio</span>'+
+      '<div class="v2-mini-desc">'+mapUi('activeAfter45')+' — '+(MATURIDADE_LEITURAS[maturidade]||'')+'</div></div>'+
+      '<div class="v2-mini-card"><span class="v2-mini-label">'+mapUi('balanceNumber')+'</span>'+
       '<div class="v2-mini-val">'+equilibrio+'</div>'+
       '<div class="v2-mini-title">'+(TITULOS[equilibrio]||'')+'</div>'+
-      '<div class="v2-mini-desc">Âncora em crises — '+(EQUILIBRIO_LEITURAS[equilibrio]||'')+'</div></div></div>';
-    return'<div class="v2-section-label">Desafios · Obstáculos que Promovem Crescimento</div>'+
+      '<div class="v2-mini-desc">'+mapUi('crisisAnchor')+' — '+(EQUILIBRIO_LEITURAS[equilibrio]||'')+'</div></div></div>';
+    return'<div class="v2-section-label">'+mapUi('challengesGrowth')+'</div>'+
       '<div class="v2-desafio-grid">'+desH+'</div>'+
       '<div class="v2-divider"><div class="v2-divider-inner">✦</div></div>'+
-      '<div class="v2-section-label">Lições Kármicas · Ausências no Nome</div>'+
+      '<div class="v2-section-label">'+mapUi('karmicLessons')+'</div>'+
       '<div style="display:grid;gap:8px">'+licH+'</div>'+
       '<div class="v2-divider"><div class="v2-divider-inner">✦</div></div>'+
-      '<div class="v2-section-label">Maturidade e Equilíbrio</div>'+specH;
+      '<div class="v2-section-label">'+mapUi('maturityBalance')+'</div>'+specH;
   }
 
   function buildPhase5(caminho){
     var direc=gerarDirecionamento(caminho).replace(/class="direcGrid"/g,'class="v2-direc-grid"').replace(/class="direcCard"/g,'class="v2-direc-card"').replace(/class="direcTitle"/g,'class="v2-direc-title"').replace(/class="direcText"/g,'class="v2-direc-text"');
     var plano=gerarPlanoAcao(caminho).replace(/class="planoGrid"/g,'class="v2-plano-grid"').replace(/class="planoCard parar"/g,'class="v2-plano-card parar"').replace(/class="planoCard comecar"/g,'class="v2-plano-card comecar"').replace(/class="planoCard manter"/g,'class="v2-plano-card manter"').replace(/class="planoTitle"/g,'class="v2-plano-title"').replace(/class="planoList"/g,'class="v2-plano-list"');
     var frase=gerarFrase(caminho),titulo=TITULOS[caminho]||'';
-    return'<div class="v2-section-label">Direcionamento de Vida e Carreira</div>'+direc+
+    return'<div class="v2-section-label">'+mapUi('directionCareer')+'</div>'+direc+
       '<div class="v2-divider"><div class="v2-divider-inner">✦</div></div>'+
-      '<div class="v2-section-label">Plano de Ação Real</div>'+plano+
+      '<div class="v2-section-label">'+mapUi('realActionPlan')+'</div>'+plano+
       '<div class="v2-divider"><div class="v2-divider-inner">✦</div></div>'+
       '<div class="v2-frase-box"><span class="v2-frase-symbol">✦</span>'+
       '<div class="v2-frase-text">'+frase+'</div>'+
-      '<span class="v2-frase-label">Caminho de Vida '+caminho+' · '+titulo+'</span></div>'+
+      '<span class="v2-frase-label">'+mapUi('lifePath')+' '+caminho+' · '+titulo+'</span></div>'+
       '<div style="text-align:center;margin-top:32px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap">'+
-      '<button class="v2-btn-new" id="v2BtnNew">✦ Nova Consulta</button>'+
+      '<button class="v2-btn-new" id="v2BtnNew">'+mapUi('newConsult')+'</button>'+
       '<button class="v2-pdf-btn" id="v2PdfBtn">'+
       '<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 12.5h10M8 2v8M5 7l3 3 3-3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>'+
-      'Baixar PDF</button>'+
+      mapUi('downloadPdf')+'</button>'+
       '</div>';
   }
 

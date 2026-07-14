@@ -1,0 +1,10 @@
+{
+  "private": true,
+  "scripts": {
+    "qa:i18n": "node scripts/qa-i18n.mjs",
+    "qa:browser-i18n": "playwright test --config scripts/playwright-qa.config.js --reporter=line"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.61.1"
+  }
+}

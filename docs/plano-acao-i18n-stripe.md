@@ -91,6 +91,12 @@ As traduções longas foram geradas como primeiro corte operacional, via script 
 
 **Mitigação aplicada:** `assets/i18n.js` agora mantém apenas `pt` habilitado para o público (`PUBLIC_ENABLED = ['pt']`). Os botões EN/ES ficam ocultos/desabilitados e qualquer cookie `sn_lang=en/es` cai de volta para PT. Para QA interno, usar `?i18n_preview=1`, que libera temporariamente os botões e o carregamento de `en.json`/`es.json`.
 
+**Atualização 2026-07-13 — QA automatizado e camada dinâmica do mapa:** além dos JSONs, havia textos gerados diretamente por `index.html` que não passavam pelo runtime i18n (intros das esferas, síntese, resumo psicológico, interpretação sistêmica, autossabotagem, direção/plano de ação, frase final, fórmulas e estados do botão de PDF). Essa camada foi ligada ao idioma ativo no preview, preservando PT como público único.
+- Criado `scripts/qa-i18n.mjs`: valida parse dos 3 JSONs, cobertura de `numbers`, placeholders, tags/atributos HTML, termos conhecidos vazando entre EN/ES e o caso específico dos insights AIDA com `<strong>Life Path N</strong>` / `<strong>Camino de Vida N</strong>`.
+- Criado QA browser Playwright (`scripts/qa-browser-i18n.spec.js` + config): abre `index.html?i18n_preview=1`, força EN e ES, preenche formulário real, renderiza o mapa e valida labels principais do mapa/preview sem chamar a Edge Function real.
+- Validação executada em 2026-07-13: `node scripts/qa-i18n.mjs` OK; `npx playwright test --config scripts\playwright-qa.config.js --reporter=line` OK (EN/ES).
+- Varredura extra do DOM renderizado para termos PT óbvios em EN/ES: limpa para os rótulos/frases dinâmicas corrigidas. O seletor público continua bloqueado; ainda falta QA editorial humana/PDF real antes de liberar tráfego EN/ES.
+
 ### Rodapé — crédito da agência (2026-07-12)
 Trocado "Desenvolvido por 11 Digital" por um crédito visual mais premium — pill com borda/gradiente dourado, ponto luminoso e link pra `onzedigitalstrategy.com.br` — em `index.html` e `mapa-7-esferas.html`. Sem relação com o roadmap de i18n/Stripe, só registro de mudança visual feita na mesma janela de trabalho.
 
