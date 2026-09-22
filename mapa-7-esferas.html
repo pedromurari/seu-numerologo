@@ -2669,13 +2669,30 @@
   }
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 </head>
 <body>
 
 <!-- ═══════════════════════════════════
      TELA 1 — FORMULÁRIO
 ═══════════════════════════════════ -->
-<div id="mScreenForm" class="v2-screen">
+<!-- ═══════════════════════════════════
+     TELA 0 — VERIFICAÇÃO DE ACESSO (SSO da área de membros)
+═══════════════════════════════════ -->
+<div id="mScreenGate" class="v2-screen">
+  <div class="v2-load-inner">
+    <div class="v2-load-spinner" id="mGateSpinner">
+      <div class="v2-load-ring1"></div>
+      <div class="v2-load-ring2"></div>
+      <span class="v2-load-icon">✦</span>
+    </div>
+    <h3 class="v2-load-h" id="mGateTitle">Verificando seu acesso</h3>
+    <p class="v2-load-sub" id="mGateSub">Confirmando sua matrícula na área de membros...</p>
+    <a href="https://www.idmpsi.com.br/mentoria-npa" id="mGateBackLink" class="v2-submit-btn" style="display:none;margin-top:20px;text-decoration:none;text-align:center">Voltar à área de membros</a>
+  </div>
+</div>
+
+<div id="mScreenForm" class="v2-screen v2-hidden">
   <nav class="v2-nav">
     <a class="v2-nav-logo" href="#" aria-label="Seu Numerólogo"><img src="assets/logo.png" alt="Seu Numerólogo"/></a>
   </nav>
@@ -2784,6 +2801,92 @@
 (function(){
 'use strict';
 var ANO_ATUAL = new Date().getFullYear();
+
+/* ── Acesso via área de membros (SSO + cota da Mentoria NPS) ──
+   Esta ferramenta é benefício de mentoria, não pública: só gera mapa pra
+   quem chega com um handoff de sessão (#sso_at=...&sso_rt=...) vindo de
+   https://www.idmpsi.com.br, com matrícula ativa na NPA (ilimitado) ou na
+   NPS (5 mapas/mês, verificado em /api/access/check). */
+var IDM_SUPABASE_URL = 'https://gkbjemvwutaiksuueiqt.supabase.co';
+var IDM_SUPABASE_ANON_KEY = 'sb_publishable_JG9PtnfHqWxIwZbpgXZwag_L_4Tt_7z';
+var ACCESS_CHECK_URL = 'https://www.idmpsi.com.br/api/access/check';
+var idmClient = window.supabase ? window.supabase.createClient(IDM_SUPABASE_URL, IDM_SUPABASE_ANON_KEY) : null;
+var _ssoUser = null; /* {id,email} depois de autenticado */
+
+function gateShow(title, sub, showBackLink, showSpinner){
+  document.getElementById('mGateTitle').textContent = title;
+  document.getElementById('mGateSub').textContent = sub;
+  document.getElementById('mGateBackLink').style.display = showBackLink ? 'block' : 'none';
+  document.getElementById('mGateSpinner').style.display = showSpinner ? '' : 'none';
+}
+
+function consumeSsoHash(){
+  var hash = window.location.hash || '';
+  if (hash.indexOf('sso_at=') === -1) return null;
+  var params = new URLSearchParams(hash.replace(/^#/, ''));
+  var at = params.get('sso_at'), rt = params.get('sso_rt');
+  history.replaceState(null, '', window.location.pathname + window.location.search);
+  if (!at || !rt) return null;
+  return { access_token: at, refresh_token: rt };
+}
+
+function checkAccess(email){
+  function ask(product){
+    return fetch(ACCESS_CHECK_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: email, product: product })
+    }).then(function(r){ return r.json(); });
+  }
+  return ask('mentoria-npa').then(function(npa){
+    if (npa && npa.has_access) return { allowed: true, product: 'mentoria-npa' };
+    return ask('mentoria-nps').then(function(nps){
+      if (nps && nps.has_access) return { allowed: true, product: 'mentoria-nps', remaining: nps.monthly_remaining };
+      var reason = (nps && nps.reason) || (npa && npa.reason) || 'sem_acesso';
+      return { allowed: false, product: 'mentoria-nps', reason: reason };
+    });
+  }).catch(function(){
+    return { allowed: false, reason: 'erro_verificacao' };
+  });
+}
+
+var REASON_MSG = {
+  email_not_found: 'Não encontramos sua matrícula. Acesse pelo link dentro da área de membros.',
+  no_active_enrollment: 'Sua matrícula na Mentoria NPA/NPS não está ativa no momento.',
+  enrollment_expired: 'Sua mensalidade da Mentoria NPS está vencida.',
+  monthly_limit_reached: 'Você já usou os 5 mapas disponíveis este mês na Mentoria NPS.',
+  erro_verificacao: 'Não conseguimos confirmar seu acesso agora. Tente novamente em instantes.',
+  sem_acesso: 'Este mapa é um benefício exclusivo da Mentoria NPA/NPS.'
+};
+
+function initAccessGate(){
+  if (!idmClient) { gateShow('Erro ao carregar', 'Recarregue a página.', false, false); return; }
+  var tokens = consumeSsoHash();
+  if (!tokens) {
+    gateShow('Acesso restrito', REASON_MSG.sem_acesso, true, false);
+    return;
+  }
+  idmClient.auth.setSession(tokens).then(function(res){
+    var user = res && res.data && res.data.user;
+    if (!user || !user.email) {
+      gateShow('Sessão inválida', 'Acesse novamente pelo link dentro da área de membros.', true, false);
+      return;
+    }
+    _ssoUser = { id: user.id, email: user.email };
+    return checkAccess(user.email).then(function(access){
+      if (!access.allowed) {
+        gateShow('Acesso indisponível', REASON_MSG[access.reason] || REASON_MSG.sem_acesso, true, false);
+        return;
+      }
+      _accessInfo = access;
+      showScreen('mScreenForm');
+    });
+  }).catch(function(){
+    gateShow('Não foi possível verificar seu acesso', 'Verifique sua conexão e acesse novamente pelo link dentro da área de membros.', true, false);
+  });
+}
+
+var _accessInfo = null;
 
   const TAB = {A:1,B:2,C:3,D:4,E:5,F:6,G:7,H:8,I:9,J:1,K:2,L:3,M:4,N:5,O:6,P:7,Q:8,R:9,S:1,T:2,U:3,V:4,W:5,X:6,Y:7,Z:8};
   const VOGAIS = new Set(['A','E','I','O','U']);
@@ -2954,13 +3057,32 @@ var ANO_ATUAL = new Date().getFullYear();
     if(!nome){err.textContent='Por favor, informe o nome completo de batismo.';return;}
     var clean=dataRaw.replace(/\s/g,'').replace(/\/+/g,'/');
     if(!parseDateBR(clean)){err.textContent='Data inválida. Use o formato DD/MM/AAAA.';return;}
+    if(!_ssoUser){err.textContent='Sessão de acesso perdida. Volte à área de membros e abra o mapa de novo.';return;}
     err.textContent='';
-    showScreen('mScreenLoad');
-    setTimeout(function(){
-      _nums=buildNums(nome,clean);
-      renderMap(_nums);
-      showScreen('mScreenMap');
-    },1600);
+    var btn=document.getElementById('mSubmit');
+    btn.disabled=true;
+    /* Reconfere a cota bem na hora de gerar (evita usar valor de acesso já velho,
+       ex. aba aberta desde o mês passado ou mapa já gerado em outra aba). */
+    checkAccess(_ssoUser.email).then(function(access){
+      if(!access.allowed){
+        btn.disabled=false;
+        err.textContent=REASON_MSG[access.reason]||REASON_MSG.sem_acesso;
+        return;
+      }
+      _accessInfo=access;
+      showScreen('mScreenLoad');
+      setTimeout(function(){
+        _nums=buildNums(nome,clean);
+        renderMap(_nums);
+        showScreen('mScreenMap');
+        btn.disabled=false;
+        idmClient.from('mapa_7_esferas_maps').insert({
+          user_id:_ssoUser.id, nome:nome, data_nascimento:clean, origem:'mapa-7-esferas'
+        }).then(function(res){
+          if(res && res.error) console.error('[mapa-7-esferas] falha ao registrar uso', res.error);
+        });
+      },1600);
+    });
   });
 
   function buildNums(nomeRaw,dateRaw){
@@ -3384,6 +3506,8 @@ var ANO_ATUAL = new Date().getFullYear();
       cleanup();
     },150);
   }
+
+  initAccessGate();
 
 })();
 </script>
