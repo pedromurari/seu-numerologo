@@ -2,6 +2,13 @@
 // Roda antes do CDN servir o HTML estático. Não altera o conteúdo do arquivo —
 // só seta o cookie sn_lang na primeira visita, que assets/i18n.js lê no client
 // pra escolher qual /locales/{lang}.json carregar.
+//
+// Usa next() do @vercel/edge em vez de `await fetch(request)` — fazer fetch da
+// própria requisição reentra no pipeline de rotas/middleware da Vercel e causa
+// loop infinito (o cookie ainda não existe na requisição refeita, então
+// hasLangCookie() dá false de novo, pra sempre). next() sinaliza "continue pra
+// origem/estático" sem essa recursão.
+import { next } from '@vercel/edge';
 
 export const config = {
   // Aplica em qualquer rota que não seja asset estático (tem extensão) nem
@@ -29,8 +36,7 @@ export default async function middleware(request) {
   var country = (request.headers.get('x-vercel-ip-country') || '').toUpperCase();
   var lang = COUNTRY_TO_LANG[country] || DEFAULT_LANG;
 
-  var originResponse = await fetch(request);
-  var response = new Response(originResponse.body, originResponse);
+  var response = next();
   response.headers.append(
     'Set-Cookie',
     COOKIE_NAME + '=' + lang + '; Path=/; Max-Age=31536000; SameSite=Lax'
